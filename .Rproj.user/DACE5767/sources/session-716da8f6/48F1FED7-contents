@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "GPT in Genomics"
+  site-url: https://www.srustillmblog.io
+  description: "A Blog Navigating my LLM Project"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+format:
+  html:
+    theme: solar
+    css: styles.css
+
+editor: visual
+

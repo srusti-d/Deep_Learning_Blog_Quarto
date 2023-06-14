@@ -1,0 +1,127 @@
+---
+title: "GWAS Code"
+author: "Srusti Donapati"
+date: "2023-06-13"
+categories: [blog]
+---
+
+## Exploring GWAS using a smaller genomic dataset.
+
+```{r}
+library(tidyverse)
+library(devtools)
+devtools::source_gist("38431b74c6c0bf90c12f")
+```
+
+```{r}
+
+#downloading data
+
+if(!file.exists(glue::glue("~/Downloads/analysis_population_structure.tgz")))
+{
+  system(glue::glue("wget -O ~/Downloads/analysis_population_structure.tgz https://uchicago.box.com/shared/static/zv1jyevq01mt130ishx25sgb1agdu8lj.tgz"))
+  ## tar -xf file_name.tar.gz --directory /target/directory
+  system(glue::glue("tar xvf ~/Downloads/analysis_population_structure.tgz --directory ~/Downloads/")) 
+}
+work.dir ="~/Downloads/analysis_population_structure/"
+```
+
+```{r}
+#testing Hardy-Weinberg Equilibrium with population structure
+popinfo = read_tsv(paste0(work.dir,"relationships_w_pops_051208.txt"))
+popinfo %>% count(population)
+samdata = read_tsv(paste0(work.dir,"phase3_corrected.psam"),guess_max = 2500)  
+superpop = samdata %>% select(SuperPop,Population) %>% unique()
+superpop = rbind(superpop, data.frame(SuperPop=c("EAS","HIS","AFR"),Population=c("CHD","MEX","MKK")))
+```
+
+```{r}
+## what happens if we calculate HWE with this mixed population?
+if(!file.exists(glue::glue("{work.dir}output/allhwe.hwe")))
+system(glue::glue("~/bin/plink --bfile {work.dir}hapmapch22 --hardy --out {work.dir}output/allhwe"))
+allhwe = read.table(glue::glue("{work.dir}output/allhwe.hwe"),header=TRUE,as.is=TRUE)
+hist(allhwe$P)
+```
+
+```{r}
+qqunif(allhwe$P,main='HWE HapMap3 All Pop')
+```
+
+```{r}
+pop = "CHB"
+pop = "CEU"
+pop = "YRI"
+for(pop in c("CHB","CEU","YRI"))
+{
+  ## what if we calculate with single population?
+  popinfo %>% filter(population==pop) %>%
+    write_tsv(path=glue::glue("{work.dir}{pop}.fam") )
+  if(!file.exists(glue::glue("{work.dir}output/hwe-{pop}.hwe")))
+  system(glue::glue("~/bin/plink --bfile {work.dir}hapmapch22 --hardy --keep {work.dir}{pop}.fam --out {work.dir}output/hwe-{pop}"))
+  pophwe = read.table(glue::glue("{work.dir}output/hwe-{pop}.hwe"),header=TRUE,as.is=TRUE)
+  hist(pophwe$P,main=glue::glue("HWE {pop} and founders only"))
+  qqunif(pophwe$P,main=glue::glue("HWE {pop} and founders only"))
+}
+```
+
+```{r}
+#effect of population stratification on GWAS
+## read igrowth
+igrowth = read_tsv("https://raw.githubusercontent.com/hakyimlab/igrowth/master/rawgrowth.txt", show_col_types = FALSE)
+```
+
+```{r}
+## add FID to igrowth file
+igrowth = popinfo %>% select(-pheno) %>% inner_join(igrowth %>% select(IID,growth), by=c("IID"="IID"))
+write_tsv(igrowth,path=glue::glue("{work.dir}igrowth.pheno"))
+igrowth %>% ggplot(aes(population,growth)) + geom_violin(aes(fill=population)) + geom_boxplot(width=0.2,col='black',fill='gray',alpha=.8) + theme_bw(base_size = 15)
+```
+
+```{r}
+summary( lm(growth~population,data=igrowth) )
+```
+
+```{r}
+## run plink linear regression only if it hasn't been run already
+if(!file.exists(glue::glue("{work.dir}output/igrowth.assoc.linear")))
+system(glue::glue("~/bin/plink --bfile {work.dir}hapmapch22 --linear --pheno {work.dir}igrowth.pheno --pheno-name growth --maf 0.05 --out {work.dir}output/igrowth"))
+igrowth.assoc = read.table(glue::glue("{work.dir}output/igrowth.assoc.linear"),header=T,as.is=T)
+hist(igrowth.assoc$P)
+```
+
+```{r}
+qqunif(igrowth.assoc$P)
+```
+
+```{r}
+## install.packages("qqman")
+library(qqman)
+manhattan(igrowth.assoc, chr="CHR", bp="BP", snp="SNP", p="P" )
+```
+
+```{r}
+## generate PCs using plink
+if(!file.exists(glue::glue("{work.dir}output/pca.eigenvec")))
+system(glue::glue("~/bin/plink --bfile {work.dir}hapmapch22 --pca --out {work.dir}output/pca"))
+## read plink calculated PCs
+pcplink = read.table(glue::glue("{work.dir}output/pca.eigenvec"),header=F, as.is=T)
+names(pcplink) = c("FID","IID",paste0("PC", c(1:(ncol(pcplink)-2))) )
+pcplink = popinfo %>% left_join(superpop,by=c("population"="Population")) %>% inner_join(pcplink, by=c("FID"="FID", "IID"="IID"))
+## plot PC1 vs PC2
+pcplink %>% ggplot(aes(PC1,PC2,col=population,shape=SuperPop)) + geom_point(size=3,alpha=.7) + theme_bw(base_size = 15)
+```
+
+```{r}
+#running igrowth GWAS using PCs
+
+if(!file.exists(glue::glue("{work.dir}output/igrowth-adjPC.assoc.linear")))
+system(glue::glue("~/bin/plink --bfile {work.dir}hapmapch22 --linear --pheno {work.dir}igrowth.pheno --pheno-name growth --covar {work.dir}output/pca.eigenvec --covar-number 1-4 --hide-covar --maf 0.05 --out {work.dir}output/igrowth-adjPC"))
+igrowth.adjusted.assoc = read.table(glue::glue("{work.dir}output/igrowth-adjPC.assoc.linear"),header=T,as.is=T)
+##indadd = igrowth.adjusted.assoc$TEST=="ADD"
+titulo = "igrowh association adjusted for PCs"
+hist(igrowth.adjusted.assoc$P,main=titulo)
+```
+
+```{r}
+qqunif(igrowth.adjusted.assoc$P,main=titulo)
+```

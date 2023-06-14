@@ -1,0 +1,14 @@
+{
+  "hash": "0726da9d239731f4fb04f7857758441a",
+  "result": {
+    "markdown": "---\ntitle: \"The Biology to be Explored in LLMs\"\nauthor: \"Srusti Donapati\"\ndate: \"2023-06-06\"\ncategories: [news, code, analysis]\nimage: \"https://wallpaperaccess.com/full/3020077.jpg\"\n---\n\n\nThis is a post with executable code.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

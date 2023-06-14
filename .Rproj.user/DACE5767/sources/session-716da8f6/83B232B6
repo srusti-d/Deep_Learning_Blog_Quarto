@@ -1,0 +1,31 @@
+{
+    "id": "83B232B6",
+    "path": "~/GPT in Genomics Project/GPT in Genomics/posts/index.qmd",
+    "project_path": "posts/index.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1686071180887.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "cursorPosition": "62,0",
+        "scrollLine": "0",
+        "rmdVisualModeLocation": "9338:3305"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1686154830,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1686154830900,
+    "read_only": false,
+    "read_only_alternatives": []
+}

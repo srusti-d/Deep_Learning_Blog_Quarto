@@ -1,0 +1,67 @@
+---
+title: "Basics of LLMs and Their Role in the Field of Biology"
+author: "Srusti Donapati"
+date: "2023-06-06"
+categories: [blog]
+---
+
+# **Computational Components (LLMs)**
+
+### [**What is an LLM?**]{style="color: white"}
+
+A Large Language Model is a type of neural network which uses vast amounts of textual data in order to generate text composed of human language. By identifying patterns and context within the text which is inputted, it is able to respond to questions, create new content, and even make predictions.
+
+### [**What are the different types of LLMs?**]{style="color: white"}
+
+1.  **Word grams:** These are rudimentary models that predict the next word based on the frequency of word pairs or word bags in the training data. They DO NOT consider context or word order, resulting in less coherent predictions. Text generated using word grams often lacks resemblance to human text.
+
+2.  **CNNs (Convolutional Neural Networks)**: CNN models analyze text by considering relationships between adjacent words within a fixed window. They can have wide windows using techniques like dilation. While CNNs are good at identifying local patterns, they struggle with capturing long-range dependencies and comprehending complex sentence structures.
+
+3.  **LSTMs (Long Short-Term Memory networks):** LSTMs are a variant of Recurrent Neural Networks (RNNs) capable of storing and processing information from earlier parts of a text. They outperform CNNs in understanding context and managing long-range dependencies. However, they still face challenges with complex sentences and long text.
+
+4.  **Attention Mechanisms:** Attention mechanisms are not models in themselves, but mechanisms. They allow models to focus on relevant parts of the input when making predictions. These models have multiple attention "heads" that can concentrate on different parts of the previous text. Transformers, a class of language models, implement attention mechanisms.
+
+5.  **Large Language Models (LLMs):** LLMs, such as GPT-3, are transformers trained on vast amounts of data. Their large size facilitates the learning of intricate patterns, relationships, and context within the text. LLMs represent the most advanced language models available and can generate accurate and coherent responses across a wide range of topics.![ChatGPT has revolutionized easy public access to the vast array of information on the internet. ChatGPT is an example of an LLM.](https://uploads-ssl.webflow.com/5b105a0c66f2f636c7884a17/64063dbcad97bd421b437096_chatgpt.jpg){width="500"}
+
+The following LLMs use transformer architecture and were breakthroughs in the field:
+
+1.  **BERT (Bidirectional Encoder Representations from Transformers):** BERT is a series of LLMs introduced by Google. It is trained using masked language modeling and next sentence prediction. BERT understands context from both the left and right sides of the input, making it **bidirectional**. It has been open-sourced and achieved significant advancements in language understanding.
+
+2.  **GPT (Generative Pretrained Transformer):** GPT is a series of LLMs introduced by OpenAI. Unlike BERT, GPT is trained using the traditional language modeling task of autocompletion. It attends only to the left context during training, making it **unidirectional**. GPT excels in tasks involving text generation and has shown remarkable performance across various domains.
+
+These types of LLMs vary in their modeling capabilities, with LSTMs and transformers like BERT and GPT being more advanced in understanding context and generating coherent responses. LLMs have significantly evolved, and the latest generation, such as GPT-4, exhibits promising signs of general intelligence.
+
+### [**What about Data Generation for LLMs for Use in Genetics?**]{style="color: white"}
+
+Advances in DNA sequencing have allowed us to fully sequence the entire human genome for less than \$200. Sequencing-based methods have significantly advanced our ability to measure molecular function. These methods allow for the exposure of crucial molecular information such as chromatin structure, histone modifications, and transcription factor binding to DNA. Short DNA segments with specific properties of interest are isolated and sequenced in experiments to obtain this information. The rapid progress in DNA sequencing technology has outpaced Moore's law and enabled the measurement of various genetic aspects within biological samples, including gene expression, chromatin accessibility, and histone modifications, often with single-cell or spatial precision.
+
+### [**Using LLMs for Diagnosing Genetic Diseases**]{style="color: white"}
+
+As mentioned in an earlier post, mutations at splicing sites can completely change which proteins are produced, thus the protein function, resulting in rare genetic diseases. However, using LLMs, predicting splice sites and deducing gene structure becomes simpler and contribute to the diagnosis of rare genetic diseases.
+
+SpliceAI is a deep residual Convolutional Neural Network (CNN) introduced by the Illumina AI laboratory. It operates by utilizing earlier techniques for language modeling applied to DNA sequences, rather than functioning as a Language Model itself. Its primary purpose is to accurately predict the locations of intron-exon boundaries in the human genome, specifically the donor and acceptor sites. SpliceAI achieved a high precision-recall area under the curve (PR-AUC) score of 0.98, surpassing the previous best score of 0.23.
+
+One key feature of SpliceAI is its ability to perform in silico mutational analysis. It can artificially modify DNA positions and determine whether the alterations introduce or eliminate splice sites within 10,000 nucleotides of the mutation. This capability makes SpliceAI valuable for aiding genetic diagnosis, particularly in cases of rare undiagnosed pediatric diseases. By inputting variants of a patient's DNA into SpliceAI, it can assess the likelihood of altering gene splicing and disrupting gene function. SpliceAI's high accuracy stems from its deep residual network's capacity to learn complex biomolecular properties of DNA sequences that guide the splicing machinery to the correct splice sites. It captures and utilizes these previously unknown or imprecisely known properties effectively.
+
+### [**Predicting Gene Expression from a DNA Sequence Using LLMs**]{style="color: white"}
+
+\
+Enformer is a transformer-based tool and a part of the lineage of language models designed to predict cell type-specific gene expression levels based on the DNA sequence near a gene. It is trained using supervised learning to predict various experimental data types for a given genome region, including chromatin status, histone modifications, transcription factor binding, and gene expression levels. By incorporating attention mechanisms, Enformer can effectively capture correlations between molecular entities across distant regions up to 100,000 nucleotides away.
+
+While Enformer performs reasonably well in predicting gene expression from sequence alone, it currently falls short compared to experimental replicates, correlating at a level of 0.85, with a three-fold higher error rate. However, as more data are incorporated and the model is improved, its performance is expected to enhance. Enformer can also predict changes in gene expression caused by mutations in different individuals and artificially introduced mutations through CRISPR experiments. However, it has limitations in predicting the effects of distal enhancers and determining the direction of the impact of personal variants on gene expression, likely due to insufficient training data.
+
+![Enformers for effective gene expression prediction. Credit: Erik Storrs blog.](https://storrs.io/content/images/2022/03/Untitled-1-1.png)
+
+### [**Foundation Models**]{style="color: white"}
+
+Foundation models, such as the transformer-based GPT models, are large deep learning architectures that encode a vast amount of knowledge from various sources. They can be fine-tuned for specific tasks, resulting in high-performance systems for different applications. Two recent preprint models in molecular biology are introduced: scGPT and Nucleotide Transformer.
+
+scGPT is designed for single-cell transcriptomics, chromatin accessibility, and protein abundance. It is trained on single-cell data from 10 million human cells and learns embeddings that provide insights into cellular states and biological pathways. The model is trained to generate data based on gene prompts and cell prompts, predicting genes and their confidence values. scGPT is then fine-tuned for tasks like batch correction, cell annotation, perturbation prediction, multiomics, and pathway prediction.
+
+Nucleotide Transformer focuses on raw DNA sequences and uses the BERT methodology. It tokenizes sequences into k-mers of length 6 and is trained on the reference human genome, diverse human genomes, and genomes of other species. It is applied to 18 downstream tasks, including promoter prediction, splice site prediction, and histone modifications. Predictions are made through probing or computationally inexpensive fine-tuning.
+
+### [**What the AI Actually Does: Training LLMs in Predicting Gene Expression**]{style="color: white"}
+
+Teach it one-step causality relationships: "if a certain mutation occurs, a specific gene malfunctions. If this gene is under-expressed, other genes in the cascade increase or decrease" (Batzoglou). Ultimately, we want it to learn the complex statistical properties of existing biological systems. Batzoglou states that it can be "learned from triangulating between correlations across modalities such as DNA variation, protein abundance and phenotype (a technique known as Mendelian randomization)".
+
+In all, the deep learning technology is strong enough at this point to take in genomic data and output predictions for gene expression or other biological information. These technologies are continuously being developed, becoming even more powerful, efficient, and precise day-by-day.

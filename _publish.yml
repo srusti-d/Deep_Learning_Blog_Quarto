@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 6a1686b3-7240-4474-bf83-e8930c76ebf0
+      url: 'https://srusti.quarto.pub/gpt-in-genomics'

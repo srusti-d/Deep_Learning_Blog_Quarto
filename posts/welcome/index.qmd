@@ -1,0 +1,12 @@
+---
+title: "Welcome To My 'LLM in Biology' Blog!"
+author: "Srusti Donapati"
+date: "2023-06-06"
+categories: [blog]
+---
+
+This is the introductory post about the blog!
+
+![Credit: Serafim Batzoglou, "Large Language Models in Biology". Image from the author, created by Midjourney, prompted by "DNA".](https://miro.medium.com/v2/resize:fit:1024/0*neS1Be9611CzdqF2.png){width="400"}
+
+This blog will ultimately track my progress in learning about Large Language Models (LLMs) and their applications in molecular biology throughout the course of my 8-week program in the Im Lab at the University of Chicago. As I continue to learn biological knowledge and computational skills, I will continue to update this blog with what I have learned.

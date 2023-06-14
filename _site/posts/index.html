@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Srusti Donapati">
+<meta name="dcterms.date" content="2023-06-06">
+
+<title>GPT in Genomics - Basics of LLMs and Their Role in the Field of Biology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">GPT in Genomics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Basics of LLMs and Their Role in the Field of Biology</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">blog</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Srusti Donapati </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 6, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="computational-components-llms" class="level1">
+<h1><strong>Computational Components (LLMs)</strong></h1>
+<section id="what-is-an-llm" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-an-llm"><span style="color: white"><strong>What is an LLM?</strong></span></h3>
+<p>A Large Language Model is a type of neural network which uses vast amounts of textual data in order to generate text composed of human language. By identifying patterns and context within the text which is inputted, it is able to respond to questions, create new content, and even make predictions.</p>
+</section>
+<section id="what-are-the-different-types-of-llms" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-the-different-types-of-llms"><span style="color: white"><strong>What are the different types of LLMs?</strong></span></h3>
+<ol type="1">
+<li><p><strong>Word grams:</strong> These are rudimentary models that predict the next word based on the frequency of word pairs or word bags in the training data. They DO NOT consider context or word order, resulting in less coherent predictions. Text generated using word grams often lacks resemblance to human text.</p></li>
+<li><p><strong>CNNs (Convolutional Neural Networks)</strong>: CNN models analyze text by considering relationships between adjacent words within a fixed window. They can have wide windows using techniques like dilation. While CNNs are good at identifying local patterns, they struggle with capturing long-range dependencies and comprehending complex sentence structures.</p></li>
+<li><p><strong>LSTMs (Long Short-Term Memory networks):</strong> LSTMs are a variant of Recurrent Neural Networks (RNNs) capable of storing and processing information from earlier parts of a text. They outperform CNNs in understanding context and managing long-range dependencies. However, they still face challenges with complex sentences and long text.</p></li>
+<li><p><strong>Attention Mechanisms:</strong> Attention mechanisms are not models in themselves, but mechanisms. They allow models to focus on relevant parts of the input when making predictions. These models have multiple attention “heads” that can concentrate on different parts of the previous text. Transformers, a class of language models, implement attention mechanisms.</p></li>
+<li><p><strong>Large Language Models (LLMs):</strong> LLMs, such as GPT-3, are transformers trained on vast amounts of data. Their large size facilitates the learning of intricate patterns, relationships, and context within the text. LLMs represent the most advanced language models available and can generate accurate and coherent responses across a wide range of topics.<img src="https://uploads-ssl.webflow.com/5b105a0c66f2f636c7884a17/64063dbcad97bd421b437096_chatgpt.jpg" class="img-fluid" width="500" alt="ChatGPT has revolutionized easy public access to the vast array of information on the internet. ChatGPT is an example of an LLM."></p></li>
+</ol>
+<p>The following LLMs use transformer architecture and were breakthroughs in the field:</p>
+<ol type="1">
+<li><p><strong>BERT (Bidirectional Encoder Representations from Transformers):</strong> BERT is a series of LLMs introduced by Google. It is trained using masked language modeling and next sentence prediction. BERT understands context from both the left and right sides of the input, making it <strong>bidirectional</strong>. It has been open-sourced and achieved significant advancements in language understanding.</p></li>
+<li><p><strong>GPT (Generative Pretrained Transformer):</strong> GPT is a series of LLMs introduced by OpenAI. Unlike BERT, GPT is trained using the traditional language modeling task of autocompletion. It attends only to the left context during training, making it <strong>unidirectional</strong>. GPT excels in tasks involving text generation and has shown remarkable performance across various domains.</p></li>
+</ol>
+<p>These types of LLMs vary in their modeling capabilities, with LSTMs and transformers like BERT and GPT being more advanced in understanding context and generating coherent responses. LLMs have significantly evolved, and the latest generation, such as GPT-4, exhibits promising signs of general intelligence.</p>
+</section>
+<section id="what-about-data-generation-for-llms-for-use-in-genetics" class="level3">
+<h3 class="anchored" data-anchor-id="what-about-data-generation-for-llms-for-use-in-genetics"><span style="color: white"><strong>What about Data Generation for LLMs for Use in Genetics?</strong></span></h3>
+<p>Advances in DNA sequencing have allowed us to fully sequence the entire human genome for less than $200. Sequencing-based methods have significantly advanced our ability to measure molecular function. These methods allow for the exposure of crucial molecular information such as chromatin structure, histone modifications, and transcription factor binding to DNA. Short DNA segments with specific properties of interest are isolated and sequenced in experiments to obtain this information. The rapid progress in DNA sequencing technology has outpaced Moore’s law and enabled the measurement of various genetic aspects within biological samples, including gene expression, chromatin accessibility, and histone modifications, often with single-cell or spatial precision.</p>
+</section>
+<section id="using-llms-for-diagnosing-genetic-diseases" class="level3">
+<h3 class="anchored" data-anchor-id="using-llms-for-diagnosing-genetic-diseases"><span style="color: white"><strong>Using LLMs for Diagnosing Genetic Diseases</strong></span></h3>
+<p>As mentioned in an earlier post, mutations at splicing sites can completely change which proteins are produced, thus the protein function, resulting in rare genetic diseases. However, using LLMs, predicting splice sites and deducing gene structure becomes simpler and contribute to the diagnosis of rare genetic diseases.</p>
+<p>SpliceAI is a deep residual Convolutional Neural Network (CNN) introduced by the Illumina AI laboratory. It operates by utilizing earlier techniques for language modeling applied to DNA sequences, rather than functioning as a Language Model itself. Its primary purpose is to accurately predict the locations of intron-exon boundaries in the human genome, specifically the donor and acceptor sites. SpliceAI achieved a high precision-recall area under the curve (PR-AUC) score of 0.98, surpassing the previous best score of 0.23.</p>
+<p>One key feature of SpliceAI is its ability to perform in silico mutational analysis. It can artificially modify DNA positions and determine whether the alterations introduce or eliminate splice sites within 10,000 nucleotides of the mutation. This capability makes SpliceAI valuable for aiding genetic diagnosis, particularly in cases of rare undiagnosed pediatric diseases. By inputting variants of a patient’s DNA into SpliceAI, it can assess the likelihood of altering gene splicing and disrupting gene function. SpliceAI’s high accuracy stems from its deep residual network’s capacity to learn complex biomolecular properties of DNA sequences that guide the splicing machinery to the correct splice sites. It captures and utilizes these previously unknown or imprecisely known properties effectively.</p>
+</section>
+<section id="predicting-gene-expression-from-a-dna-sequence-using-llms" class="level3">
+<h3 class="anchored" data-anchor-id="predicting-gene-expression-from-a-dna-sequence-using-llms"><span style="color: white"><strong>Predicting Gene Expression from a DNA Sequence Using LLMs</strong></span></h3>
+<p><br>
+Enformer is a transformer-based tool and a part of the lineage of language models designed to predict cell type-specific gene expression levels based on the DNA sequence near a gene. It is trained using supervised learning to predict various experimental data types for a given genome region, including chromatin status, histone modifications, transcription factor binding, and gene expression levels. By incorporating attention mechanisms, Enformer can effectively capture correlations between molecular entities across distant regions up to 100,000 nucleotides away.</p>
+<p>While Enformer performs reasonably well in predicting gene expression from sequence alone, it currently falls short compared to experimental replicates, correlating at a level of 0.85, with a three-fold higher error rate. However, as more data are incorporated and the model is improved, its performance is expected to enhance. Enformer can also predict changes in gene expression caused by mutations in different individuals and artificially introduced mutations through CRISPR experiments. However, it has limitations in predicting the effects of distal enhancers and determining the direction of the impact of personal variants on gene expression, likely due to insufficient training data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://storrs.io/content/images/2022/03/Untitled-1-1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Enformers for effective gene expression prediction. Credit: Erik Storrs blog.</figcaption>
+</figure>
+</div>
+</section>
+<section id="foundation-models" class="level3">
+<h3 class="anchored" data-anchor-id="foundation-models"><span style="color: white"><strong>Foundation Models</strong></span></h3>
+<p>Foundation models, such as the transformer-based GPT models, are large deep learning architectures that encode a vast amount of knowledge from various sources. They can be fine-tuned for specific tasks, resulting in high-performance systems for different applications. Two recent preprint models in molecular biology are introduced: scGPT and Nucleotide Transformer.</p>
+<p>scGPT is designed for single-cell transcriptomics, chromatin accessibility, and protein abundance. It is trained on single-cell data from 10 million human cells and learns embeddings that provide insights into cellular states and biological pathways. The model is trained to generate data based on gene prompts and cell prompts, predicting genes and their confidence values. scGPT is then fine-tuned for tasks like batch correction, cell annotation, perturbation prediction, multiomics, and pathway prediction.</p>
+<p>Nucleotide Transformer focuses on raw DNA sequences and uses the BERT methodology. It tokenizes sequences into k-mers of length 6 and is trained on the reference human genome, diverse human genomes, and genomes of other species. It is applied to 18 downstream tasks, including promoter prediction, splice site prediction, and histone modifications. Predictions are made through probing or computationally inexpensive fine-tuning.</p>
+</section>
+<section id="what-the-ai-actually-does-training-llms-in-predicting-gene-expression" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-ai-actually-does-training-llms-in-predicting-gene-expression"><span style="color: white"><strong>What the AI Actually Does: Training LLMs in Predicting Gene Expression</strong></span></h3>
+<p>Teach it one-step causality relationships: “if a certain mutation occurs, a specific gene malfunctions. If this gene is under-expressed, other genes in the cascade increase or decrease” (Batzoglou). Ultimately, we want it to learn the complex statistical properties of existing biological systems. Batzoglou states that it can be “learned from triangulating between correlations across modalities such as DNA variation, protein abundance and phenotype (a technique known as Mendelian randomization)”.</p>
+<p>In all, the deep learning technology is strong enough at this point to take in genomic data and output predictions for gene expression or other biological information. These technologies are continuously being developed, becoming even more powerful, efficient, and precise day-by-day.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

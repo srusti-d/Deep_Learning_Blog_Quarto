@@ -1,0 +1,209 @@
+---
+title: "Practicing Working with Terminal"
+author: "Srusti Donapati"
+date: "2023-06-08"
+categories: [blog]
+image: https://help.apple.com/assets/63D8162D4F5E9E311D0CFA28/63D816334F5E9E311D0CFA30/en_US/d94aa1c4979b25e9ffbda97fcbae219a.png
+---
+
+# Working with Terminal ( + GitHub & VSCode)
+
+The goal of this 8 week program is to be able to train an LLM to take in a full DNA sequence and predict some biological mechanism, such as gene expression or the effect of transcription factor binding. This can only be accomplished by using a supercomputer with many, many GPUs. These supercomputers will take in the training code from the terminal (or VSCode), which is why it is necessary to learn how to use VSCode and navigate the command line on the terminal of the laptop.
+
+First, you need to ensure that your new file that you are working on is in the correct environment. An environment is kind of like a storage area on your laptop for all your programming tools (e.g. Python)-- it's basically like a folder for everything you need.
+
+**Conda:** Conda is an environment management tool which ensures that all your code, program, and files for a specific project are in the same environment. It also manages the installation, updating, and removal of packages (e.g. numpy, pandas, etc.). Conda comes with Anaconda and Miniconda, which you can download from the internet and have all the tools you would need to explore, model, and visualize datasets and more.
+
+### **Make a New Environment**
+
+Open terminal. Type the following, where "envname" is what you want to call your new environment:
+
+conda create ---name envname
+
+### Activate Newly Created Environment
+
+Do this to enter your desired environment. Type the following, where "envname" is your environment name:
+
+conda activate envname
+
+### Installing Tools for Programming in Python within New Environment
+
+Type the following:
+
+conda install python
+
+### Install "pip" before installing packages for Python
+
+pip is is a package management system used to install and manage software packages written in Python. It is a command-line tool that comes bundled with Python installations.
+
+**To install pip:**
+
+conda install pip
+
+**Note: Make sure you are in the desired environment while doing this.**
+
+You can check that you are in that desired environment if the environment name is in the parenthesis before the remaining line of code produced by terminal. So, after you activate the environment, it should produce something like this:
+
+(envname) Your-MacBook-Pro:\~ macusername\$
+
+When you are in the "normal" default environment, it will look something like this:
+
+(base) Your-MacBook-Pro:\~ macusername\$
+
+### Various pip commands
+
+Here are some commonly used **`pip`** commands:
+
+-   **`pip install package_name`**: Installs a package from PyPI or another source.
+
+\*\*For example, for installing numpy: python -m pip install numpy
+
+Note: The **`-m`** flag is commonly used for running Python scripts that are part of a package or when you want to ensure that the module is executed with the correct environment and dependencies.
+
+-   **`pip uninstall package_name`**: Uninstalls a package.
+
+-   **`pip list`**: Lists installed packages.
+
+-   **`pip search package_name`**: Searches PyPI for packages matching the given name.
+
+-   **`pip show package_name`**: Displays information about a specific package.
+
+-   **`pip freeze`**: Generates a requirements.txt file containing a list of installed packages and their versions.
+
+### Using VSCode with Desired Environment
+
+VSCode has an integrated terminal that allows you to run commands directly within the editor. However, VSCode's integrated terminal supports various shells, including PowerShell, Command Prompt (Windows), and Bash (macOS/Linux). So, while coding in VSCode, you need to make sure your code file is in the correct environment for your project. To do this, click on the bottom right of the screen on VSCode (in this example, the tab that says "3.11.3 ('dlgtools':conda). dlgtools is the name of my desired project environment. If the name of the environment is not the environment you want to work in, simply click on it and VSCode should open a tab at the top of your screen which says"Select Interpreter" and you can switch into a different environment. Your file will then be stored in this environment, so any packages or programs (like Python) which you plan to use in that file should be in that environment.
+
+![](images/Screen%20Shot%202023-06-08%20at%203.22.19%20PM.png)
+
+### Checking to See If You Have Python
+
+Once the terminal is open, type **`python --version`** or **`python3 --version`** and press Enter.
+
+-   If Python is installed, the command will display the version number of Python installed on your system. For example, you might see something like **`Python 3.9.2`**.
+
+-   If Python is not installed or if the command is not recognized, you will typically see an error message indicating that the command is not found or recognized. In this case, you'll need to install Python.
+
+### Checking Your VSCode in Terminal
+
+It is usually very difficult to see the output of your code in the integrated terminal of VSCode because it is kind of obscured among the lines about your system, device username, etc. To more clearly see the outputs of your code, you can do the following options:
+
+1.  **Check the code outputs directly in your device's terminal.**
+
+-   Open terminal.
+
+-   Making sure you are in the desired environment (check the parenthesis), type the following, where file_name is the name of the VSCode file you want to check the code for:
+
+-   from file_name import \*
+
+-   This should clearly produce all the outputs for your code
+
+2.  **Copy-paste the code into Jupyter Notebook, Google Colab, or some other software with all the packages and tools built in and run the code.**
+
+3.  **Add the following line of code at the very top and very bottom of your coding file to create some space between the outputs within the integrated terminal of VSCode itself. This may not be as helpful to clearly see the code, but it may make a slight difference in visibility.**
+
+-   print("\\n \\n \\n \-\-\-\-\-\-\-\-\-\-\-\-\-\-- \\n \\n \\n")
+
+# File Navigation in Terminal
+
+Here are some basic commands in your device's terminal to make sure you are storing all your files within the desired directory. A directory is basically a type of folder on your device. You need to know which directory you are putting your project files so that you do not lose any important files in the short or long-term.
+
+![](images/Screen%20Shot%202023-06-07%20at%202.00.19%20PM.png)
+
+### Additional Navigation Commands in Terminal:
+
+open . → opens the directory you are currently in
+
+cd .. → goes to the parent directory ("steps back")
+
+ls -a → see all files within the directory (including hidden ones with .git)
+
+cd \\ → goes to the root directory of the hardware system (the furthest back root)
+
+Basically, I would start by typing "pwd" in Terminal to determine which directory I am currently in. If you need to move back into an earlier parent folder/directory, type cd ..
+
+If you want to move into a further directory, type cd directory_name.
+
+If you do not know the name of the directory you want to move further into, or if you do not know if that directory is within your current working directory, type ls to see all directories/files within your current working directory.
+
+ls-a shows all the hidden files as well. Hidden files are files which work in the background of your project, and will begin with a . , which as .git or .nojekyll.
+
+After navigating into the root directory using cd \\, and then going into the desired directory, you can type "echo \$PATH" to get the path to get to that directory.
+
+# Github/Git Commands in Terminal
+
+### **Cloning on GitHub**
+
+Cloning refers to creating a local copy of an entire repository, including all its files, commit history, branches, and configuration. When you clone a repository, you create an identical copy on your local machine. This allows you to work with the project, make changes, commit them, and push them back to the remote repository. Cloning is typically used when you want to contribute to a project or work on your own project locally.
+
+**To clone a repository from GitHub, follow these steps:**
+
+1.  Open the GitHub repository page in your web browser.
+
+2.  Click on the "Code" button, located near the top-right corner of the repository page.
+
+3.  Click on the clipboard icon to copy the repository's URL. Alternatively, you can click on the "Download ZIP" button to download a compressed version of the repository instead of cloning it with Git.
+
+4.  Open your terminal or Git Bash (if you're on Windows).
+
+5.  Navigate to the directory where you want to clone the repository. You can use the **`cd`** command to change directories.
+
+6.  Once you're in the desired directory, use the following command to clone the repository:
+
+git clone \<paste_repository_URL\>
+
+### After making changes to local files on your device, you want to sync those changes to the remote, master directory on Github. Git is a tools which allows this syncing. Carry out the following steps to do so:
+
+1.  git add \* → add your changes
+
+2.  git status → check you are adding the files/directories you want
+
+3.  git commit -m 'message' → add a message
+
+4.  git push → update the master directory with your work
+
+### Another option -- "pulling" in Github:
+
+Pulling is the opposite of pushing: it's what you do when the **remote**, master directory (maybe owned by someone other than you) has changes and you want to update your **local** directory with those changes. Typically used in collaborative files.
+
+-   git pull → update your local directory with the master (remote) directory
+
+### When would you pull?
+
+The \`git pull\` command is used to update your local repository with the latest changes from a remote repository, typically the one you cloned from. It incorporates changes made by others and brings your local copy up to date.
+
+You would use \`git pull\` in a few different scenarios:
+
+1\. \*\*Working on a shared project\*\*: If you are collaborating with other people on a project, they might have made changes to the remote repository that you want to sync with. Running \`git pull\` will fetch those changes and merge them into your local branch.
+
+2\. \*\*Staying up to date\*\*: Even if you're not collaborating with others, it's good practice to regularly update your local repository with the latest changes from the remote repository. This ensures that you have the most recent version of the code and can avoid conflicts when you eventually push your own changes.
+
+3\. \*\*Resolving conflicts\*\*: Sometimes, when you pull changes from the remote repository, there might be **conflicts** between your local changes and the incoming changes. For example, if someone edited the same lines which you edited, and now there are different versions of the same file in the repo. In such cases, Git will notify you of the conflicts and provide an opportunity to resolve them manually.
+
+It's important to note that before running \`git pull\`, you should commit your local changes to avoid conflicts. If you have uncommitted changes, Git may ask you to stash or commit them before pulling.
+
+### Forking in Github:
+
+Forking a file in GitHub is like making a personal copy of someone else's file or project. When you fork a file, you create your own version of it that you can modify and make changes to without affecting the original file.
+
+Here's a simple analogy: Imagine you have a friend who has a really cool drawing. You want to add your own touches and modifications to that drawing, but you don't want to mess up your friend's original. So, what you do is make a photocopy of the drawing and work on that copy. This way, you can freely experiment and make changes without worrying about ruining the original.
+
+In GitHub, forking is similar. If you find a file or project in someone else's repository that you want to modify or contribute to, you can fork it to create your own personal copy of that repository. This copy will be stored in your GitHub account, and you can make changes without affecting the original file or the owner's repository.
+
+Once you've made the desired changes to your forked repository, you can choose to share those changes with the original owner through a process called a **pull request**. This allows the owner to review your changes and decide whether to incorporate them into the original file or project.
+
+### How to fork a file on Github?
+
+To fork a repository in GitHub, including all its files, branches, and commit history, follow these steps:
+
+1.  Open your web browser and go to the GitHub repository page that contains the file you want to fork.
+
+2.  In the top-right corner of the repository page, click on the "Fork" button.
+
+3.  GitHub will prompt you to select where you want to fork the repository. Choose your user account or any organization you belong to. Click on the appropriate option.
+
+4.  GitHub will then create a copy of the repository under your account or organization. Once the forking process is complete, you will be redirected to the forked repository's page.
+
+Now you have successfully forked the entire repository, not just an individual file. You will have a separate copy of the repository in your GitHub account. This copy will include all the files, branches, and commit history present in the original repository.
+
+You can make changes to the files, add new features, fix bugs, or experiment with the forked repository as you see fit. You can commit and push changes to the forked repository without affecting the original repository
