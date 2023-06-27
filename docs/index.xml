@@ -10,7 +10,47 @@
 <atom:link href="https://www.srustillmblog.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A Blog Navigating my LLM Project</description>
 <generator>quarto-1.3.361</generator>
-<lastBuildDate>Tue, 13 Jun 2023 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 23 Jun 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Neural Networks: Concepts and Code</title>
+  <dc:creator>Srusti Donapati</dc:creator>
+  <link>https://www.srustillmblog.io/posts/neural_networks/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="a-brief-conceptual-review-of-neural-networks-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="a-brief-conceptual-review-of-neural-networks-architecture">A Brief Conceptual Review of Neural Networks Architecture</h3>
+<p><strong>Three main components:</strong> input layer, output layer, hidden layers.</p>
+<p><strong>Input layer:</strong> where the neural network receives data represented as numbers.</p>
+<p><strong>Hidden layers:</strong> layers of the neural network; intermediate processing steps where extract and learn complex patterns and features from the input data.</p>
+<p><strong>Output layer:</strong> where the final prediction or output based on the computations performed by the hidden layers is provided.</p>
+<p><strong>Forward propagation:</strong> the hidden layers transform the input data by applying weights and biases to the inputs and passing them through an activation function.</p>
+<p><strong>Activation function</strong>: introduces non-linearities, allowing the network to capture complex relationships and make more sophisticated predictions.</p>
+<p>The number of hidden layers and the number of neurons within each layer are <strong>hyperparameters</strong> that can be adjusted based on the complexity of the problem at hand.</p>
+<p><strong>Backpropagation:</strong> As the network is trained on labeled data, it adjusts the weights and biases, gradually improving its ability to recognize and classify patterns in the input data.</p>
+<p>By adding more hidden layers, the neural network can learn increasingly abstract representations of the data. Each hidden layer can capture different levels of abstraction, with earlier layers learning simple features and later layers combining them to learn more complex patterns.</p>
+<p>This hierarchical representation enables the neural network to model intricate relationships and make accurate predictions or decisions based on the input provided.</p>
+<p>You must install the below packages for coding a neural network:</p>
+
+
+</section>
+
+ ]]></description>
+  <category>blog</category>
+  <guid>https://www.srustillmblog.io/posts/neural_networks/index.html</guid>
+  <pubDate>Fri, 23 Jun 2023 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <dc:creator>Srusti Donapati</dc:creator>
+  <link>https://www.srustillmblog.io/posts/neural_networks/neural_network_outline copy.html</link>
+  <description><![CDATA[ undefined ]]></description>
+  <category>blog</category>
+  <guid>https://www.srustillmblog.io/posts/neural_networks/neural_network_outline copy.html</guid>
+  <pubDate>Fri, 23 Jun 2023 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>GWAS Code</title>
   <dc:creator>Srusti Donapati</dc:creator>
@@ -20,8 +60,15 @@
 
 
 
-<p>Exploring GWAS using a smaller genomic dataset.</p>
-<hr>
+<section id="genome-wide-association-study-gwas" class="level2">
+<h2 class="anchored" data-anchor-id="genome-wide-association-study-gwas">Genome-Wide Association Study (GWAS)</h2>
+<p>GWAS is a genome-wide association study. It observes the differences in genes by a scanning the genomes of a large number of individuals to identify genetic markers, such as single nucleotide polymorphisms (SNPs), that are associated with a specific trait or condition.</p>
+<p>The process of conducting a GWAS typically involves comparing the genomes of individuals with a particular trait or disease to those without the trait or disease (known as the reference genome – a genome widely agreed upon scientists in the field to be the “control” genome in which other genomes are compared). By identifying genetic markers that are more frequently present in the group with the trait or disease, researchers can infer potential associations between specific genetic variants and the trait of interest.These associations between genes and traits includes traits associated with a disease or condition.</p>
+<p>However, it is important to note that GWAS findings often identify statistical associations between genetic markers and traits, rather than direct causal relationships. The inability to identify a direct causal relationship between genetic markers and traits in a GWAS is because most genetic variants do not change the coding of proteins (which carry out the cell’s functions, which can result in a specific trait).</p>
+<p>Further research and functional studies are typically required to validate and understand the biological significance of these associations. However, GWAS is a good first-step in identifying genes highly associated with a trait in order to pursue next steps of causal identification.</p>
+</section>
+<section id="exploring-gwas-using-a-smaller-genomic-dataset." class="level2">
+<h2 class="anchored" data-anchor-id="exploring-gwas-using-a-smaller-genomic-dataset.">Exploring GWAS using a smaller genomic dataset.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -53,7 +100,7 @@ background-color: null;
 font-style: inherit;">"38431b74c6c0bf90c12f"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Sourcing gist "38431b74c6c0bf90c12f"
-ℹ SHA-1 hash of file is "cbeca7fd9bf1602dee41c4f1880cc3a5e8992303"</code></pre>
+ℹ SHA-1 hash of file is "7534a04652d34154de13d2fa2ac042adb0d1f564"</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -96,18 +143,24 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"tar xvf ~/Downloads/analysis_population_structure.tgz --directory ~/Downloads/"</span>)) </span>
-<span id="cb7-8">}</span>
-<span id="cb7-9">work.dir <span class="ot" style="color: #003B4F;
+<span id="cb7-8">}</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in system(glue::glue("wget -O
+~/Downloads/analysis_population_structure.tgz
+https://uchicago.box.com/shared/static/zv1jyevq01mt130ishx25sgb1agdu8lj.tgz")):
+error in running command</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">work.dir <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/Downloads/analysis_population_structure/"</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#testing Hardy-Weinberg Equilibrium with population structure</span></span>
-<span id="cb8-2">popinfo <span class="ot" style="color: #003B4F;
+<span id="cb10-2">popinfo <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -126,7 +179,7 @@ dbl (2): sex, pheno
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">popinfo <span class="sc" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">popinfo <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -147,7 +200,7 @@ font-style: inherit;">count</span>(population)</span></code></pre></div>
 10 TSI          100
 11 YRI          180</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">samdata <span class="ot" style="color: #003B4F;
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">samdata <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -170,7 +223,7 @@ dbl (1): SEX
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">superpop <span class="ot" style="color: #003B4F;
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">superpop <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> samdata <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -181,7 +234,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">unique</span>()</span>
-<span id="cb14-2">superpop <span class="ot" style="color: #003B4F;
+<span id="cb16-2">superpop <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -210,10 +263,10 @@ background-color: null;
 font-style: inherit;">"MKK"</span>)))</span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="do" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## what happens if we calculate HWE with this mixed population?</span></span>
-<span id="cb15-2"><span class="cf" style="color: #003B4F;
+<span id="cb17-2"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -226,7 +279,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}output/allhwe.hwe"</span>)))</span>
-<span id="cb15-3"><span class="fu" style="color: #4758AB;
+<span id="cb17-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(glue<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -235,7 +288,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/bin/plink --bfile {work.dir}hapmapch22 --hardy --out {work.dir}output/allhwe"</span>))</span>
-<span id="cb15-4">allhwe <span class="ot" style="color: #003B4F;
+<span id="cb17-4">allhwe <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -254,7 +307,7 @@ background-color: null;
 font-style: inherit;">as.is=</span><span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">TRUE</span>)</span>
-<span id="cb15-5"><span class="fu" style="color: #4758AB;
+<span id="cb17-5"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">hist</span>(allhwe<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -264,7 +317,7 @@ font-style: inherit;">$</span>P)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">qqunif</span>(allhwe<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -282,22 +335,22 @@ font-style: inherit;">'HWE HapMap3 All Pop'</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">pop <span class="ot" style="color: #003B4F;
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">pop <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"CHB"</span></span>
-<span id="cb18-2">pop <span class="ot" style="color: #003B4F;
+<span id="cb20-2">pop <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"CEU"</span></span>
-<span id="cb18-3">pop <span class="ot" style="color: #003B4F;
+<span id="cb20-3">pop <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"YRI"</span></span>
-<span id="cb18-4"><span class="cf" style="color: #003B4F;
+<span id="cb20-4"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span>(pop <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -310,11 +363,11 @@ background-color: null;
 font-style: inherit;">"CEU"</span>,<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"YRI"</span>))</span>
-<span id="cb18-5">{</span>
-<span id="cb18-6">  <span class="do" style="color: #5E5E5E;
+<span id="cb20-5">{</span>
+<span id="cb20-6">  <span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## what if we calculate with single population?</span></span>
-<span id="cb18-7">  popinfo <span class="sc" style="color: #5E5E5E;
+<span id="cb20-7">  popinfo <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -323,7 +376,7 @@ background-color: null;
 font-style: inherit;">==</span>pop) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span></span>
-<span id="cb18-8">    <span class="fu" style="color: #4758AB;
+<span id="cb20-8">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write_tsv</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -334,7 +387,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}{pop}.fam"</span>) )</span>
-<span id="cb18-9">  <span class="cf" style="color: #003B4F;
+<span id="cb20-9">  <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -347,7 +400,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}output/hwe-{pop}.hwe"</span>)))</span>
-<span id="cb18-10">  <span class="fu" style="color: #4758AB;
+<span id="cb20-10">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(glue<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -356,7 +409,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/bin/plink --bfile {work.dir}hapmapch22 --hardy --keep {work.dir}{pop}.fam --out {work.dir}output/hwe-{pop}"</span>))</span>
-<span id="cb18-11">  pophwe <span class="ot" style="color: #003B4F;
+<span id="cb20-11">  pophwe <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -375,7 +428,7 @@ background-color: null;
 font-style: inherit;">as.is=</span><span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">TRUE</span>)</span>
-<span id="cb18-12">  <span class="fu" style="color: #4758AB;
+<span id="cb20-12">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">hist</span>(pophwe<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -388,7 +441,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"HWE {pop} and founders only"</span>))</span>
-<span id="cb18-13">  <span class="fu" style="color: #4758AB;
+<span id="cb20-13">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">qqunif</span>(pophwe<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -401,7 +454,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"HWE {pop} and founders only"</span>))</span>
-<span id="cb18-14">}</span></code></pre></div>
+<span id="cb20-14">}</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `path` argument of `write_tsv()` is deprecated as of readr 1.4.0.
 ℹ Please use the `file` argument instead.</code></pre>
@@ -426,13 +479,13 @@ font-style: inherit;">"HWE {pop} and founders only"</span>))</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#effect of population stratification on GWAS</span></span>
-<span id="cb20-2"><span class="do" style="color: #5E5E5E;
+<span id="cb22-2"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## read igrowth</span></span>
-<span id="cb20-3">igrowth <span class="ot" style="color: #003B4F;
+<span id="cb22-3">igrowth <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -445,10 +498,10 @@ background-color: null;
 font-style: inherit;">FALSE</span>)</span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="do" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## add FID to igrowth file</span></span>
-<span id="cb21-2">igrowth <span class="ot" style="color: #003B4F;
+<span id="cb23-2">igrowth <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> popinfo <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -475,7 +528,7 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"IID"</span>))</span>
-<span id="cb21-3"><span class="fu" style="color: #4758AB;
+<span id="cb23-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write_tsv</span>(igrowth,<span class="at" style="color: #657422;
 background-color: null;
@@ -486,7 +539,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}igrowth.pheno"</span>))</span>
-<span id="cb21-4">igrowth <span class="sc" style="color: #5E5E5E;
+<span id="cb23-4">igrowth <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -540,7 +593,7 @@ font-style: inherit;">15</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">summary</span>( <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -575,10 +628,10 @@ F-statistic: 32.08 on 4 and 3591 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="do" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## run plink linear regression only if it hasn't been run already</span></span>
-<span id="cb26-2"><span class="cf" style="color: #003B4F;
+<span id="cb28-2"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -591,7 +644,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}output/igrowth.assoc.linear"</span>)))</span>
-<span id="cb26-3"><span class="fu" style="color: #4758AB;
+<span id="cb28-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(glue<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -600,7 +653,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/bin/plink --bfile {work.dir}hapmapch22 --linear --pheno {work.dir}igrowth.pheno --pheno-name growth --maf 0.05 --out {work.dir}output/igrowth"</span>))</span>
-<span id="cb26-4">igrowth.assoc <span class="ot" style="color: #003B4F;
+<span id="cb28-4">igrowth.assoc <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -615,7 +668,7 @@ background-color: null;
 font-style: inherit;">header=</span>T,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">as.is=</span>T)</span>
-<span id="cb26-5"><span class="fu" style="color: #4758AB;
+<span id="cb28-5"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">hist</span>(igrowth.assoc<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -625,7 +678,7 @@ font-style: inherit;">$</span>P)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">qqunif</span>(igrowth.assoc<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -635,10 +688,10 @@ font-style: inherit;">$</span>P)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="do" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## install.packages("qqman")</span></span>
-<span id="cb28-2"><span class="fu" style="color: #4758AB;
+<span id="cb30-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(qqman)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -659,7 +712,7 @@ font-style: inherit;">library</span>(qqman)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">manhattan</span>(igrowth.assoc, <span class="at" style="color: #657422;
 background-color: null;
@@ -683,10 +736,10 @@ font-style: inherit;">"P"</span> )</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="do" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## generate PCs using plink</span></span>
-<span id="cb36-2"><span class="cf" style="color: #003B4F;
+<span id="cb38-2"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -699,7 +752,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}output/pca.eigenvec"</span>)))</span>
-<span id="cb36-3"><span class="fu" style="color: #4758AB;
+<span id="cb38-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(glue<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -708,10 +761,10 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/bin/plink --bfile {work.dir}hapmapch22 --pca --out {work.dir}output/pca"</span>))</span>
-<span id="cb36-4"><span class="do" style="color: #5E5E5E;
+<span id="cb38-4"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## read plink calculated PCs</span></span>
-<span id="cb36-5">pcplink <span class="ot" style="color: #003B4F;
+<span id="cb38-5">pcplink <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -726,7 +779,7 @@ background-color: null;
 font-style: inherit;">header=</span>F, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">as.is=</span>T)</span>
-<span id="cb36-6"><span class="fu" style="color: #4758AB;
+<span id="cb38-6"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">names</span>(pcplink) <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -753,7 +806,7 @@ background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>))) )</span>
-<span id="cb36-7">pcplink <span class="ot" style="color: #003B4F;
+<span id="cb38-7">pcplink <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> popinfo <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -790,10 +843,10 @@ background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"IID"</span>))</span>
-<span id="cb36-8"><span class="do" style="color: #5E5E5E;
+<span id="cb38-8"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## plot PC1 vs PC2</span></span>
-<span id="cb36-9">pcplink <span class="sc" style="color: #5E5E5E;
+<span id="cb38-9">pcplink <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -829,11 +882,11 @@ font-style: inherit;">15</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#runnig igrowth GWAS using PCs</span></span>
-<span id="cb37-2"></span>
-<span id="cb37-3"><span class="cf" style="color: #003B4F;
+font-style: inherit;">#running igrowth GWAS using PCs</span></span>
+<span id="cb39-2"></span>
+<span id="cb39-3"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span>(<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -846,7 +899,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"{work.dir}output/igrowth-adjPC.assoc.linear"</span>)))</span>
-<span id="cb37-4"><span class="fu" style="color: #4758AB;
+<span id="cb39-4"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">system</span>(glue<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -855,7 +908,7 @@ background-color: null;
 font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"~/bin/plink --bfile {work.dir}hapmapch22 --linear --pheno {work.dir}igrowth.pheno --pheno-name growth --covar {work.dir}output/pca.eigenvec --covar-number 1-4 --hide-covar --maf 0.05 --out {work.dir}output/igrowth-adjPC"</span>))</span>
-<span id="cb37-5">igrowth.adjusted.assoc <span class="ot" style="color: #003B4F;
+<span id="cb39-5">igrowth.adjusted.assoc <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -870,15 +923,15 @@ background-color: null;
 font-style: inherit;">header=</span>T,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">as.is=</span>T)</span>
-<span id="cb37-6"><span class="do" style="color: #5E5E5E;
+<span id="cb39-6"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">##indadd = igrowth.adjusted.assoc$TEST=="ADD"</span></span>
-<span id="cb37-7">titulo <span class="ot" style="color: #003B4F;
+<span id="cb39-7">titulo <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"igrowh association adjusted for PCs"</span></span>
-<span id="cb37-8"><span class="fu" style="color: #4758AB;
+<span id="cb39-8"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">hist</span>(igrowth.adjusted.assoc<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -890,7 +943,7 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">qqunif</span>(igrowth.adjusted.assoc<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -903,6 +956,7 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 </div>
 
 
+</section>
 
  ]]></description>
   <category>blog</category>

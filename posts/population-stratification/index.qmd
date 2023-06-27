@@ -5,6 +5,16 @@ date: "2023-06-13"
 categories: [blog]
 ---
 
+## Genome-Wide Association Study (GWAS)
+
+GWAS is a genome-wide association study. It observes the differences in genes by a scanning the genomes of a large number of individuals to identify genetic markers, such as single nucleotide polymorphisms (SNPs), that are associated with a specific trait or condition.
+
+The process of conducting a GWAS typically involves comparing the genomes of individuals with a particular trait or disease to those without the trait or disease (known as the reference genome -- a genome widely agreed upon scientists in the field to be the "control" genome in which other genomes are compared). By identifying genetic markers that are more frequently present in the group with the trait or disease, researchers can infer potential associations between specific genetic variants and the trait of interest.These associations between genes and traits includes traits associated with a disease or condition.
+
+However, it is important to note that GWAS findings often identify statistical associations between genetic markers and traits, rather than direct causal relationships. The inability to identify a direct causal relationship between genetic markers and traits in a GWAS is because most genetic variants do not change the coding of proteins (which carry out the cell's functions, which can result in a specific trait).
+
+Further research and functional studies are typically required to validate and understand the biological significance of these associations. However, GWAS is a good first-step in identifying genes highly associated with a trait in order to pursue next steps of causal identification.
+
 ## Exploring GWAS using a smaller genomic dataset.
 
 ```{r}

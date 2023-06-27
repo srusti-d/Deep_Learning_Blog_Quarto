@@ -1,0 +1,30 @@
+---
+title: "Neural Networks: Concepts and Code"
+author: "Srusti Donapati"
+date: "2023-06-23"
+categories: [blog]
+---
+
+### A Brief Conceptual Review of Neural Networks Architecture
+
+**Three main components:** input layer, output layer, hidden layers.
+
+**Input layer:** where the neural network receives data represented as numbers.
+
+**Hidden layers:** layers of the neural network; intermediate processing steps where extract and learn complex patterns and features from the input data.
+
+**Output layer:** where the final prediction or output based on the computations performed by the hidden layers is provided.
+
+**Forward propagation:** the hidden layers transform the input data by applying weights and biases to the inputs and passing them through an activation function.
+
+**Activation function**: introduces non-linearities, allowing the network to capture complex relationships and make more sophisticated predictions.
+
+The number of hidden layers and the number of neurons within each layer are **hyperparameters** that can be adjusted based on the complexity of the problem at hand.
+
+**Backpropagation:** As the network is trained on labeled data, it adjusts the weights and biases, gradually improving its ability to recognize and classify patterns in the input data.
+
+By adding more hidden layers, the neural network can learn increasingly abstract representations of the data. Each hidden layer can capture different levels of abstraction, with earlier layers learning simple features and later layers combining them to learn more complex patterns.
+
+This hierarchical representation enables the neural network to model intricate relationships and make accurate predictions or decisions based on the input provided.
+
+You must install the below packages for coding a neural network:
