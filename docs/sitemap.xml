@@ -2,42 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/post-with-code/index.html</loc>
-    <lastmod>2023-06-13T20:41:13.212Z</lastmod>
+    <lastmod>2023-06-28T15:08:09.533Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index.html</loc>
-    <lastmod>2023-06-13T20:41:24.768Z</lastmod>
+    <lastmod>2023-06-28T15:08:10.223Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/index.html</loc>
-    <lastmod>2023-06-13T20:41:25.240Z</lastmod>
+    <lastmod>2023-06-28T15:08:10.665Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/welcome/index.html</loc>
-    <lastmod>2023-06-13T20:41:25.533Z</lastmod>
+    <lastmod>2023-06-28T15:08:10.953Z</lastmod>
+  </url>
+  <url>
+    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/neural_networks/index.html</loc>
+    <lastmod>2023-06-28T15:08:11.842Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/index.html</loc>
-    <lastmod>2023-06-13T20:41:26.093Z</lastmod>
+    <lastmod>2023-06-28T15:08:12.433Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/index.html</loc>
-    <lastmod>2023-06-13T20:41:26.603Z</lastmod>
+    <lastmod>2023-06-28T15:08:13.039Z</lastmod>
   </url>
   <url>
     <loc>https://srusti.quarto.pub/gpt-in-genomics/about.html</loc>
-    <lastmod>2023-06-13T20:41:26.848Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.srustillmblog.io/posts/population-stratification/index.html</loc>
-    <lastmod>2023-06-25T23:59:07.617Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.srustillmblog.io/index.html</loc>
-    <lastmod>2023-06-26T19:47:12.610Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.srustillmblog.io/posts/neural_networks/index.html</loc>
-    <lastmod>2023-06-26T19:42:09.938Z</lastmod>
+    <lastmod>2023-06-28T15:08:13.312Z</lastmod>
   </url>
 </urlset>

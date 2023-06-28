@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Srusti Donapati">
-<meta name="dcterms.date" content="2023-06-23">
+<meta name="author" content="Srusti">
+<meta name="dcterms.date" content="2023-06-28">
 
-<title>GPT in Genomics - Neural Networks: Concepts and Code</title>
+<title>GPT in Genomics - Neural Networks Code and Explanation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -108,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Neural Networks: Concepts and Code</h1>
+      <h1 class="title">Neural Networks Code and Explanation</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">blog</div>
               </div>
@@ -121,14 +155,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Srusti Donapati </p>
+               <p>Srusti </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 23, 2023</p>
+        <p class="date">June 28, 2023</p>
       </div>
     </div>
     
@@ -146,22 +180,299 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="a-brief-conceptual-review-of-neural-networks-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="a-brief-conceptual-review-of-neural-networks-architecture">A Brief Conceptual Review of Neural Networks Architecture</h3>
-<p><strong>Three main components:</strong> input layer, output layer, hidden layers.</p>
-<p><strong>Input layer:</strong> where the neural network receives data represented as numbers.</p>
-<p><strong>Hidden layers:</strong> layers of the neural network; intermediate processing steps where extract and learn complex patterns and features from the input data.</p>
-<p><strong>Output layer:</strong> where the final prediction or output based on the computations performed by the hidden layers is provided.</p>
-<p><strong>Forward propagation:</strong> the hidden layers transform the input data by applying weights and biases to the inputs and passing them through an activation function.</p>
-<p><strong>Activation function</strong>: introduces non-linearities, allowing the network to capture complex relationships and make more sophisticated predictions.</p>
-<p>The number of hidden layers and the number of neurons within each layer are <strong>hyperparameters</strong> that can be adjusted based on the complexity of the problem at hand.</p>
-<p><strong>Backpropagation:</strong> As the network is trained on labeled data, it adjusts the weights and biases, gradually improving its ability to recognize and classify patterns in the input data.</p>
-<p>By adding more hidden layers, the neural network can learn increasingly abstract representations of the data. Each hidden layer can capture different levels of abstraction, with earlier layers learning simple features and later layers combining them to learn more complex patterns.</p>
-<p>This hierarchical representation enables the neural network to model intricate relationships and make accurate predictions or decisions based on the input provided.</p>
-<p>You must install the below packages for coding a neural network:</p>
+<p>Import the necessary packages. Also import the iris dataset, which we will be using to train the neural network. The iris dataset is a widely-known, relatively small dataset which can be used to train this simple neural network.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch  <span class="co">#torch is an open source ML library used for creating deep neural networks</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader, Dataset</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris <span class="co">#scikit-learn is a data analysis library for machine learning</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder <span class="co">#converts categorical variables into a numerical format that can be used by ML algorithms</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The iris dataset contains categorical variables (attributes are sepal length, sepal width, petal length, petal width), which is why we import OneHotEncoder. OneHotEncoder will allow us to preprocess the data from the iris dataset by converting the categorical attributes to numerical formats so that the neural network can understand it.</p>
+<p>Before getting into the code, here is a conceptual outline of a neural network architecture:</p>
+<p>A neural network has three main components: input layer, hidden layers, output layer.</p>
+<ol type="1">
+<li><p>Input layer: where the neural network receives data represented as numbers.</p></li>
+<li><p>Hidden layers: layers of the neural network; intermediate processing steps where the model extracts and learns complex patterns and features from the input data. Within the hidden layers, an activation function introduces non-linearities, allowing the network to capture complex relationships and make more sophisticated predictions.</p></li>
+</ol>
+<p>Each hidden layer can capture different levels of abstraction, with earlier layers learning simple features and later layers combining them to learn more complex patterns. The number of hidden layers and the number of neurons within each layer can be adjusted based on the complexity of the problem at hand. By adding more hidden layers, the neural network can learn increasingly abstract representations of the data.</p>
+<ol start="3" type="1">
+<li>Output layer: where the final prediction or output based on the computations performed by the hidden layers is provided.</li>
+</ol>
+<p>Many people think of neural networks as this mysterious black box which just predicts information. To more concretely understand what’s going on, here is a more detailed explanation what happens when you put input data through a neural network:</p>
+<p>Input data is put into neural networks, and neural networks are a just a collection of nested functions. These functions are defined by parameters (consisting of weights and biases).</p>
+<p>Think of weights as the knobs that control how much attention the neural network should pay to each feature. For example, for a neural network which classifies the fruit in images of various fruits, if the weight for the color feature is high, it means that the network considers color to be more important in the prediction. Conversely, if the weight is low, the network assigns less importance to that feature. During the training phase of a neural network, these weights are adjusted based on the input data and the desired output.</p>
+<p>Biases provide the neural network with the ability to make predictions even when all the input features are zero or missing. In our fruit example, biases can be thought of as an inherent inclination of the neural network to lean towards predicting one fruit over the other, regardless of the input values. They act as an additional input to each neuron in the network and help in adjusting the output of the neuron.</p>
+<p>The parameters (weights and biases) are stored in tensors. Tensors are PyTorch’s version of arrays and matrices.</p>
+<p>The entire process of running the input data through each of the NN’s functions to make its best guess about the correct output is known as a forward propagation, or forward pass.</p>
+<p>During training, after a forward pass, the NN goes through backward propagation: in backprop, the NN adjusts its parameters proportionate to the error in its guess. This error (known as the “loss”) is the mathematical difference between what the NN predicted and the correct answer (called the “ground truth”). The NN does this by traversing backwards from the output, back into each of the layers, collecting the derivatives of the error with respect to the parameters of the functions (parameters are like settings that control how the NN works).</p>
+<p>Once the network knows how each parameter affects the error with those derivatives (called “gradients”), it can update the parameters in a way that reduces the error. This updating process is called “gradient descent.” It adjusts the parameters step by step, using the information from the gradients, to make the network better at making predictions.</p>
+<p>By repeating this process with many examples and adjusting the parameters based on the gradients, the network gradually improves its performance and becomes better at making accurate predictions.</p>
+<p>Now, to the code!</p>
+<p>The following code defines the neural network:</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#defining neural network</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyNeural(nn.Module):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="bu">input</span>, hidden_layers, output):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.inputLayer <span class="op">=</span> torch.nn.Linear(<span class="bu">input</span>, hidden_layers[<span class="dv">0</span>])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.hlayers <span class="op">=</span> torch.nn.ModuleDict(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            {<span class="ss">f"hL</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>: torch.nn.Linear(hidden_layers[i], hidden_layers[i<span class="op">+</span><span class="dv">1</span>]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(hidden_layers) <span class="op">-</span> <span class="dv">1</span>)}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.outputLayer <span class="op">=</span> torch.nn.Linear(hidden_layers[<span class="op">-</span><span class="dv">1</span>], output)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sig <span class="op">=</span> nn.Sigmoid()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> F.relu(<span class="va">self</span>.inputLayer(x))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> name, layer <span class="kw">in</span> <span class="va">self</span>.hlayers.items():</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> F.relu(layer(x))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.outputLayer(x)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="va">self</span>.sig(x)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Explanation of above code, line by line:</p>
+<ol type="1">
+<li><p>When using PyTorch, which is a machine learning framework based on the Torch library, like we are here, you need to create a sub-class within the nn.Module and implement your neural network architecture within it. The name of our sub-class, our neural network architecture, is MyNeural.</p></li>
+<li><p>Initialize the MyNeural class. The initialization method takes in an input, which is the dimensions of the input layer, dimensions of the hidden layers, and dimensions of the output layer of the neural network. For example, in the iris dataset, the input layer will be 4 because there are 4 attributes: sepal length, sepal width, petal length, petal width (note: do not count the ‘species’ category as one of the attributes because that is what we are trying to predict with this dataset, so it should not be an input).</p></li>
+<li><p>This line calls the initialization method of the parent class (nn.Module). It ensures that the necessary setup is done before defining the architecture of the custom neural network.</p></li>
+<li><p>This line creates the input layer of the neural network using the torch.nn.Linear class. It specifies that the input layer has “input” number of input features and outputs “hidden_layers[0]” number of neurons.</p></li>
+</ol>
+<p>This linear layer performs a linear transformation on the input data (an oversimplified explanation: takes the input data, factors in weights and biases of the network, and turns the data into the values of the neuron within the network). The .Linear method creates fully connected layers, where each neuron is connected to every neuron in the previous layer (see diagram at start of blog).</p>
+<ol start="5" type="1">
+<li><p>This line creates the hidden layers of the neural network using the torch.nn.Linear class. It creates a ModuleDict object named hlayers, which is a dictionary-like structure that holds the hidden layers. It uses a dictionary comprehension to iterate over the range of len(hidden_layers) - 1 and creates a linear layer for each hidden layer. The keys of the dictionary are formatted as hLi, where i is the index of the hidden layer, and the corresponding value is the linear layer itself. Each linear layer specifies the number of input and output features for the corresponding hidden layer.</p></li>
+<li><p>This line creates the output layer of the neural network using the torch.nn.Linear class. It specifies that the output layer has hidden_layers[-1] number of input features (the output size of the last hidden layer) and output number of output features (neurons).</p></li>
+<li><p>Sigmoid is an activation function (here we are defining the output function), which will introduce non-linearity and allow the network to capture complex relationships and make more sophisticated predictions. This line creates an instance of the nn.Sigmoid class and assigns it to the variable self.sig.</p></li>
+<li><p>Declares the forward method of the class, which takes x as the input data. The forward methos is used for a “forward pass,” which is the process of inputting data into the neural network, propagating it forwards, through the hidden layers, and producing an output inference/prediction from the output layer.</p></li>
+<li><p>This line applies the ReLU (Rectified Linear Unit) activation function to the input data x after passing it through the self.inputLayer linear layer. The F.relu function is a shorthand for applying the ReLU activation function element-wise. In specific, reLu is an activation function which takes any number you put into it (from the hidden layers), and if any of those numbers is negative, it turns them into positive, and if they are positive, it retains it. The reason for this is to promote efficiency and reduce the computational load of the network by focusing on relevant features and reducing redundant computations</p></li>
+<li><p>This line starts a loop over the hidden layers of the neural network. It iterates through the self.hlayers dictionary, which holds the hidden layers of the network.</p></li>
+<li><p>Inside the loop, this line applies the ReLU activation function to the intermediate results obtained by passing the data x through each hidden layer (layer). The ReLU activation function introduces non-linearity to the network. The ReLu function needs to be applied after EVERY hidden layer in order to ensure complex patterns are understood by the model, which is why we are iterating through each hidden layer using a for loop.</p></li>
+<li><p>After the loop, this line applies the output layer (self.outputLayer) to the intermediate results (x). The output layer typically performs a linear transformation on the data without applying an activation function.</p></li>
+<li><p>This line applies the sigmoid activation function (self.s) to the output of the neural network (x). The sigmoid function squeezes the output values between 0 and 1, often used for binary classification or probability estimation. There are many types of activation functions, but Sigmoid is used for predicting probabilities in datasets with attributes that are categorical, like the iris dataset (e.g.&nbsp;sepal width, petal length, etc.)</p></li>
+<li><p>This line returns the final output y from the forward method (produces the output after a forward pass).</p></li>
+</ol>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> datasets.load_iris()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> iris.data <span class="co">#assigning data (data represents features)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> iris.target <span class="co">#assigning target (which are class labels)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, we the iris dataset.</p>
+<p>We assign the data part of the Iris dataset to the variable data. iris.data represents the features or input variables. It is a two-dimensional array-like object where each row corresponds to a sample (flower) and each column represents a specific feature (sepal length, sepal width, petal length, petal width). After executing this line, the variable data will hold the feature data from the Iris dataset.</p>
+<p>Next, assign the target part of the Iris dataset. iris.target represents the class labels, which are the species of flower. Labels are like the ground truth or the correct answers that the neural network learns to predict. By providing labels during the training phase, the network learns to associate specific patterns or features in the input data with the corresponding labels. The class labels in the Iris dataset are encoded as integers, where 0 represents setosa, 1 represents versicolor, and 2 represents virginica. After executing this line, the variable target will hold the class label data from the Iris dataset.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trainD, testD, trainT, testT <span class="op">=</span> train_test_split(data, target, test_size<span class="op">=</span><span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">42</span>) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tTrainD <span class="op">=</span> torch.from_numpy(trainD).<span class="bu">float</span>() <span class="co">#training data</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tTrainT <span class="op">=</span> torch.from_numpy(trainT).<span class="bu">long</span>() <span class="co">#training targets</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>tTestD <span class="op">=</span> torch.from_numpy(testD).<span class="bu">float</span>() <span class="co">#testing data</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tTestT <span class="op">=</span> torch.from_numpy(testT).<span class="bu">long</span>() <span class="co">#testing targets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before explaining the above chunk, let’s go through the process of how a neural network is trained and tested.</p>
+<p>After loading the dataset, we split the data into train, test, and validation sections (validation is just another test). So, the training will be done on one subset of the data, but the testing will be done on a different subset of the data (but within the same dataset). Doing this allows the model to use the complex relationships and patterns it identified from the training data to predict on different test data.</p>
+<p>In the first line of code above, we are splitting the dataset into training and test sets (for simplification purposes, we are not splitting it into validation too), and specifying the training and testing targets (species) within the dataset as well. test_size = 0.1 ensures that 10% of the data is allocated for testing. random_state is just some arbitrary parameter that, when set again at the same value, will ensure the same exact random splits in data are used (in case you want to retest the neural network with the same splits of the dataset into test and training groups).</p>
+<p>The next provided code converts the NumPy arrays representing training and testing data and targets that we made in the first line of code into PyTorch tensors. Tensors are PyTorch’s version of arrays and matrices.</p>
+<p>This conversion allows for seamless integration with PyTorch and enables further processing, manipulation, and training of neural networks using the converted tensors. The .float() and .long() methods are used to ensure the appropriate data types for the tensors based on the nature of the data (float for input features (numerical data like sepal and petal length) and long for labels or targets (flower species label)).</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating custom dataset object</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> myDataset():</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, x, y): <span class="co">#initialize by putting in the dataset, which is 1 million by 4 attributes for iris </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.x <span class="op">=</span> x</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>): <span class="co">#pytorch will look at the length (the number of rows) in dataset</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        length_ml <span class="op">=</span> <span class="va">self</span>.x.shape[<span class="dv">0</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>(length_ml)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx): <span class="co"># says how to I source one training item and return it back to you, and the next time you call this function,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">#it is going to select a different training item (keeping the training items it already used in its memory)</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.x[idx, :], <span class="va">self</span>.y[idx])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first four lines in the above code define a custom dataset class myDataset in PyTorch. The class encapsulates the input features (self.x) and labels (self.y) of the iris dataset into a single object, which helps organize and manage your data in a structured manner, making it easier to work with and reducing the risk of errors or data inconsistencies.</p>
+<p>The next 3 lines of code (def <strong>len</strong>(self) …) provide methods to determine the length of the dataset. These methods are called by PyTorch to determine the length of the dataset, i.e., the number of samples in the dataset.</p>
+<p>The last two lines of code (def <strong>getitem</strong>(self, idx) …) retrieve individual samples by index. The <strong>getitem</strong> method allows you to define how individual samples are accessed from the dataset. This customization is valuable when you need to implement specific data preprocessing or transformations before feeding the data into the neural network.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>trainDataset <span class="op">=</span> myDataset(tTrainD, tTrainT)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>trainDataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>&lt;__main__.myDataset at 0x12edbcd10&gt;</code></pre>
+</div>
+</div>
+<p>By passing tTrainD (training data) and tTrainT (training targets) as arguments, you are initializing the trainDataset object with the corresponding data and targets in preparation for training.</p>
+<p>Explanation of the process of training neural networks:</p>
+<p>When training a neural network, the process of splitting the data into batches is an essential step that enables efficient training. Instead of processing the entire dataset at once, the data is divided into smaller subsets called batches. Each batch contains a fixed number of samples, and the network is updated based on the gradients computed from the predictions and the corresponding targets within the batch.</p>
+<p>The process of training a neural network with batching typically involves the following steps:</p>
+<p>Data Loading: The training dataset is loaded, either as a whole or through a data loader object, which provides access to the data in batches. The data loader takes care of shuffling, batching, and any necessary preprocessing.</p>
+<p>Mini-batch Iteration: The training data is divided into mini-batches, each containing a predefined number of samples (specified by the batch size). The network will process one mini-batch at a time.</p>
+<p>Forward Pass: For each mini-batch, the input data is fed forward through the network. The network computes predictions for the samples in the mini-batch.</p>
+<p>Loss Computation: The predictions from the forward pass are compared to the corresponding target values (labels) for the samples in the mini-batch. This comparison generates a loss value, which quantifies the error between the predicted outputs and the true targets.</p>
+<p>Backward Pass and Parameter Update: The loss is used to compute gradients with respect to the network parameters. The gradients indicate the direction and magnitude of the updates required to minimize the loss. The gradients are backpropagated through the network using the chain rule of derivatives. The network’s parameters are then updated using an optimization algorithm (e.g., gradient descent or its variants) based on these gradients.</p>
+<p>Iteration: Steps 3 to 5 are repeated for each mini-batch in the training data. This process is typically performed for multiple epochs, where an epoch refers to one complete pass through the entire training dataset. The network updates its parameters after each mini-batch, gradually improving its performance over the epochs.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>train_loader <span class="op">=</span> DataLoader(trainDataset, batch_size<span class="op">=</span><span class="dv">8</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>train_loader</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>&lt;torch.utils.data.dataloader.DataLoader at 0x14c9dbe90&gt;</code></pre>
+</div>
+</div>
+<p>trainDataset: This is the dataset object that you want to load using the data loader. It should be an instance of a PyTorch dataset class. We already defined trainDataset st chunk of code using the myDataset custom object we created.</p>
+<p>batch_size: Specifies the number of samples to load in each batch. In this case, each batch will contain 8 samples.</p>
+<p>shuffle: If set to True, the data loader will shuffle the samples before each epoch (a complete iteration over the dataset). Shuffling the data helps in randomizing the order of the samples and can improve the model’s training performance.</p>
+<p>Essentially, the training examples are split into groups called “batches”. This allows the dataset to be “loaded” into the network, or processed, in more manageable, smaller chunks. Those batches then produce some output values, get backpropagated, and each and every batch individually goes through the NN in each epoch. An epoch is one pass through your entire training data. So if there are 30 epochs, you are training 30 times.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#naming the neural network and setting dimensions of layers</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>myNN <span class="op">=</span> MyNeural(<span class="dv">4</span>, [<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">6</span>], <span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>myNN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre><code>MyNeural(
+  (inputLayer): Linear(in_features=4, out_features=5, bias=True)
+  (hlayers): ModuleDict(
+    (hL0): Linear(in_features=5, out_features=6, bias=True)
+    (hL1): Linear(in_features=6, out_features=7, bias=True)
+    (hL2): Linear(in_features=7, out_features=6, bias=True)
+  )
+  (outputLayer): Linear(in_features=6, out_features=4, bias=True)
+  (sig): Sigmoid()
+)</code></pre>
+</div>
+</div>
+<p>In the above code, for the neural network model ‘MyNeural’ which we defined earlier:</p>
+<p>We set 4 input features (4 because of the number attributes of the iris dataset: sepal width, sepal length, petal width, and petal length). The 4 input features produce 5 features (aka 5 neurons) in the first hidden layer, 6 neurons in the second hidden layer, 7 in the third, 6 in the fourth, and finally output 4 features as a prediction. So, the values in the list [5, 6, 7, 6] assign the number of neurons in each hidden layer, and the length of the list corresponds to the number of hidden layers. Here, there are 4 hidden layers. These dimensions for MyNeural are all assigned to myNN – which becomes the name of the specific neural network.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> torch.optim.SGD(myNN.parameters(), lr <span class="op">=</span> <span class="fl">0.01</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lossfunction <span class="op">=</span> nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Based on the gradients computed by backpropagation, an optimizer is an algorithm or method used to adjust the parameters of the model during the training process in order to minimize the loss (to produce a more accurate prediction). In the above code, we are initializing an optimizer object (opt) of type Stochastic Gradient Descent (SGD). It takes two arguments:</p>
+<p>myNN.parameters(): This specifies the parameters of your neural network model (myNN) that will be optimized during training. The optimizer will update these parameters based on the computed gradients. lr=0.01: This sets the learning rate for the optimizer. The learning rate determines the step size taken during optimization, influencing how quickly the model learns and converges.</p>
+<p>Even though we used the SGD optimizer here, there other examples of optimizers including Adam, RMSprop, Adagrad, etc., all of which have their own strengths and weaknesses.</p>
+<p>The loss function calculates the discrepancy between the predicted outputs and the ground truth labels, providing a measure of the model’s performance during training. The CrossEntropyLoss() function from torch.nn is commonly used for multi-class classification tasks, like the classification of species that we are doing with the iris dataset.</p>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#training loop for an NN model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>num_epochs <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>train_loss <span class="op">=</span> []</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>test_loss <span class="op">=</span> []</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    myNN.train()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    running_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    dt_size <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, (batchX, batchY) <span class="kw">in</span> <span class="bu">enumerate</span>(train_loader): </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#batchY represents target (actual) labels corresponding to input data batch (batchX)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        opt.zero_grad()</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> myNN(batchX)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> lossfunction(output, batchY)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        opt.step()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        running_loss <span class="op">+=</span> loss.item() <span class="op">*</span> batchX.size(<span class="dv">0</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        dt_size <span class="op">+=</span> batchX.size(<span class="dv">0</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    train_loss.append(running_loss <span class="op">/</span> dt_size)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    myNN.<span class="bu">eval</span>()</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> myNN(tTestD) <span class="co">#forward pass on testing data subset</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> lossfunction(p, tTestT) <span class="co">#loss calculation</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        test_loss.append(l.item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The above code essentially iterates over the training data, performs forward and backward passes, updates the model parameters, and calculates and stores the training and testing loss for each epoch.</p>
+<p>An explanation of the code, line by line:</p>
+<ul>
+<li><p><code>num_epochs = 1000</code>: This variable indicates the number of training epochs, specifying how many times the entire dataset will be iterated (repeatedly ran through the NN) during training.</p></li>
+<li><p><code>train_loss</code> and <code>test_loss</code> are empty lists that will store the training and testing loss values for each epoch, respectively, within the for loop later.</p></li>
+<li><p>The loop <code>for epoch in range(num_epochs):</code> iterates over the specified number of epochs.</p></li>
+<li><p><code>myNN.train()</code> sets the neural network model (<code>myNN</code>) in training mode.</p></li>
+<li><p><code>running_loss</code> and <code>dt_size</code> variables are initialized to track the cumulative loss and the total size of the training dataset.</p></li>
+<li><p>The inner loop <code>for i, (batchX, batchY) in enumerate(train_loader):</code> iterates over the batches of data from the training data loader (<code>train_loader</code>). The enumerate(train_loader) part adds an index counter (i) to each batch returned by the train_loader. This means that as you iterate over the batches in the train_loader, you also have access to the index or position of the current batch. The index counter (i) starts from 0 and increments by 1 for each batch in the train_loader. It allows you to keep track of the progress and index of the current batch within the training loop.</p></li>
+<li><p><code>opt.zero_grad()</code> clears the gradients of the optimizer before calculating the new gradients after every batch. This is VERY important to include because during backpropagation, gradients are calculated and stored for each parameter of the model. If the gradients are not cleared, they would accumulate from one iteration to the next. This would result in incorrect gradient values and lead to incorrect updates of the model parameters. Many people forget it!</p></li>
+<li><p><code>output = myNN(batchX)</code> computes the forward pass of the neural network model on the current batch of inputs (<code>batchX</code>).</p></li>
+<li><p><code>loss = lossfunction(output, batchY)</code> calculates the loss between the predicted outputs and the actual labels (<code>batchY</code>) using the specified loss function (<code>lossfunction</code>).</p></li>
+<li><p><code>loss.backward()</code> performs backpropagation, computing the gradients of the model’s parameters with respect to the loss.</p></li>
+<li><p><code>opt.step()</code> updates the model’s parameters by taking an optimization step using the optimizer (<code>opt</code>).</p></li>
+<li><p><code>running_loss += loss.item() * batchX.size(0)</code> and <code>dt_size += batchX.size(0)</code> accumulate the loss and the size of the current batch for later calculation of the average loss.</p></li>
+<li><p><code>train_loss.append(running_loss / dt_size)</code> calculates and stores the average training loss for the current epoch.</p></li>
+<li><p><code>myNN.eval()</code> switches the model to evaluation mode. During the training phase of a neural network, the model undergoes iterations to learn from the training data and update its parameters. However, when it comes to evaluating the model’s performance on a validation or test set, it is important to ensure that the model behaves differently compared to the training phase. This is where the evaluation mode comes into play.</p></li>
+<li><p><code>with torch.no_grad():</code> ensures that no gradients are computed during the following evaluation phase.</p></li>
+<li><p><code>p = myNN(tTestD)</code> performs the forward pass of the model on the testing dataset (<code>tTestD</code>) to obtain the predicted outputs.</p></li>
+<li><p><code>l = lossfunction(p, tTestT)</code> calculates the loss between the predicted outputs and the testing labels (<code>tTestT</code>).</p></li>
+<li><p><code>test_loss.append(l.item())</code> stores the testing loss for the current epoch.</p></li>
+</ul>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plotting loss with training and testing the NN</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.plot(train_loss, label<span class="op">=</span><span class="st">'train loss'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.plot(test_loss, label <span class="op">=</span> <span class="st">'test loss'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Epochs"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Loss"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Testing and Training Loss for NN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>Text(0.5, 1.0, 'Testing and Training Loss for NN')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#testing NN</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing:"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>opt.zero_grad()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> myNN(tTestD)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tTestD.shape)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> lossfunction(output, tTestT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Testing:
+torch.Size([15, 4])</code></pre>
+</div>
+</div>
+<p>Overall, the code snippet performs a forward pass of the neural network model on the testing data, prints the shape of the testing data, and calculates the loss between the predicted outputs and the target labels. This can be useful for evaluating the performance of the model on the testing data after training.</p>
+<p>Printing the shape of the testing data is crucial as it allows for data verification, debugging, and input size considerations. It helps ensure that the testing data matches the expected input shape for the neural network model. Additionally, it provides insights into the number of samples and dimensions, which is vital for designing and configuring the model. Checking the data shape ensures that preprocessing steps have been correctly applied.</p>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#analyzing and printing results for one epoch</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> output:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row.<span class="bu">max</span>() <span class="op">==</span> row[<span class="dv">0</span>]:</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        predictions.append(<span class="dv">0</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row.<span class="bu">max</span>() <span class="op">==</span> row[<span class="dv">1</span>]:</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        predictions.append(<span class="dv">1</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        predictions.append(<span class="dv">2</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>tPreds <span class="op">=</span> torch.tensor(predictions).view(<span class="dv">15</span>,<span class="dv">1</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>tTargets <span class="op">=</span> tTestT.view(<span class="dv">15</span>,<span class="dv">1</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> torch.cat([tPreds,tTargets], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>correct <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> result:</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="dv">0</span>] <span class="op">==</span> row[<span class="dv">1</span>]:</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        correct <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(correct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[1, 1],
+        [0, 0],
+        [1, 2],
+        [1, 1],
+        [1, 1],
+        [0, 0],
+        [1, 1],
+        [1, 2],
+        [1, 1],
+        [1, 1],
+        [1, 2],
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0]])
+12</code></pre>
+</div>
+</div>
+<p>The above code snippet is not necessary but can be helpful to understand the accuracy of the model’s prediction. The code snippet calculates the predicted labels based on the output tensor, compares them with the target labels, and prints the resulting tensor as well as the number of correct predictions.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
