@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "Large Language Models in Molecular Biology",
     "section": "",
-    "text": "Neural Networks Code and Explanation\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 28, 2023\n\n\nSrusti\n\n\n\n\n\n\n  \n\n\n\n\nGWAS Code\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nPracticing Working with Terminal\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 8, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nThe Biology to be Explored in LLMs\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nBasics of LLMs and Their Role in the Field of Biology\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My ‘LLM in Biology’ Blog!\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\nNo matching items"
+    "text": ":::{#quarto-listing-pipeline .hidden} \\(e = mC^2\\)\n:::{.hidden render-id=“pipeline-listing-listing”}\n:::{.list .quarto-listing-default}\n\n\n  \n\n\n\n\n\nTrain and Logistic Predictor\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\nHow to Extract a DNA Sequence Centered at a Specific Locus\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJul 10, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nNeural Networks Code and Explanation\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 28, 2023\n\n\nSrusti\n\n\n\n\n\n\n  \n\n\n\n\nGWAS Code\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 13, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nPracticing Working with Terminal\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 8, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nThe Biology to be Explored in LLMs\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nBasics of LLMs and Their Role in the Field of Biology\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My ‘LLM in Biology’ Blog!\n\n\n\n\n\n\n\nblog\n\n\n\n\n\n\n\n\n\n\n\nJun 6, 2023\n\n\nSrusti Donapati\n\n\n\n\n:::\n\n\nNo matching items\n\n:::\n:::"
   },
   {
     "objectID": "about.html",
@@ -68,5 +68,12 @@
     "title": "About",
     "section": "",
     "text": "This blog is essentially a project of progress reports on biological knowledge and computational skills that I have acquired over my 8 weeks in the Im Lab during Summer 2023 for the GPT in Genomics Project."
+  },
+  {
+    "objectID": "posts/test_post/index.html",
+    "href": "posts/test_post/index.html",
+    "title": "test post",
+    "section": "",
+    "text": "#code"
   }
 ]

@@ -1,0 +1,65 @@
+---
+title: "How to Extract a DNA Sequence Centered at a Specific Locus"
+author: "Srusti Donapati"
+date: "2023-07-10"
+categories: [blog]
+image: "https://www.genome.gov/sites/default/files/tg/en/illustration/acgt.jpg"
+---
+
+Using a DNA sequence, researchers often want to predict something (e.g. gene expression, TF binding, histone modification, etc) at a specific locus ("location" on the genome) relevant to a particular trait or phenotype. For example, my project will be examining histone modifications at the 17q locus, which is the most significant locus for asthma (the part of the genome which is most influential, genetically, on the asthma condition). To accomplish this, it is important to know how extract from a full DNA sequence (which is 3 billion nucleotides long) the relevant locus.
+
+You can use the following function to extract a DNA sequence at a specific locus center:
+
+```{python}
+class FastaStringExtractor:
+    def __init__(self, fasta_file):
+        import pyfaidx
+        self.fasta = pyfaidx.Fasta(fasta_file)
+        self._chromosome_sizes = {k: len(v) for k, v in self.fasta.items()}
+    def extract(self, interval, **kwargs) -> str:
+        # Truncate interval if it extends beyond the chromosome lengths.
+        import kipoiseq
+        chromosome_length = self._chromosome_sizes[interval.chrom]
+        trimmed_interval = kipoiseq.Interval(interval.chrom,
+                                    max(interval.start, 0),
+                                    min(interval.end, chromosome_length),
+                                    )
+        # pyfaidx wants a 1-based interval
+        sequence = str(self.fasta.get_seq(trimmed_interval.chrom,
+                                            trimmed_interval.start + 1,
+                                            trimmed_interval.stop).seq).upper()
+        # Fill truncated values with N's.
+        pad_upstream = 'N' * max(-interval.start, 0)
+        pad_downstream = 'N' * max(interval.end - chromosome_length, 0)
+        return pad_upstream + sequence + pad_downstream
+    def close(self):
+        return self.fasta.close()
+```
+
+\*\*credits to Saideep Gona.
+
+You will need the pyfaidx and kipoiseq packages to use this function:
+
+```{python}
+pip install pyfaidx kipoiseq==0.5.2
+```
+
+To use this function (after you have defined it), first create an instance of the FastaStringExtractor object, providing a fasta file you want to use. This fasta file is going to contain the full DNA sequence which you want to extract from:
+
+```{python}
+fasta_extractor_object = FastaStringExtractor(fasta_file)
+```
+
+Then, create an interval you want to extract the sequence from using kipoiseq (".resize" will resize the interval you provide to a length provided by "sequence_length". The new interval will be centered on the "start","end" you provided originally):
+
+```{python}
+target_interval = kipoiseq.Interval(chrom,start,end).resize(sequence_length)
+```
+
+Finally, extract the sequence using the extractor object like this:
+
+```{python}
+extracted_sequence = fasta_extractor_object.extract(target_interval)
+```
+
+That's it!

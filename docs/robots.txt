@@ -1,1 +1,1 @@
-Sitemap: https://srusti.quarto.pub/gpt-in-genomics/sitemap.xml
+Sitemap: https://www.srustillmblog.io/sitemap.xml
