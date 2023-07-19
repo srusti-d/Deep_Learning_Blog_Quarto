@@ -6,15 +6,1171 @@
       version="2.0">
 <channel>
 <title>GPT in Genomics</title>
-<link>https://srusti.quarto.pub/gpt-in-genomics/index.html</link>
-<atom:link href="https://srusti.quarto.pub/gpt-in-genomics/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://www.srustillmblog.io/index.html</link>
+<atom:link href="https://www.srustillmblog.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A Blog Navigating my LLM Project</description>
 <generator>quarto-1.3.361</generator>
-<lastBuildDate>Wed, 28 Jun 2023 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 10 Jul 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Linear Regression &amp; Data Analysis Basics</title>
+  <dc:creator>Srusti Donapati</dc:creator>
+  <link>https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Resources for basic data analysis using python, and conducting a linear regression. Will be using a diabetes dataset.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># library used for working with arrays</span></span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># library used for data manipulation and analysis</span></span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># library for visualization</span></span>
+<span id="cb1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># library for visualization</span></span>
+<span id="cb1-6"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>matplotlib inline</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># to suppress warnings</span></span>
+<span id="cb1-10"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> warnings</span>
+<span id="cb1-11">warnings.filterwarnings(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ignore'</span>)</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#read csv dataset</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3">pima <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"diabetes.csv"</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># load and reads the csv file</span></span>
+<span id="cb2-4">pima</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Pregnancies</th>
+<th data-quarto-table-cell-role="th">Glucose</th>
+<th data-quarto-table-cell-role="th">BloodPressure</th>
+<th data-quarto-table-cell-role="th">SkinThickness</th>
+<th data-quarto-table-cell-role="th">Insulin</th>
+<th data-quarto-table-cell-role="th">BMI</th>
+<th data-quarto-table-cell-role="th">DiabetesPedigreeFunction</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>6</td>
+<td>148</td>
+<td>72</td>
+<td>35</td>
+<td>0</td>
+<td>33.6</td>
+<td>0.627</td>
+<td>50</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>85</td>
+<td>66</td>
+<td>29</td>
+<td>0</td>
+<td>26.6</td>
+<td>0.351</td>
+<td>31</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>8</td>
+<td>183</td>
+<td>64</td>
+<td>0</td>
+<td>0</td>
+<td>23.3</td>
+<td>0.672</td>
+<td>32</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>89</td>
+<td>66</td>
+<td>23</td>
+<td>94</td>
+<td>28.1</td>
+<td>0.167</td>
+<td>21</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>137</td>
+<td>40</td>
+<td>35</td>
+<td>168</td>
+<td>43.1</td>
+<td>2.288</td>
+<td>33</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">763</td>
+<td>10</td>
+<td>101</td>
+<td>76</td>
+<td>48</td>
+<td>180</td>
+<td>32.9</td>
+<td>0.171</td>
+<td>63</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">764</td>
+<td>2</td>
+<td>122</td>
+<td>70</td>
+<td>27</td>
+<td>0</td>
+<td>36.8</td>
+<td>0.340</td>
+<td>27</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">765</td>
+<td>5</td>
+<td>121</td>
+<td>72</td>
+<td>23</td>
+<td>112</td>
+<td>26.2</td>
+<td>0.245</td>
+<td>30</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">766</td>
+<td>1</td>
+<td>126</td>
+<td>60</td>
+<td>0</td>
+<td>0</td>
+<td>30.1</td>
+<td>0.349</td>
+<td>47</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">767</td>
+<td>1</td>
+<td>93</td>
+<td>70</td>
+<td>31</td>
+<td>0</td>
+<td>30.4</td>
+<td>0.315</td>
+<td>23</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>768 rows × 9 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># finds the number of columns in the dataset</span></span>
+<span id="cb3-2">total_cols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(pima.axes[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Columns: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(total_cols))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of Columns: 9</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#first 10 rows</span></span>
+<span id="cb5-2">pima.head(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Pregnancies</th>
+<th data-quarto-table-cell-role="th">Glucose</th>
+<th data-quarto-table-cell-role="th">BloodPressure</th>
+<th data-quarto-table-cell-role="th">SkinThickness</th>
+<th data-quarto-table-cell-role="th">Insulin</th>
+<th data-quarto-table-cell-role="th">BMI</th>
+<th data-quarto-table-cell-role="th">DiabetesPedigreeFunction</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>6</td>
+<td>148</td>
+<td>72</td>
+<td>35</td>
+<td>0</td>
+<td>33.6</td>
+<td>0.627</td>
+<td>50</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>85</td>
+<td>66</td>
+<td>29</td>
+<td>0</td>
+<td>26.6</td>
+<td>0.351</td>
+<td>31</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>8</td>
+<td>183</td>
+<td>64</td>
+<td>0</td>
+<td>0</td>
+<td>23.3</td>
+<td>0.672</td>
+<td>32</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>89</td>
+<td>66</td>
+<td>23</td>
+<td>94</td>
+<td>28.1</td>
+<td>0.167</td>
+<td>21</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>137</td>
+<td>40</td>
+<td>35</td>
+<td>168</td>
+<td>43.1</td>
+<td>2.288</td>
+<td>33</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>5</td>
+<td>116</td>
+<td>74</td>
+<td>0</td>
+<td>0</td>
+<td>25.6</td>
+<td>0.201</td>
+<td>30</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>3</td>
+<td>78</td>
+<td>50</td>
+<td>32</td>
+<td>88</td>
+<td>31.0</td>
+<td>0.248</td>
+<td>26</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>10</td>
+<td>115</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>35.3</td>
+<td>0.134</td>
+<td>29</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2</td>
+<td>197</td>
+<td>70</td>
+<td>45</td>
+<td>543</td>
+<td>30.5</td>
+<td>0.158</td>
+<td>53</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>8</td>
+<td>125</td>
+<td>96</td>
+<td>0</td>
+<td>0</td>
+<td>0.0</td>
+<td>0.232</td>
+<td>54</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Outcomes here represents whether someone has diabetes (1) or not (0).</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#number of rows in dataset</span></span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># finds the number of rows in the dataset</span></span>
+<span id="cb6-4">total_rows<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(pima.axes[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb6-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Rows: "</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(total_rows))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of Rows: 768</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'The dimension of the DataFrame is: '</span>, pima.ndim)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The dimension of the DataFrame is:  2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#size of the dataset (how many elements)</span></span>
+<span id="cb10-2"></span>
+<span id="cb10-3">pima.size</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>6912</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#The info() function is used to print a concise summary of a DataFrame.</span></span>
+<span id="cb12-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#This method prints information about a DataFrame including the index dtype and column dtypes, non-null values and memory usage.</span></span>
+<span id="cb12-3"></span>
+<span id="cb12-4">pima.info()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 768 entries, 0 to 767
+Data columns (total 9 columns):
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   Pregnancies               768 non-null    int64  
+ 1   Glucose                   768 non-null    int64  
+ 2   BloodPressure             768 non-null    int64  
+ 3   SkinThickness             768 non-null    int64  
+ 4   Insulin                   768 non-null    int64  
+ 5   BMI                       768 non-null    float64
+ 6   DiabetesPedigreeFunction  768 non-null    float64
+ 7   Age                       768 non-null    int64  
+ 8   Outcome                   768 non-null    int64  
+dtypes: float64(2), int64(7)
+memory usage: 54.1 KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#functions that return a boolean value indicating whether the passed in argument value is in fact missing data.</span></span>
+<span id="cb14-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># this is an example of chaining methods</span></span>
+<span id="cb14-3"></span>
+<span id="cb14-4">pima.isnull().values.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">any</span>()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>False</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#it can also output if there is any missing values each of the columns</span></span>
+<span id="cb16-2"></span>
+<span id="cb16-3">pima.isnull().<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">any</span>()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>Pregnancies                 False
+Glucose                     False
+BloodPressure               False
+SkinThickness               False
+Insulin                     False
+BMI                         False
+DiabetesPedigreeFunction    False
+Age                         False
+Outcome                     False
+dtype: bool</code></pre>
+</div>
+</div>
+<p>Now let’s do a summary of the statistics!</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">pima.iloc[:,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>:]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">763</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">764</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">765</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">766</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">767</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>768 rows × 1 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#excludes the outcome column </span></span>
+<span id="cb19-2">pima.iloc[:,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>].describe()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Pregnancies</th>
+<th data-quarto-table-cell-role="th">Glucose</th>
+<th data-quarto-table-cell-role="th">BloodPressure</th>
+<th data-quarto-table-cell-role="th">SkinThickness</th>
+<th data-quarto-table-cell-role="th">Insulin</th>
+<th data-quarto-table-cell-role="th">BMI</th>
+<th data-quarto-table-cell-role="th">DiabetesPedigreeFunction</th>
+<th data-quarto-table-cell-role="th">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+<td>768.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>3.845052</td>
+<td>120.894531</td>
+<td>69.105469</td>
+<td>20.536458</td>
+<td>79.799479</td>
+<td>31.992578</td>
+<td>0.471876</td>
+<td>33.240885</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>3.369578</td>
+<td>31.972618</td>
+<td>19.355807</td>
+<td>15.952218</td>
+<td>115.244002</td>
+<td>7.884160</td>
+<td>0.331329</td>
+<td>11.760232</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.078000</td>
+<td>21.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>1.000000</td>
+<td>99.000000</td>
+<td>62.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>27.300000</td>
+<td>0.243750</td>
+<td>24.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>3.000000</td>
+<td>117.000000</td>
+<td>72.000000</td>
+<td>23.000000</td>
+<td>30.500000</td>
+<td>32.000000</td>
+<td>0.372500</td>
+<td>29.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>6.000000</td>
+<td>140.250000</td>
+<td>80.000000</td>
+<td>32.000000</td>
+<td>127.250000</td>
+<td>36.600000</td>
+<td>0.626250</td>
+<td>41.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>17.000000</td>
+<td>199.000000</td>
+<td>122.000000</td>
+<td>99.000000</td>
+<td>846.000000</td>
+<td>67.100000</td>
+<td>2.420000</td>
+<td>81.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Slay &lt;3</p>
+<p>From the results we can make out a few insights: The pregnancy numbers appear to be normally distributed whereas the others seem to be rightly skewed. (The mean and std deviation of pregnancies are more or less the same as opposed to the others). Highest glucose levels is 199, pregnancies 17 and BMI 67.</p>
+<p>Now to the fun part.</p>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization"><strong>Data Visualization</strong></h2>
+<p>Plotting a distribution plot for variable ‘Blood Pressure’.</p>
+<p>displot() function which is used to visualize a distribution of the univariate variable. This function uses matplotlib to plot a histogram and fit a kernel density estimate (KDE).</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">sns.displot(pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BloodPressure'</span>], kind<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'kde'</span>) </span>
+<span id="cb20-2">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>What is the BMI of the person having the highest glucose?</strong></p>
+<p>Max() method finds the highest value.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">pima[pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span>pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>()][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BMI'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>661    42.9
+Name: BMI, dtype: float64</code></pre>
+</div>
+</div>
+<p>The person with the highest glucose value (661) has a bmi of 42.9</p>
+<p><strong>Finding Measures of Central Tendency (the mean,median, and mode) </strong></p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mean </span></span>
+<span id="cb23-2">m1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BMI'</span>].mean() </span>
+<span id="cb23-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(m1) </span>
+<span id="cb23-4"></span>
+<span id="cb23-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># median </span></span>
+<span id="cb23-6">m2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BMI'</span>].median() </span>
+<span id="cb23-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(m2)</span>
+<span id="cb23-8"></span>
+<span id="cb23-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mode  </span></span>
+<span id="cb23-10">m3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BMI'</span>].mode()[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] </span>
+<span id="cb23-11"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(m3)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>31.992578124999998
+32.0
+32.0</code></pre>
+</div>
+</div>
+<p>Studying the correlation between glucose and insulin using a Scatter Plot.</p>
+<p>A scatter plot is a set of points plotted on horizontal and vertical axes. The scatter plot can be used to study the correlation between the two variables. One can also detect the extreme data points using a scatter plot.</p>
+<div class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1">sns.scatterplot(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>,y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BloodPressure'</span>,data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pima)</span>
+<span id="cb25-2">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Now, to do a linear regression.</p>
+<p>Linear regression is a statistical technique used to model the relationship between a dependent variable and one or more independent variables. It assumes a linear relationship between the variables, meaning that the change in the dependent variable is directly proportional to the change in the independent variable(s). The goal of linear regression is to find the best-fit line that minimizes the distance between the observed data points and the predicted values on the line. This line can then be used to make predictions or understand the impact of the independent variable(s) on the dependent variable.</p>
+<p>Thus, linear regressions can only be done with numerical variables (for example, glucose levels or skin thickness).</p>
+<div class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> statsmodels.api <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sm</span></code></pre></div>
+</div>
+<p>Here, we conduct a linear regression using glucose levels as the independent variable (x) and insulin as the dependent variable (y).</p>
+<div class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"></span>
+<span id="cb27-2">X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>]</span>
+<span id="cb27-3">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pima[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BloodPressure'</span>]</span>
+<span id="cb27-4"></span>
+<span id="cb27-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Add a constant column for the intercept term</span></span>
+<span id="cb27-6">X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sm.add_constant(X)</span>
+<span id="cb27-7"></span>
+<span id="cb27-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create and fit the linear regression model</span></span>
+<span id="cb27-9">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sm.OLS(y, X)</span>
+<span id="cb27-10">results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit()</span>
+<span id="cb27-11"></span>
+<span id="cb27-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Print the summary of the regression results</span></span>
+<span id="cb27-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(results.summary())</span>
+<span id="cb27-14"></span>
+<span id="cb27-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Make predictions</span></span>
+<span id="cb27-16">y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> results.predict(X)</span>
+<span id="cb27-17"></span>
+<span id="cb27-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Access the coefficients</span></span>
+<span id="cb27-19"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Coefficients: "</span>, results.params)</span>
+<span id="cb27-20"></span>
+<span id="cb27-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the data points and the line of best fit</span></span>
+<span id="cb27-22">plt.scatter(X[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>], y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'blue'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Data Points'</span>)</span>
+<span id="cb27-23">plt.plot(X[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>], y_pred, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Line of Best Fit'</span>)</span>
+<span id="cb27-24">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Glucose'</span>)</span>
+<span id="cb27-25">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Blood Pressure'</span>)</span>
+<span id="cb27-26">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Linear Regression'</span>)</span>
+<span id="cb27-27">plt.legend()</span>
+<span id="cb27-28">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          BloodPressure   R-squared:                       0.023
+Model:                            OLS   Adj. R-squared:                  0.022
+Method:                 Least Squares   F-statistic:                     18.26
+Date:                Mon, 03 Jul 2023   Prob (F-statistic):           2.17e-05
+Time:                        16:05:01   Log-Likelihood:                -3355.8
+No. Observations:                 768   AIC:                             6716.
+Df Residuals:                     766   BIC:                             6725.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         57.9377      2.703     21.433      0.000      52.631      63.244
+Glucose        0.0924      0.022      4.273      0.000       0.050       0.135
+==============================================================================
+Omnibus:                      318.039   Durbin-Watson:                   1.961
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1397.465
+Skew:                          -1.903   Prob(JB):                    3.50e-304
+Kurtosis:                       8.403   Cond. No.                         489.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Coefficients:  const      57.937746
+Glucose     0.092376
+dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis_files/figure-html/cell-19-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="what-about-a-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="what-about-a-logistic-regression">What about a logistic regression?</h2>
+<p>Use a logistic regression when exploring For the diabetes dataset, you would use logistic regression because the values are binary (they are not just 0 and 1). More to come on this in a future blog post!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>blog</category>
+  <guid>https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis.html</guid>
+  <pubDate>Mon, 10 Jul 2023 05:00:00 GMT</pubDate>
+  <media:content url="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F62413fa0-3d80-411c-af93-ebd0f096a26a_1042x644.png" medium="image" type="image/png"/>
+</item>
+<item>
+  <title>How to Extract a DNA Sequence Centered at a Specific Locus</title>
+  <dc:creator>Srusti Donapati</dc:creator>
+  <link>https://www.srustillmblog.io/posts/DNA-locus-extraction/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Using a DNA sequence, researchers often want to predict something (e.g.&nbsp;gene expression, TF binding, histone modification, etc) at a specific locus (“location” on the genome) relevant to a particular trait or phenotype. For example, my project will be examining histone modifications at the 17q locus, which is the most significant locus for asthma (the part of the genome which is most influential, genetically, on the asthma condition). To accomplish this, it is important to know how extract from a full DNA sequence (which is 3 billion nucleotides long) the relevant locus.</p>
+<p>You can use the following function to extract a DNA sequence at a specific locus center (in Python):</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> FastaStringExtractor:</span>
+<span id="cb1-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, fasta_file):</span>
+<span id="cb1-3">        <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pyfaidx</span>
+<span id="cb1-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.fasta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pyfaidx.Fasta(fasta_file)</span>
+<span id="cb1-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._chromosome_sizes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {k: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(v) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> k, v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.fasta.items()}</span>
+<span id="cb1-6">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> extract(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, interval, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>:</span>
+<span id="cb1-7">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Truncate interval if it extends beyond the chromosome lengths.</span></span>
+<span id="cb1-8">        <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> kipoiseq</span>
+<span id="cb1-9">        chromosome_length <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>._chromosome_sizes[interval.chrom]</span>
+<span id="cb1-10">        trimmed_interval <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> kipoiseq.Interval(interval.chrom,</span>
+<span id="cb1-11">                                    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(interval.start, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>),</span>
+<span id="cb1-12">                                    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(interval.end, chromosome_length),</span>
+<span id="cb1-13">                                    )</span>
+<span id="cb1-14">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># pyfaidx wants a 1-based interval</span></span>
+<span id="cb1-15">        sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.fasta.get_seq(trimmed_interval.chrom,</span>
+<span id="cb1-16">                                            trimmed_interval.start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb1-17">                                            trimmed_interval.stop).seq).upper()</span>
+<span id="cb1-18">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Fill truncated values with N's.</span></span>
+<span id="cb1-19">        pad_upstream <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'N'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>interval.start, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-20">        pad_downstream <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'N'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(interval.end <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> chromosome_length, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-21">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> pad_upstream <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pad_downstream</span>
+<span id="cb1-22">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> close(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb1-23">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.fasta.close()</span></code></pre></div>
+</div>
+<p>Credits for the function: Saideep Gona @ Im Lab at UChicago</p>
+<p>You will need the pyfaidx and kipoiseq packages to use the function:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>pip install pyfaidx </span>
+<span id="cb2-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>pip install kipoiseq<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5.2</span></span></code></pre></div>
+</div>
+<p>To use this function (after you have defined it), first create an instance of the FastaStringExtractor object, providing a fasta file you want to use. This fasta file is going to contain the full DNA sequence which you want to extract from:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">fasta_extractor_object <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> FastaStringExtractor(fasta_file)</span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#you should have defined the path of your fasta file and assigned it to some variable before this</span></span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'fasta_file' is not defined</code></pre>
+</div>
+</div>
+<p>Then, create an interval you want to extract the sequence from using kipoiseq (“.resize” will resize the interval you provide to a length provided by “sequence_length”. The new interval will be centered on the “start”,“end” you provided originally):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">target_interval <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> kipoiseq.Interval(chrom,start,end).resize(sequence_length)</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'kipoiseq' is not defined</code></pre>
+</div>
+</div>
+<p>Then, create an interval you want to extract the sequence from using kipoiseq (“.resize” will resize the interval you provide to a length provided by “sequence_length”. The new interval will be centered on the “start”,“end” you provided originally):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">target_interval <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> kipoiseq.Interval(chrom,start,end).resize(sequence_length)</span></code></pre></div>
+</div>
+<p>Finally, extract the sequence using the extractor object like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">extracted_sequence <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> fasta_extractor_object.extract(target_interval)</span></code></pre></div>
+</div>
+<p>That’s it!</p>
+
+
+
+ ]]></description>
+  <category>blog</category>
+  <guid>https://www.srustillmblog.io/posts/DNA-locus-extraction/index.html</guid>
+  <pubDate>Mon, 10 Jul 2023 05:00:00 GMT</pubDate>
+  <media:content url="https://www.genome.gov/sites/default/files/tg/en/illustration/acgt.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Neural Networks Code and Explanation</title>
   <dc:creator>Srusti </dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/neural_networks/index.html</link>
+  <link>https://www.srustillmblog.io/posts/neural_networks/index.html</link>
   <description><![CDATA[ 
 
 
@@ -589,7 +1745,7 @@ font-style: inherit;">"Testing and Training Loss for NN"</span>)</span></code></
 <pre><code>Text(0.5, 1.0, 'Testing and Training Loss for NN')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/neural_networks/index_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+<p><img src="https://www.srustillmblog.io/posts/neural_networks/index_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="39">
@@ -740,14 +1896,14 @@ font-style: inherit;">print</span>(correct)</span></code></pre></div>
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/neural_networks/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/neural_networks/index.html</guid>
   <pubDate>Wed, 28 Jun 2023 05:00:00 GMT</pubDate>
   <media:content url="https://www.investopedia.com/thmb/PgHPmalVUUHIQrp616mTdlmyD0I=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_Final_Neural_Network_Apr_2020-01-5f4088dfda4c49d99a4d927c9a3a5ba0.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>GWAS Code</title>
   <dc:creator>Srusti Donapati</dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index.html</link>
+  <link>https://www.srustillmblog.io/posts/population-stratification/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1006,7 +2162,7 @@ font-style: inherit;">hist</span>(allhwe<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>P)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1024,7 +2180,7 @@ font-style: inherit;">'HWE HapMap3 All Pop'</span>)</span></code></pre></div>
 1e-30</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1153,22 +2309,22 @@ font-style: inherit;">"HWE {pop} and founders only"</span>))</span>
 ℹ Please use the `file` argument instead.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-5.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-5.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-6.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-6-6.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1282,7 +2438,7 @@ font-style: inherit;">15</span>)</span></code></pre></div>
 <pre><code>Warning: Removed 130 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1367,7 +2523,7 @@ font-style: inherit;">hist</span>(igrowth.assoc<span class="sc" style="color: #5
 background-color: null;
 font-style: inherit;">$</span>P)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1377,7 +2533,7 @@ font-style: inherit;">qqunif</span>(igrowth.assoc<span class="sc" style="color: 
 background-color: null;
 font-style: inherit;">$</span>P)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1425,7 +2581,7 @@ font-style: inherit;">p=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"P"</span> )</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1571,7 +2727,7 @@ font-style: inherit;">base_size =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">15</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1632,7 +2788,7 @@ font-style: inherit;">$</span>P,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1644,7 +2800,7 @@ font-style: inherit;">$</span>P,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="https://www.srustillmblog.io/posts/population-stratification/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
@@ -1653,13 +2809,13 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/population-stratification/index.html</guid>
   <pubDate>Tue, 13 Jun 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Practicing Working with Terminal</title>
   <dc:creator>Srusti Donapati</dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/index.html</link>
+  <link>https://www.srustillmblog.io/posts/command-line-skills/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1715,7 +2871,7 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 <section id="using-vscode-with-desired-environment" class="level3">
 <h3 class="anchored" data-anchor-id="using-vscode-with-desired-environment">Using VSCode with Desired Environment</h3>
 <p>VSCode has an integrated terminal that allows you to run commands directly within the editor. However, VSCode’s integrated terminal supports various shells, including PowerShell, Command Prompt (Windows), and Bash (macOS/Linux). So, while coding in VSCode, you need to make sure your code file is in the correct environment for your project. To do this, click on the bottom right of the screen on VSCode (in this example, the tab that says “3.11.3 (‘dlgtools’:conda). dlgtools is the name of my desired project environment. If the name of the environment is not the environment you want to work in, simply click on it and VSCode should open a tab at the top of your screen which says”Select Interpreter” and you can switch into a different environment. Your file will then be stored in this environment, so any packages or programs (like Python) which you plan to use in that file should be in that environment.</p>
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/images/Screen Shot 2023-06-08 at 3.22.19 PM.png" class="img-fluid"></p>
+<p><img src="https://www.srustillmblog.io/posts/command-line-skills/images/Screen Shot 2023-06-08 at 3.22.19 PM.png" class="img-fluid"></p>
 </section>
 <section id="checking-to-see-if-you-have-python" class="level3">
 <h3 class="anchored" data-anchor-id="checking-to-see-if-you-have-python">Checking to See If You Have Python</h3>
@@ -1749,7 +2905,7 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 <section id="file-navigation-in-terminal" class="level1">
 <h1>File Navigation in Terminal</h1>
 <p>Here are some basic commands in your device’s terminal to make sure you are storing all your files within the desired directory. A directory is basically a type of folder on your device. You need to know which directory you are putting your project files so that you do not lose any important files in the short or long-term.</p>
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/images/Screen Shot 2023-06-07 at 2.00.19 PM.png" class="img-fluid"></p>
+<p><img src="https://www.srustillmblog.io/posts/command-line-skills/images/Screen Shot 2023-06-07 at 2.00.19 PM.png" class="img-fluid"></p>
 <section id="additional-navigation-commands-in-terminal" class="level3">
 <h3 class="anchored" data-anchor-id="additional-navigation-commands-in-terminal">Additional Navigation Commands in Terminal:</h3>
 <p>open . → opens the directory you are currently in</p>
@@ -1829,14 +2985,14 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/command-line-skills/index.html</guid>
   <pubDate>Thu, 08 Jun 2023 05:00:00 GMT</pubDate>
   <media:content url="https://help.apple.com/assets/63D8162D4F5E9E311D0CFA28/63D816334F5E9E311D0CFA30/en_US/d94aa1c4979b25e9ffbda97fcbae219a.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>The Biology to be Explored in LLMs</title>
   <dc:creator>Srusti Donapati</dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/post-with-code/index.html</link>
+  <link>https://www.srustillmblog.io/posts/post-with-code/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1869,14 +3025,14 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/post-with-code/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/post-with-code/index.html</guid>
   <pubDate>Tue, 06 Jun 2023 05:00:00 GMT</pubDate>
   <media:content url="https://wallpaperaccess.com/full/3020077.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Basics of LLMs and Their Role in the Field of Biology</title>
   <dc:creator>Srusti Donapati</dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/index.html</link>
+  <link>https://www.srustillmblog.io/posts/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1895,7 +3051,7 @@ font-style: inherit;">main=</span>titulo)</span></code></pre></div>
 <li><p><strong>CNNs (Convolutional Neural Networks)</strong>: CNN models analyze text by considering relationships between adjacent words within a fixed window. They can have wide windows using techniques like dilation. While CNNs are good at identifying local patterns, they struggle with capturing long-range dependencies and comprehending complex sentence structures.</p></li>
 <li><p><strong>LSTMs (Long Short-Term Memory networks):</strong> LSTMs are a variant of Recurrent Neural Networks (RNNs) capable of storing and processing information from earlier parts of a text. They outperform CNNs in understanding context and managing long-range dependencies. However, they still face challenges with complex sentences and long text.</p></li>
 <li><p><strong>Attention Mechanisms:</strong> Attention mechanisms are not models in themselves, but mechanisms. They allow models to focus on relevant parts of the input when making predictions. These models have multiple attention “heads” that can concentrate on different parts of the previous text. Transformers, a class of language models, implement attention mechanisms.</p></li>
-<li><p><strong>Large Language Models (LLMs):</strong> LLMs, such as GPT-3, are transformers trained on vast amounts of data. Their large size facilitates the learning of intricate patterns, relationships, and context within the text. LLMs represent the most advanced language models available and can generate accurate and coherent responses across a wide range of topics.<img src="https://srusti.quarto.pub/gpt-in-genomics/posts/https:/uploads-ssl.webflow.com/5b105a0c66f2f636c7884a17/64063dbcad97bd421b437096_chatgpt.jpg" class="img-fluid" width="500" alt="ChatGPT has revolutionized easy public access to the vast array of information on the internet. ChatGPT is an example of an LLM."></p></li>
+<li><p><strong>Large Language Models (LLMs):</strong> LLMs, such as GPT-3, are transformers trained on vast amounts of data. Their large size facilitates the learning of intricate patterns, relationships, and context within the text. LLMs represent the most advanced language models available and can generate accurate and coherent responses across a wide range of topics.<img src="https://www.srustillmblog.io/posts/https:/uploads-ssl.webflow.com/5b105a0c66f2f636c7884a17/64063dbcad97bd421b437096_chatgpt.jpg" class="img-fluid" width="500" alt="ChatGPT has revolutionized easy public access to the vast array of information on the internet. ChatGPT is an example of an LLM."></p></li>
 </ol>
 <p>The following LLMs use transformer architecture and were breakthroughs in the field:</p>
 <ol type="1">
@@ -1921,7 +3077,7 @@ Enformer is a transformer-based tool and a part of the lineage of language model
 <p>While Enformer performs reasonably well in predicting gene expression from sequence alone, it currently falls short compared to experimental replicates, correlating at a level of 0.85, with a three-fold higher error rate. However, as more data are incorporated and the model is improved, its performance is expected to enhance. Enformer can also predict changes in gene expression caused by mutations in different individuals and artificially introduced mutations through CRISPR experiments. However, it has limitations in predicting the effects of distal enhancers and determining the direction of the impact of personal variants on gene expression, likely due to insufficient training data.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/https:/storrs.io/content/images/2022/03/Untitled-1-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.srustillmblog.io/posts/https:/storrs.io/content/images/2022/03/Untitled-1-1.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Enformers for effective gene expression prediction. Credit: Erik Storrs blog.</figcaption>
 </figure>
 </div>
@@ -1943,13 +3099,13 @@ Enformer is a transformer-based tool and a part of the lineage of language model
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/index.html</guid>
   <pubDate>Tue, 06 Jun 2023 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Welcome To My ‘LLM in Biology’ Blog!</title>
   <dc:creator>Srusti Donapati</dc:creator>
-  <link>https://srusti.quarto.pub/gpt-in-genomics/posts/welcome/index.html</link>
+  <link>https://www.srustillmblog.io/posts/welcome/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1958,7 +3114,7 @@ Enformer is a transformer-based tool and a part of the lineage of language model
 <p>This is the introductory post about the blog!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://srusti.quarto.pub/gpt-in-genomics/posts/welcome/https:/miro.medium.com/v2/resize:fit:1024/0*neS1Be9611CzdqF2.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="https://www.srustillmblog.io/posts/welcome/https:/miro.medium.com/v2/resize:fit:1024/0*neS1Be9611CzdqF2.png" class="img-fluid figure-img" width="400"></p>
 <figcaption class="figure-caption">Credit: Serafim Batzoglou, “Large Language Models in Biology”. Image from the author, created by Midjourney, prompted by “DNA”.</figcaption>
 </figure>
 </div>
@@ -1968,7 +3124,7 @@ Enformer is a transformer-based tool and a part of the lineage of language model
 
  ]]></description>
   <category>blog</category>
-  <guid>https://srusti.quarto.pub/gpt-in-genomics/posts/welcome/index.html</guid>
+  <guid>https://www.srustillmblog.io/posts/welcome/index.html</guid>
   <pubDate>Tue, 06 Jun 2023 05:00:00 GMT</pubDate>
 </item>
 </channel>

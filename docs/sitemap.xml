@@ -1,35 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/post-with-code/index.html</loc>
-    <lastmod>2023-06-28T15:08:09.533Z</lastmod>
+    <loc>https://www.srustillmblog.io/posts/DNA-locus-extraction/index.html</loc>
+    <lastmod>2023-07-10T20:31:34.446Z</lastmod>
   </url>
   <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/population-stratification/index.html</loc>
-    <lastmod>2023-06-28T15:08:10.223Z</lastmod>
+    <loc>https://www.srustillmblog.io/about.html</loc>
+    <lastmod>2023-07-10T20:10:10.768Z</lastmod>
   </url>
   <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/index.html</loc>
-    <lastmod>2023-06-28T15:08:10.665Z</lastmod>
+    <loc>https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis.html</loc>
+    <lastmod>2023-07-10T20:31:12.658Z</lastmod>
   </url>
   <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/welcome/index.html</loc>
-    <lastmod>2023-06-28T15:08:10.953Z</lastmod>
-  </url>
-  <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/neural_networks/index.html</loc>
-    <lastmod>2023-06-28T15:08:11.842Z</lastmod>
-  </url>
-  <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/posts/command-line-skills/index.html</loc>
-    <lastmod>2023-06-28T15:08:12.433Z</lastmod>
-  </url>
-  <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/index.html</loc>
-    <lastmod>2023-06-28T15:08:13.039Z</lastmod>
-  </url>
-  <url>
-    <loc>https://srusti.quarto.pub/gpt-in-genomics/about.html</loc>
-    <lastmod>2023-06-28T15:08:13.312Z</lastmod>
+    <loc>https://www.srustillmblog.io/index.html</loc>
+    <lastmod>2023-07-10T20:31:37.101Z</lastmod>
   </url>
 </urlset>

@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/practice_analysis/diabetes_analysis.html",
+      "/posts/DNA-locus-extraction/index.html",
       "/posts/neural_networks/index.html",
       "/posts/population-stratification/index.html",
       "/posts/command-line-skills/index.html",
