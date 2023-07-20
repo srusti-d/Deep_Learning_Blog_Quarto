@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.srustillmblog.io/posts/DNA-locus-extraction/index.html</loc>
-    <lastmod>2023-07-10T20:31:34.446Z</lastmod>
+    <loc>https://www.srustillmblog.io/posts/post-with-code/index.html</loc>
+    <lastmod>2023-07-20T15:11:24.864Z</lastmod>
   </url>
   <url>
-    <loc>https://www.srustillmblog.io/about.html</loc>
-    <lastmod>2023-07-10T20:10:10.768Z</lastmod>
+    <loc>https://www.srustillmblog.io/posts/2023-07-19-katenproj/enf_proj_partone.html</loc>
+    <lastmod>2023-07-20T15:12:33.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/population-stratification/index.html</loc>
+    <lastmod>2023-07-20T15:11:26.885Z</lastmod>
   </url>
   <url>
     <loc>https://www.srustillmblog.io/posts/practice_analysis/diabetes_analysis.html</loc>
-    <lastmod>2023-07-10T20:31:12.658Z</lastmod>
+    <lastmod>2023-07-20T15:11:27.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/index.html</loc>
+    <lastmod>2023-07-20T15:11:28.160Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/welcome/index.html</loc>
+    <lastmod>2023-07-20T15:11:28.437Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/neural_networks/index.html</loc>
+    <lastmod>2023-07-20T15:11:29.300Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/command-line-skills/index.html</loc>
+    <lastmod>2023-07-20T15:11:29.880Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/DNA-locus-extraction/index.html</loc>
+    <lastmod>2023-07-20T15:11:30.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/posts/query-encode/encode-update.html</loc>
+    <lastmod>2023-07-20T15:11:30.459Z</lastmod>
   </url>
   <url>
     <loc>https://www.srustillmblog.io/index.html</loc>
-    <lastmod>2023-07-10T20:31:37.101Z</lastmod>
+    <lastmod>2023-07-20T15:12:19.477Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.srustillmblog.io/about.html</loc>
+    <lastmod>2023-07-20T15:11:31.444Z</lastmod>
   </url>
 </urlset>
