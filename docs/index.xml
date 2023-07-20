@@ -9,10 +9,10 @@
 <link>https://www.srustillmblog.io/index.html</link>
 <atom:link href="https://www.srustillmblog.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A Blog Navigating my LLM Project</description>
-<generator>quarto-1.3.361</generator>
+<generator>quarto-1.3.433</generator>
 <lastBuildDate>Thu, 20 Jul 2023 05:00:00 GMT</lastBuildDate>
 <item>
-  <title>this is a title</title>
+  <title>Enformer Histone Modifications Prediction Project</title>
   <dc:creator>Srusti </dc:creator>
   <link>https://www.srustillmblog.io/posts/2023-07-19-katenproj/enf_proj_partone.html</link>
   <description><![CDATA[ 
@@ -20,18 +20,19 @@
 
 
 
+<p>This is a very unrefined first draft of my project code, just for future reference.</p>
 <section id="background-aims" class="level2">
 <h2 class="anchored" data-anchor-id="background-aims">Background &amp; Aims</h2>
 <p>Go to GeneCards for specific gene of interest (use version 19 for now, which is under “Previous Assembly”).</p>
 <p>https://www.genecards.org/cgi-bin/carddisp.pl?gene=GSDMB#:~:text=GeneCards%20Summary%20for%20GSDMB%20Gene,of%20this%20gene%20is%20GSDMA. Not the best way to do this, but it works for now.</p>
 <p>From GeneCards, look like this is the location: chr17:38,060,848-38,074,888</p>
 <p>Look at enformer.usage Jupyter notebook for the prediction and visualization of these areas.</p>
-<p>Katen Project Goal:</p>
+<p><strong><em>Katen Project Goal:</em></strong></p>
 <p>Examine the activity of histone modifications: - across various tissues and cell lines - across different forms of histone modification - in 17q locus of asthma (most significant locus of asthma)</p>
-<p>Longer-Term Goal: Train genetic predictors of histone modifications - can be combined with GWAS of asthma to identify loci where histone modification may play a role in asthma etiology</p>
+<p><strong><em>Longer-Term Goal:</em></strong> Train genetic predictors of histone modifications - can be combined with GWAS of asthma to identify loci where histone modification may play a role in asthma etiology</p>
 <p>“The 17q21 asthma susceptibility locus is located between 35.0 and 35.5 Mb on chromosome 17 and contains at least 15 genes. To date, however, asthma-associated SNPs have been associated with the expression of only four of these genes: (i) Ikaros zinc finger protein 3 (IKZF3), involved with the regulation of lymphocyte development; (ii) Gasdermin B (GSDMB), implicated in epithelial cell barrier function; (iii) Mediator of RNA polymerase II transcription subunit 24 (MED24), a component of a transcriptional coactivator complex thought to be required for expression of most genes; and (4) ORMDL3, an endoplasmic reticulum (ER) transmembrane protein involved in regulation of sphingolipid metabolism.” Source: https://www.nature.com/articles/pr2013186</p>
 <p>Relevant genes in the 17q21 locus: IKZF3, GSDMB, MED24, ORMDL3. Center at GSDMB.</p>
-<p>Human Targets (trained ENFORMER):</p>
+<p><strong><em>Human Targets (trained ENFORMER):</em></strong></p>
 <p>https://raw.githubusercontent.com/calico/basenji/master/manuscripts/cross2020/targets_human.txt</p>
 <ol type="1">
 <li>get locus center (17q)</li>
@@ -61,7 +62,7 @@
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Import necessary packages.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="1">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> tensorflow_hub <span class="im" style="color: #00769E;
@@ -156,12 +157,12 @@ font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'retina'</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2023-07-19 20:36:28.384228: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+<pre><code>2023-07-20 15:36:24.257845: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.</code></pre>
 </div>
 </div>
 <p>Changed the original code from !pip to %pip because only &amp;pip allows us to import packages into the correct location (including tensorflow, which was the specific package that wasn’t importing here).</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="2">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#tensorflow import</span></span>
@@ -174,44 +175,44 @@ font-style: inherit;">%</span>pip install tensorflow_hub</span></code></pre></di
 <div class="cell-output cell-output-stdout">
 <pre><code>Defaulting to user installation because normal site-packages is not writeable
 Requirement already satisfied: tensorflow in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (2.11.0)
+Requirement already satisfied: h5py&gt;=2.9.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (3.8.0)
+Requirement already satisfied: setuptools in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (65.6.3)
 Requirement already satisfied: typing-extensions&gt;=3.6.6 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (4.4.0)
 Requirement already satisfied: packaging in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (21.3)
-Requirement already satisfied: grpcio&lt;2.0,&gt;=1.24.3 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.51.1)
 Requirement already satisfied: astunparse&gt;=1.6.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.6.3)
-Requirement already satisfied: h5py&gt;=2.9.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (3.8.0)
-Requirement already satisfied: libclang&gt;=13.0.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (15.0.6.1)
 Requirement already satisfied: google-pasta&gt;=0.1.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (0.2.0)
-Requirement already satisfied: termcolor&gt;=1.1.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.2.0)
-Requirement already satisfied: opt-einsum&gt;=2.3.2 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (3.3.0)
-Requirement already satisfied: tensorboard&lt;2.12,&gt;=2.11 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.11.2)
 Requirement already satisfied: gast&lt;=0.4.0,&gt;=0.2.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (0.4.0)
-Requirement already satisfied: flatbuffers&gt;=2.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.0.7)
 Requirement already satisfied: tensorflow-io-gcs-filesystem&gt;=0.23.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (0.30.0)
+Requirement already satisfied: termcolor&gt;=1.1.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.2.0)
+Requirement already satisfied: numpy&gt;=1.20 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.23.5)
+Requirement already satisfied: flatbuffers&gt;=2.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.0.7)
+Requirement already satisfied: six&gt;=1.12.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.16.0)
+Requirement already satisfied: opt-einsum&gt;=2.3.2 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (3.3.0)
+Requirement already satisfied: grpcio&lt;2.0,&gt;=1.24.3 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.51.1)
+Requirement already satisfied: absl-py&gt;=1.0.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.4.0)
+Requirement already satisfied: keras&lt;2.12,&gt;=2.11.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.11.0)
 Requirement already satisfied: wrapt&gt;=1.11.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.14.1)
 Requirement already satisfied: protobuf&lt;3.20,&gt;=3.9.2 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (3.19.6)
-Requirement already satisfied: absl-py&gt;=1.0.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.4.0)
 Requirement already satisfied: tensorflow-estimator&lt;2.12,&gt;=2.11.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.11.0)
-Requirement already satisfied: keras&lt;2.12,&gt;=2.11.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.11.0)
-Requirement already satisfied: six&gt;=1.12.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.16.0)
-Requirement already satisfied: numpy&gt;=1.20 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (1.23.5)
-Requirement already satisfied: setuptools in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (65.6.3)
+Requirement already satisfied: libclang&gt;=13.0.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (15.0.6.1)
+Requirement already satisfied: tensorboard&lt;2.12,&gt;=2.11 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorflow) (2.11.2)
 Requirement already satisfied: wheel&lt;1.0,&gt;=0.23.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from astunparse&gt;=1.6.0-&gt;tensorflow) (0.38.4)
 Requirement already satisfied: mpi4py&gt;=3.1.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from h5py&gt;=2.9.0-&gt;tensorflow) (3.1.4)
-Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.16.0)
-Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.4.6)
-Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.28.1)
-Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.6.1)
 Requirement already satisfied: werkzeug&gt;=1.0.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.2.2)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.16.0)
+Requirement already satisfied: requests&lt;3,&gt;=2.21.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.28.1)
 Requirement already satisfied: markdown&gt;=2.6.8 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.4.1)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.6.1)
 Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.8.1)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.4.6)
 Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from packaging-&gt;tensorflow) (3.0.9)
-Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.2.8)
 Requirement already satisfied: cachetools&lt;6.0,&gt;=2.0.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (5.3.0)
 Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (4.9)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.2.8)
 Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.3.1)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.4)
 Requirement already satisfied: certifi&gt;=2017.4.17 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2022.12.7)
 Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (1.26.13)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (3.4)
 Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from requests&lt;3,&gt;=2.21.0-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.0.4)
 Requirement already satisfied: MarkupSafe&gt;=2.1.1 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from werkzeug&gt;=1.0.1-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (2.1.1)
 Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /soft/datascience/conda/2023-01-10/mconda3/lib/python3.10/site-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.12,&gt;=2.11-&gt;tensorflow) (0.4.8)
@@ -230,7 +231,7 @@ Requirement already satisfied: protobuf&gt;=3.19.6 in /soft/datascience/conda/20
 Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="3">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
@@ -248,7 +249,7 @@ background-color: null;
 font-style: inherit;">'Start the colab kernel with GPU: Runtime -&gt; Change runtime type -&gt; GPU'</span></span></code></pre></div>
 </div>
 <p>kipoiseq is a package that helps us to extract sequences from fasta files given some intervals. We will install the package.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="4">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%</span>pip install kipoiseq<span class="op" style="color: #5E5E5E;
@@ -276,7 +277,7 @@ font-style: inherit;"># You can ignore the pyYAML error</span></span></code></pr
 Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%</span>pip install Biopython <span class="co" style="color: #5E5E5E;
@@ -293,7 +294,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
 <p>We want to define some paths to save downloaded files for the duration of this notebook.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="6">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">transform_path <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -318,7 +319,7 @@ font-style: inherit;">#contains the reference human genome</span></span></code><
 </section>
 <section id="extracting-dna-sequence-centered-at-locus" class="level2">
 <h2 class="anchored" data-anchor-id="extracting-dna-sequence-centered-at-locus">Extracting DNA Sequence Centered at Locus</h2>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="7">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">class</span> FastaStringExtractor:</span>
@@ -448,14 +449,14 @@ background-color: null;
 font-style: inherit;">self</span>.fasta.close()</span></code></pre></div>
 </div>
 <p>To use the above function, first create an instance of the FastaStringExtractor object, providing a fasta file you want to use:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="8">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">fasta_extractor_object <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> FastaStringExtractor(fasta_file)</span></code></pre></div>
 </div>
 <p>Then, create an interval you want to extract the sequence from using kipoiseq (“.resize” will resize the interval you provide to a length provided by “sequence_length”. The new interval will be centered on the “start”, “end” you provided originally ):</p>
 <p>target_interval = kipoiseq.Interval(chrom,start,end).resize(SEQUENCE_LENGTH)</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="9">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">SEQUENCE_LENGTH <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
@@ -473,19 +474,19 @@ font-style: inherit;">38074888</span>).resize(SEQUENCE_LENGTH) <span class="co" 
 background-color: null;
 font-style: inherit;">#17q locus of asthma</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="10">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">target_interval</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>Interval(chrom='chr17', start=37871260, end=38264476, name='', strand='.', ...)</code></pre>
 </div>
 </div>
 <p>Finally, extract the sequence using the extractor object like this:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="11">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">extracted_sequence <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> fasta_extractor_object.extract(target_interval)</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="12">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#print(extracted_sequence)</span></span>
@@ -501,7 +502,7 @@ font-style: inherit;">len</span>(extracted_sequence)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="call-enformer-using-extracted-dna-sequence">Call Enformer using Extracted DNA Sequence</h2>
 <p>Next, we have some functions that will help us along the way. Classes and methods defined in this code block can be found in the <a href="https://colab.research.google.com/github/deepmind/deepmind_research/blob/master/enformer/enformer-usage.ipynb">original Enformer usage colab notebook</a>.</p>
 <p><strong>Enformer, EnformerScoreVariantsNormalized, EnformerScoreVariantsPCANormalized</strong></p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="13">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># @title `Enformer`, `EnformerScoreVariantsNormalized`, `EnformerScoreVariantsPCANormalized`,</span></span>
@@ -811,7 +812,7 @@ font-style: inherit;">(avsec): Add feature description: Either PCX, or full name
 </div>
 <p><strong>One Hot Encoder</strong></p>
 <p>One-Hot Encoder converts the region of the genome from letters like A, G, T, C to binary (1, 0)</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="14">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> one_hot_encode(sequence):</span>
@@ -905,7 +906,7 @@ background-color: null;
 font-style: inherit;">'alt'</span>: variant.alt}}</span></code></pre></div>
 </div>
 <p>Defining the Enformer model and fasta_extractor in order to run Enformer</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="15">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">model <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Enformer(model_path)</span>
@@ -914,7 +915,7 @@ background-color: null;
 font-style: inherit;">=</span> FastaStringExtractor(fasta_file)</span></code></pre></div>
 </div>
 <p>Run One Hot Encoder and run enformer.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="16">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">sequence_one_hot <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> one_hot_encode(fasta_extractor.extract(target_interval.resize(SEQUENCE_LENGTH)))</span>
@@ -926,7 +927,7 @@ font-style: inherit;">'human'</span>][<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>]</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="17">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">predictions.shape <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#shows that this is the 896 by 5313 matrix that Enformer outputs</span></span></code></pre></div>
@@ -938,7 +939,7 @@ font-style: inherit;">#shows that this is the 896 by 5313 matrix that Enformer o
 <section id="plot-enformer-matrix-896-x-5313" class="level2">
 <h2 class="anchored" data-anchor-id="plot-enformer-matrix-896-x-5313">Plot Enformer Matrix (896 x 5313)</h2>
 <p>We will plot this Enformer matrix in R, so it needs to be converted to a CSV file in this notebook first. After saving it as a csv file, we will read the file in RStudio and visualize it using image(matrix), where “matrix” is the name of our Enformer predictions matrix (assigned as ‘predictions’).</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="18">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
@@ -955,7 +956,7 @@ font-style: inherit;">','</span>)</span></code></pre></div>
 </div>
 <p>To save the file from polaris directory to local directory, use the command scp:</p>
 <p>scp sd04@polaris.alcf.anl.gov:/grand/TFXcan/imlab/users/srusti/enformer/data/q17_enformer.csv ~/localfolderpath</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="19">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(predictions.<span class="bu" style="color: null;
@@ -966,7 +967,7 @@ font-style: inherit;">max</span>())</span></code></pre></div>
 </div>
 </div>
 <p>Attempts at making a plot of the enformer output matrix. Very computationally expensive.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="20">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#vmax = predictions.max()</span></span>
@@ -978,7 +979,7 @@ font-style: inherit;">#sns.heatmap(predictions, vmin=0, vmax=1)</span></span></c
 <section id="plot-tracks" class="level2">
 <h2 class="anchored" data-anchor-id="plot-tracks">Plot Tracks</h2>
 <p>Function to plot tracks</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="21">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> plot_tracks(tracks, interval, height<span class="op" style="color: #5E5E5E;
@@ -1037,7 +1038,7 @@ font-style: inherit;">str</span>(interval))</span>
 <span id="cb29-8">  plt.tight_layout()</span></code></pre></div>
 </div>
 <p>Download targets_human.txt</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="22">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">targets_txt <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -1203,7 +1204,7 @@ font-style: inherit;">'</span>)</span>
 </div>
 </div>
 <p>Function to extract from dataframe based on substring</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="23">
+<div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> idx_substr(df, column_name, substring):</span>
@@ -1216,7 +1217,7 @@ font-style: inherit;">str</span>.contains(substring)</span>
 background-color: null;
 font-style: inherit;">return</span> df[mask].index</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="24">
+<div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1">indices <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> idx_substr(df_targets, <span class="st" style="color: #20794D;
@@ -1244,7 +1245,7 @@ font-style: inherit;">len</span>(list_h32kac)</span></code></pre></div>
 </div>
 </div>
 <p>The columns in the ‘predictions’ enformer output matrix is the same as the rows in the human targets dataframe.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="25">
+<div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#idk why this for loop isn't working (goal is to iterate through the list of indices and plot the tracks for each of those indices)</span></span>
@@ -1259,7 +1260,7 @@ background-color: null;
 font-style: inherit;">#plot_tracks(targets, target_interval)</span></span></code></pre></div>
 </div>
 <p>Trying for loop again but with dictionary comprehension.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="26">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">hm_targets <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df_targets[df_targets[<span class="st" style="color: #20794D;
@@ -1276,7 +1277,7 @@ font-style: inherit;">=</span> hm_targets.index.to_numpy()</span>
 background-color: null;
 font-style: inherit;">=</span> hm_targets.description</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="27">
+<div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">len</span>(hm_desc)</span></code></pre></div>
@@ -1284,7 +1285,7 @@ font-style: inherit;">len</span>(hm_desc)</span></code></pre></div>
 <pre><code>228</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="28">
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(hm_desc)</span></code></pre></div>
@@ -1304,7 +1305,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 </div>
 <p>Taking too long to run, but worked at some point?</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="29">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#tracks = {}</span></span>
@@ -1319,7 +1320,7 @@ font-style: inherit;">#tracks[desc] = predictions[:, id]</span></span>
 background-color: null;
 font-style: inherit;">#plot_tracks(tracks, target_interval)</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="30">
+<div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1">tracks <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {}</span>
@@ -1346,7 +1347,7 @@ font-style: inherit;">id</span>]</span>
 </div>
 <p>With the above plots, the y-axis is signal strength and the x-axis is locations along the genome. Keep in mind that the y-axis is different for each plot, so don’t be misguided by that. The peaks indicate a strong signal.</p>
 <p>Creating new matrix of just H32Kac histone modifications.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="31">
+<div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"></span>
 <span id="cb43-2"><span class="kw" style="color: #003B4F;
 background-color: null;
@@ -1379,13 +1380,13 @@ font-style: inherit;">=</span> spec_matr(predictions, hm_indices)</span>
 </div>
 </div>
 <p>Transpose Matrix</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="32">
+<div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1">final_hist <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> hist_mat.transpose()</span></code></pre></div>
 </div>
 <p>Conducting PCA.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="33">
+<div class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.decomposition <span class="im" style="color: #00769E;
@@ -1446,7 +1447,7 @@ font-style: inherit;">"Shape of transformed data:"</span>, transformed_data.shap
 <pre><code>Shape of transformed data: (228, 2)</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="34">
+<div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(transformed_data)</span>
@@ -1454,244 +1455,244 @@ font-style: inherit;">print</span>(transformed_data)</span>
 background-color: null;
 font-style: inherit;">print</span>(principal_components)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[ 4.29011505e+02  2.22288208e+01]
- [-5.69267349e+01 -1.08432398e+01]
- [-4.69018478e+01 -1.38660784e+01]
- [-4.59444466e+01 -4.11515274e+01]
- [-4.39879303e+01  2.97819366e+01]
- [-5.16800079e+01 -2.73693085e+01]
- [-4.01018677e+01 -5.44725647e+01]
- [-5.65888405e+01 -4.55861664e+00]
- [-3.71873856e+01  1.38566405e-01]
- [-5.18663254e+01  2.18277340e+01]
- [-5.05086784e+01  1.34429960e+01]
- [-4.23644524e+01 -2.61824722e+01]
- [-2.54263420e+01 -1.40245142e+01]
- [-3.33488045e+01 -2.68672199e+01]
- [-4.16338463e+01 -2.23779087e+01]
- [ 2.43114120e+02 -2.46386642e+01]
- [-3.11567650e+01  5.64353085e+00]
- [-4.13973503e+01  3.40232353e+01]
- [-4.34654846e+01 -1.31848164e+01]
- [-4.33576317e+01 -6.40500336e+01]
- [-3.23938026e+01 -2.04059830e+01]
- [-4.50846176e+01 -2.66593494e+01]
- [-3.96889000e+01 -2.76189404e+01]
- [-3.15704689e+01 -2.07621250e+01]
- [-4.81673813e+01 -3.35985641e+01]
- [-3.21420059e+01  5.59731960e+00]
- [ 2.07487473e+02  3.80074501e+01]
- [-5.25247383e+01  1.01850681e+01]
- [-1.68819256e+01  1.38995361e+02]
- [-3.75193024e+01 -4.40471230e+01]
- [-4.32694550e+01 -4.00518074e+01]
- [-3.93787689e+01 -2.75708408e+01]
- [-3.22931404e+01 -9.68780708e+00]
- [-3.71183434e+01 -1.02942162e+01]
- [-4.62695580e+01  6.29523163e+01]
- [-2.60679951e+01  5.49251175e+00]
- [-3.38679352e+01 -2.13475475e+01]
- [-2.66797371e+01  5.17271309e+01]
- [ 1.34053040e+02  2.82612286e+01]
- [-2.63137913e+01 -4.17184448e+01]
- [-5.81946793e+01 -7.33442545e+00]
- [-3.41397667e+01 -4.59948425e+01]
- [-1.92752247e+01 -8.86209393e+00]
- [-4.20858154e+01  6.57025681e+01]
- [-4.65590515e+01 -7.66035604e+00]
- [-3.86708221e+01 -5.30003433e+01]
- [ 3.77290916e+01  6.00367889e+01]
- [-3.63305206e+01 -5.57575760e+01]
- [-3.38381958e+01  9.58611908e+01]
- [-2.04217415e+01 -6.55782928e+01]
- [-3.00451984e+01  1.53085155e+01]
- [-3.50913696e+01  8.83656597e+00]
- [-3.73023872e+01 -4.48953362e+01]
- [ 2.23328876e+01  8.94171600e+01]
- [ 2.73067810e+02  8.77894211e+01]
- [-4.93203239e+01  1.38920984e+01]
- [ 2.66936855e+01 -3.80065613e+01]
- [ 1.44788345e+02  2.84332256e+01]
- [ 8.29699135e+00  5.61712074e+01]
- [-3.65062561e+01 -4.99313812e+01]
- [-3.67821960e+01  5.85734978e+01]
- [ 3.12843689e+02 -2.18938828e+01]
- [-3.68099518e+01 -2.72697277e+01]
- [-4.08568382e+01 -5.78830032e+01]
- [-3.67619514e+01 -4.61754761e+01]
- [-3.80882645e+01 -4.51873504e-02]
- [ 1.03285761e+01  5.37351494e+01]
- [-3.68850555e+01  9.20244122e+00]
- [-4.75946617e+01 -2.46286507e+01]
- [ 5.77541618e+01  1.30170546e+01]
- [ 2.20004532e+02  1.85488834e+01]
- [-3.65023537e+01 -4.42779398e+00]
- [-3.29802208e+01 -2.30454731e+01]
- [-2.68703518e+01  9.58871460e+00]
- [-5.88325405e+00  1.26219185e+02]
- [ 4.40409889e+01  4.79163017e+01]
- [-3.68162270e+01  9.13016510e+00]
- [-5.07439384e+01 -3.06412144e+01]
- [-2.84839840e+01 -2.79091816e+01]
- [-5.00830994e+01 -5.80908623e+01]
- [-3.22056198e+01  9.33245773e+01]
- [-3.49726982e+01 -1.83637562e+01]
- [ 3.94312973e+01  3.78827248e+01]
- [ 7.95510483e+01  9.48300400e+01]
- [ 4.20624817e+02 -1.42585785e+02]
- [ 1.51039017e+02  3.76786346e+01]
- [-4.25562477e+01 -5.97834549e+01]
- [-4.07407074e+01  4.77315102e+01]
- [-2.42843800e+01  3.88061638e+01]
- [-4.37783623e+01 -4.33335037e+01]
- [-3.69794388e+01 -1.31547511e+00]
- [ 1.94745770e+01  3.43488731e+01]
- [-4.54127083e+01  1.03664383e+02]
- [-3.93407555e+01 -6.10990982e+01]
- [-3.70460815e+01 -2.56168900e+01]
- [-4.54350166e+01 -3.08959560e+01]
- [-4.03714600e+01 -3.08495064e+01]
- [-3.92554398e+01 -3.51556320e+01]
- [ 2.53297211e+02 -1.19522297e+00]
- [-3.71794128e+01 -3.21928596e+01]
- [-3.28474121e+01  8.95713234e+00]
- [-3.68372612e+01 -5.10462379e+01]
- [-7.61319733e+00  2.30270600e+00]
- [-4.25794373e+01 -5.74623566e+01]
- [-4.24105911e+01 -6.15009079e+01]
- [-3.60462914e+01 -5.44592209e+01]
- [-2.74201717e+01  1.14738712e+01]
- [-2.90295506e+01  2.01065178e+01]
- [-3.53000870e+01  1.10632835e+02]
- [ 2.22804146e+01  7.03420029e+01]
- [ 3.81587006e+02 -8.41840897e+01]
- [-3.86171341e+01 -7.05622482e+01]
- [ 2.49438915e+01  4.28693085e+01]
- [-1.90403023e+01  4.26871452e+01]
- [-3.79729652e+01 -5.88900833e+01]
- [-4.53931770e+01 -2.09241581e+01]
- [-3.47246704e+01 -1.54767227e+01]
- [-2.59182281e+01  3.76684685e+01]
- [-3.42783661e+01 -4.67825737e+01]
- [-3.76835899e+01 -5.38020897e+01]
- [-4.27226257e+01 -6.09182205e+01]
- [-3.63096123e+01 -1.81886005e+01]
- [-5.07480087e+01 -1.09040413e+01]
- [-3.12425365e+01  2.53056068e+01]
- [-2.55199718e+01  6.13844061e+00]
- [-2.98957500e+01  2.61851673e+01]
- [-2.37498093e+01  1.31912355e+01]
- [ 1.18976578e+02  1.17882862e+01]
- [-5.29053688e+01  2.46011906e+01]
- [-5.59937210e+01  3.36088066e+01]
- [ 8.93202057e+01 -9.59025002e+00]
- [-9.43031311e+00  2.89637909e+01]
- [-5.68391724e+01  2.55285854e+01]
- [ 3.44866638e+02  1.17349083e+02]
- [-4.39301338e+01 -3.89736366e+01]
- [-2.70862427e+01  5.03470182e+00]
- [-5.12988739e+01  1.15099228e+02]
- [-3.41276550e+01  4.52498589e+01]
- [-3.58261261e+01 -5.82838860e+01]
- [ 3.13724762e+02 -5.35617447e+01]
- [-1.93395710e+01 -1.33511820e+01]
- [-3.76825905e+01 -1.95338726e+01]
- [-3.06164055e+01 -1.69042091e+01]
- [-3.73312302e+01 -2.23549194e+01]
- [-3.95572090e+01 -3.32918015e+01]
- [ 1.54116726e+01 -4.22963142e+01]
- [-3.13595695e+01 -2.13842697e+01]
- [-2.62954025e+01 -3.74205780e+01]
- [-9.26836205e+00 -1.79718323e+01]
- [-3.71944695e+01  1.34128590e+01]
- [-2.49401360e+01  6.67443562e+00]
- [-3.42405815e+01  1.08643560e+01]
- [ 5.81709051e+00  2.15994663e+01]
- [-4.26727753e+01 -6.24938965e+01]
- [-3.71272774e+01  2.39180698e+01]
- [-2.41524696e+01  5.49194298e+01]
- [ 2.34967133e+02 -1.14961601e+02]
- [-4.33071709e+01 -5.64499855e-01]
- [-4.08753052e+01 -4.42880592e+01]
- [ 1.15195747e+02  4.04950943e+01]
- [-3.51685715e+01  8.38030777e+01]
- [ 1.11027889e+01  1.15874832e+02]
- [-2.22046967e+01  1.47011906e-01]
- [-3.56695976e+01 -4.88601608e+01]
- [-1.76058502e+01 -9.75904465e+00]
- [-4.30126228e+01 -3.71555099e+01]
- [-3.30353165e+01  4.55916834e+00]
- [-1.58585091e+01  1.74813175e+00]
- [-1.85551815e+01  5.17074432e+01]
- [ 3.34669991e+01  9.39320602e+01]
- [ 1.26497246e+02  5.82719879e+01]
- [ 2.38732254e+02  1.00835098e+02]
- [-3.34099693e+01 -5.78745890e+00]
- [-4.24933929e+01 -5.80559654e+01]
- [-4.28196907e+01 -5.62694473e+01]
- [-3.08744125e+01 -3.22958946e+01]
- [-4.93449554e+01  7.98572998e+01]
- [-2.45137863e+01  1.88400669e+01]
- [ 4.82275269e+02 -1.47587006e+02]
- [-2.96534081e+01  7.96313553e+01]
- [-3.86990471e+01 -5.42709160e+01]
- [-3.46719322e+01 -2.01222973e+01]
- [-3.93394623e+01 -2.59302902e+01]
- [ 2.07254089e+02  1.53769751e+01]
- [-2.97736149e+01 -3.11685238e+01]
- [-4.89034004e+01 -3.03857021e+01]
- [-3.69259377e+01  1.72739735e+01]
- [-4.19947853e+01 -7.78308535e+00]
- [ 3.40358620e+01  5.69028244e+01]
- [-3.71714172e+01 -2.90266418e+01]
- [-4.85661850e+01  4.61616783e+01]
- [-4.06754570e+01 -1.16336899e+01]
- [-3.79456940e+01 -6.11480560e+01]
- [-4.59130630e+01  9.13757553e+01]
- [-4.11263924e+01 -4.71964912e+01]
- [ 7.47286377e+01  1.63571892e+01]
- [-2.90668831e+01 -5.09080410e+00]
- [-5.28644676e+01 -3.58812218e+01]
- [-3.95947113e+01 -6.44072266e+01]
- [ 7.04938889e+01 -4.87674427e+00]
- [ 2.88818569e+01  8.63479538e+01]
- [-4.05269012e+01 -5.78434486e+01]
- [-5.11247902e+01  3.27801132e+01]
- [-3.71980858e+01  9.48750992e+01]
- [ 2.62284576e+02 -6.50317841e+01]
- [-4.25690231e+01 -7.42995148e+01]
- [-4.07853241e+01 -6.97393951e+01]
- [-4.49804039e+01 -5.42197495e+01]
- [-4.50111359e-01  1.47176867e+01]
- [-4.03771973e+01 -2.02594471e+01]
- [ 2.06398285e+02  6.46116867e+01]
- [-1.98057213e+01  7.55206528e+01]
- [-3.96196289e+01 -2.98523693e+01]
- [-3.40873075e+00  6.28067055e+01]
- [-3.52510490e+01 -2.98613930e+01]
- [-5.37423859e+01 -1.32766399e+01]
- [-3.23342705e+01  8.63809490e+00]
- [-3.44745026e+01 -3.47955284e+01]
- [-4.73818130e+01  8.05034332e+01]
- [-4.12652435e+01 -3.32382584e+01]
- [-4.81538353e+01  8.43866043e+01]
- [ 8.89602432e+01 -3.33641472e+01]
- [-3.97471352e+01 -6.37617912e+01]
- [-3.32443542e+01 -3.48025818e+01]
- [-3.85740509e+01  2.28718452e+01]
- [ 1.94738617e+01  1.78730347e+02]
- [-3.60090714e+01  4.54106979e+01]
- [-5.03067207e+01 -4.56402931e+01]]
-[[ 0.0078284   0.01060935  0.01315628 ... -0.00110051 -0.00120933
+<pre><code>[[ 4.29011536e+02  2.22290955e+01]
+ [-5.69267349e+01 -1.08432522e+01]
+ [-4.69018288e+01 -1.38660965e+01]
+ [-4.59444046e+01 -4.11515465e+01]
+ [-4.39879303e+01  2.97819118e+01]
+ [-5.16800003e+01 -2.73693275e+01]
+ [-4.01018257e+01 -5.44725723e+01]
+ [-5.65888405e+01 -4.55863190e+00]
+ [-3.71873703e+01  1.38539836e-01]
+ [-5.18663254e+01  2.18277168e+01]
+ [-5.05086899e+01  1.34429789e+01]
+ [-4.23644371e+01 -2.61824875e+01]
+ [-2.54263306e+01 -1.40245380e+01]
+ [-3.33487701e+01 -2.68672447e+01]
+ [-4.16338120e+01 -2.23779335e+01]
+ [ 2.43114105e+02 -2.46385098e+01]
+ [-3.11567783e+01  5.64350224e+00]
+ [-4.13973656e+01  3.40232124e+01]
+ [-4.34654579e+01 -1.31848364e+01]
+ [-4.33576012e+01 -6.40500488e+01]
+ [-3.23937759e+01 -2.04059925e+01]
+ [-4.50845947e+01 -2.66593685e+01]
+ [-3.96888695e+01 -2.76189556e+01]
+ [-3.15704613e+01 -2.07621441e+01]
+ [-4.81673584e+01 -3.35985870e+01]
+ [-3.21420021e+01  5.59729719e+00]
+ [ 2.07487457e+02  3.80075455e+01]
+ [-5.25247459e+01  1.01850500e+01]
+ [-1.68820076e+01  1.38995316e+02]
+ [-3.75192680e+01 -4.40471458e+01]
+ [-4.32694321e+01 -4.00518265e+01]
+ [-3.93787422e+01 -2.75708599e+01]
+ [-3.22931328e+01 -9.68781281e+00]
+ [-3.71183281e+01 -1.02942362e+01]
+ [-4.62695847e+01  6.29523010e+01]
+ [-2.60679970e+01  5.49248314e+00]
+ [-3.38679123e+01 -2.13475609e+01]
+ [-2.66797714e+01  5.17271042e+01]
+ [ 1.34053024e+02  2.82612839e+01]
+ [-2.63137608e+01 -4.17184448e+01]
+ [-5.81946678e+01 -7.33444023e+00]
+ [-3.41397362e+01 -4.59948578e+01]
+ [-1.92752113e+01 -8.86211205e+00]
+ [-4.20858536e+01  6.57025375e+01]
+ [-4.65590286e+01 -7.66036940e+00]
+ [-3.86707954e+01 -5.30003624e+01]
+ [ 3.77290611e+01  6.00368042e+01]
+ [-3.63304863e+01 -5.57575798e+01]
+ [-3.38382263e+01  9.58611679e+01]
+ [-2.04216919e+01 -6.55782928e+01]
+ [-3.00452023e+01  1.53084908e+01]
+ [-3.50913811e+01  8.83654308e+00]
+ [-3.73023529e+01 -4.48953400e+01]
+ [ 2.23328190e+01  8.94171448e+01]
+ [ 2.73067657e+02  8.77895584e+01]
+ [-4.93203392e+01  1.38920860e+01]
+ [ 2.66937160e+01 -3.80065422e+01]
+ [ 1.44788361e+02  2.84333076e+01]
+ [ 8.29694843e+00  5.61711693e+01]
+ [-3.65062141e+01 -4.99313889e+01]
+ [-3.67822266e+01  5.85734825e+01]
+ [ 3.12843658e+02 -2.18936634e+01]
+ [-3.68099365e+01 -2.72697487e+01]
+ [-4.08568077e+01 -5.78830223e+01]
+ [-3.67619247e+01 -4.61754913e+01]
+ [-3.80882645e+01 -4.52177450e-02]
+ [ 1.03285408e+01  5.37351379e+01]
+ [-3.68850555e+01  9.20241642e+00]
+ [-4.75946541e+01 -2.46286678e+01]
+ [ 5.77541389e+01  1.30170755e+01]
+ [ 2.20004532e+02  1.85489998e+01]
+ [-3.65023613e+01 -4.42782068e+00]
+ [-3.29801903e+01 -2.30454960e+01]
+ [-2.68703537e+01  9.58869934e+00]
+ [-5.88332701e+00  1.26219170e+02]
+ [ 4.40409660e+01  4.79163094e+01]
+ [-3.68162346e+01  9.13014507e+00]
+ [-5.07439423e+01 -3.06412258e+01]
+ [-2.84839706e+01 -2.79092045e+01]
+ [-5.00830536e+01 -5.80908813e+01]
+ [-3.22056770e+01  9.33245544e+01]
+ [-3.49726830e+01 -1.83637791e+01]
+ [ 3.94312782e+01  3.78827209e+01]
+ [ 7.95509720e+01  9.48300095e+01]
+ [ 4.20624786e+02 -1.42585419e+02]
+ [ 1.51039017e+02  3.76787033e+01]
+ [-4.25561981e+01 -5.97834740e+01]
+ [-4.07407341e+01  4.77314987e+01]
+ [-2.42844086e+01  3.88061371e+01]
+ [-4.37783203e+01 -4.33335075e+01]
+ [-3.69794388e+01 -1.31550121e+00]
+ [ 1.94745464e+01  3.43488503e+01]
+ [-4.54127769e+01  1.03664375e+02]
+ [-3.93407173e+01 -6.10991173e+01]
+ [-3.70460701e+01 -2.56169071e+01]
+ [-4.54350128e+01 -3.08959694e+01]
+ [-4.03714256e+01 -3.08495255e+01]
+ [-3.92553940e+01 -3.51556473e+01]
+ [ 2.53297211e+02 -1.19507599e+00]
+ [-3.71793709e+01 -3.21928749e+01]
+ [-3.28474159e+01  8.95710373e+00]
+ [-3.68372269e+01 -5.10462532e+01]
+ [-7.61320162e+00  2.30268955e+00]
+ [-4.25793991e+01 -5.74623718e+01]
+ [-4.24105530e+01 -6.15009193e+01]
+ [-3.60462646e+01 -5.44592323e+01]
+ [-2.74201794e+01  1.14738493e+01]
+ [-2.90295601e+01  2.01064968e+01]
+ [-3.53001595e+01  1.10632812e+02]
+ [ 2.22803555e+01  7.03419495e+01]
+ [ 3.81587036e+02 -8.41837616e+01]
+ [-3.86170731e+01 -7.05622635e+01]
+ [ 2.49438572e+01  4.28692932e+01]
+ [-1.90403214e+01  4.26871109e+01]
+ [-3.79729309e+01 -5.88901024e+01]
+ [-4.53931580e+01 -2.09241810e+01]
+ [-3.47246590e+01 -1.54767399e+01]
+ [-2.59182529e+01  3.76684341e+01]
+ [-3.42783279e+01 -4.67825813e+01]
+ [-3.76835518e+01 -5.38021049e+01]
+ [-4.27225952e+01 -6.09182281e+01]
+ [-3.63095932e+01 -1.81886292e+01]
+ [-5.07480202e+01 -1.09040594e+01]
+ [-3.12425404e+01  2.53055859e+01]
+ [-2.55199833e+01  6.13841581e+00]
+ [-2.98957691e+01  2.61851444e+01]
+ [-2.37498245e+01  1.31911783e+01]
+ [ 1.18976517e+02  1.17883396e+01]
+ [-5.29053764e+01  2.46011753e+01]
+ [-5.59937248e+01  3.36087914e+01]
+ [ 8.93202057e+01 -9.59020233e+00]
+ [-9.43033600e+00  2.89637413e+01]
+ [-5.68391609e+01  2.55285702e+01]
+ [ 3.44866669e+02  1.17349251e+02]
+ [-4.39300995e+01 -3.89736519e+01]
+ [-2.70862446e+01  5.03467798e+00]
+ [-5.12989578e+01  1.15099197e+02]
+ [-3.41276779e+01  4.52498360e+01]
+ [-3.58260727e+01 -5.82839012e+01]
+ [ 3.13724762e+02 -5.35614967e+01]
+ [-1.93395538e+01 -1.33511982e+01]
+ [-3.76825714e+01 -1.95338917e+01]
+ [-3.06163883e+01 -1.69042358e+01]
+ [-3.73312225e+01 -2.23549347e+01]
+ [-3.95571823e+01 -3.32918205e+01]
+ [ 1.54117031e+01 -4.22962990e+01]
+ [-3.13595505e+01 -2.13842945e+01]
+ [-2.62953758e+01 -3.74205933e+01]
+ [-9.26836014e+00 -1.79718494e+01]
+ [-3.71944885e+01  1.34128332e+01]
+ [-2.49401283e+01  6.67440939e+00]
+ [-3.42405853e+01  1.08643332e+01]
+ [ 5.81706953e+00  2.15994396e+01]
+ [-4.26727257e+01 -6.24939194e+01]
+ [-3.71272888e+01  2.39180527e+01]
+ [-2.41525040e+01  5.49193726e+01]
+ [ 2.34967194e+02 -1.14961380e+02]
+ [-4.33071709e+01 -5.64517856e-01]
+ [-4.08752747e+01 -4.42880821e+01]
+ [ 1.15195724e+02  4.04951324e+01]
+ [-3.51686211e+01  8.38030472e+01]
+ [ 1.11027174e+01  1.15874794e+02]
+ [-2.22046967e+01  1.46998167e-01]
+ [-3.56695557e+01 -4.88601837e+01]
+ [-1.76058445e+01 -9.75905228e+00]
+ [-4.30125923e+01 -3.71555290e+01]
+ [-3.30353241e+01  4.55915213e+00]
+ [-1.58585148e+01  1.74811292e+00]
+ [-1.85552063e+01  5.17074127e+01]
+ [ 3.34669456e+01  9.39320297e+01]
+ [ 1.26497200e+02  5.82720375e+01]
+ [ 2.38732193e+02  1.00835213e+02]
+ [-3.34099617e+01 -5.78747845e+00]
+ [-4.24933319e+01 -5.80559807e+01]
+ [-4.28196487e+01 -5.62694626e+01]
+ [-3.08743916e+01 -3.22959023e+01]
+ [-4.93449936e+01  7.98572845e+01]
+ [-2.45137901e+01  1.88400478e+01]
+ [ 4.82275452e+02 -1.47586578e+02]
+ [-2.96534691e+01  7.96313171e+01]
+ [-3.86990013e+01 -5.42709274e+01]
+ [-3.46719055e+01 -2.01223125e+01]
+ [-3.93394318e+01 -2.59303074e+01]
+ [ 2.07254059e+02  1.53771029e+01]
+ [-2.97735901e+01 -3.11685352e+01]
+ [-4.89033699e+01 -3.03857098e+01]
+ [-3.69259415e+01  1.72739487e+01]
+ [-4.19947815e+01 -7.78310013e+00]
+ [ 3.40358276e+01  5.69028130e+01]
+ [-3.71713982e+01 -2.90266609e+01]
+ [-4.85662117e+01  4.61616554e+01]
+ [-4.06754417e+01 -1.16337070e+01]
+ [-3.79456444e+01 -6.11480751e+01]
+ [-4.59131393e+01  9.13757324e+01]
+ [-4.11263657e+01 -4.71965141e+01]
+ [ 7.47286224e+01  1.63572235e+01]
+ [-2.90668678e+01 -5.09082794e+00]
+ [-5.28644218e+01 -3.58812370e+01]
+ [-3.95946579e+01 -6.44072342e+01]
+ [ 7.04939194e+01 -4.87671328e+00]
+ [ 2.88817825e+01  8.63479080e+01]
+ [-4.05268555e+01 -5.78434715e+01]
+ [-5.11247940e+01  3.27800980e+01]
+ [-3.71981506e+01  9.48750916e+01]
+ [ 2.62284607e+02 -6.50315933e+01]
+ [-4.25689583e+01 -7.42995377e+01]
+ [-4.07852783e+01 -6.97394104e+01]
+ [-4.49803810e+01 -5.42197647e+01]
+ [-4.50117916e-01  1.47176781e+01]
+ [-4.03771782e+01 -2.02594643e+01]
+ [ 2.06398315e+02  6.46117783e+01]
+ [-1.98057556e+01  7.55205917e+01]
+ [-3.96195908e+01 -2.98523979e+01]
+ [-3.40876937e+00  6.28066940e+01]
+ [-3.52510300e+01 -2.98614140e+01]
+ [-5.37423782e+01 -1.32766590e+01]
+ [-3.23342743e+01  8.63807011e+00]
+ [-3.44744759e+01 -3.47955551e+01]
+ [-4.73818779e+01  8.05034103e+01]
+ [-4.12652130e+01 -3.32382736e+01]
+ [-4.81539116e+01  8.43865814e+01]
+ [ 8.89602585e+01 -3.33640862e+01]
+ [-3.97470970e+01 -6.37618065e+01]
+ [-3.32443275e+01 -3.48026009e+01]
+ [-3.85740662e+01  2.28718262e+01]
+ [ 1.94737492e+01  1.78730286e+02]
+ [-3.60090981e+01  4.54106827e+01]
+ [-5.03066788e+01 -4.56403084e+01]]
+[[ 0.00782844  0.01060935  0.01315628 ... -0.00110051 -0.00120934
   -0.0007786 ]
- [-0.00430644 -0.00433365 -0.00487836 ...  0.00233991  0.00243057
+ [-0.00430667 -0.00433361 -0.00487834 ...  0.00233991  0.00243056
    0.00122821]]</code></pre>
 </div>
 </div>
 <p>In the code above, we import the necessary modules and create an instance of the PCA class from scikit-learn. We specify the desired number of components (n_components) as an argument. Next, we fit the PCA model to the data_matrix using the fit() method. Then, we transform the original data to the principal components using the transform() method.</p>
 <p>You can access the principal components via the components_ attribute and the explained variance ratio via the explained_variance_ratio_ attribute of the PCA object.</p>
 <p>Finally, we print the shape of the transformed data matrix and show the first few rows of the transformed data.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="35">
+<div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#producing a PCA plot</span></span>
@@ -1726,7 +1727,7 @@ font-style: inherit;">"PCA Plot"</span>)</span>
 <section id="cell-type-specific-histone-modification-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="cell-type-specific-histone-modification-analysis">Cell Type Specific Histone Modification Analysis</h2>
 <p>Lung tissue cells:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="36">
+<div class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1">lung_targets <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df_targets[df_targets[<span class="st" style="color: #20794D;
@@ -1784,7 +1785,7 @@ font-style: inherit;">id</span>]</span>
 </div>
 </div>
 <p>T cells (takes too long to run):</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="37">
+<div class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#tcell_targets = df_targets[df_targets["description"].str.contains("CHIP") &amp; df_targets["description"].str.contains("H3K27ac") &amp; df_targets["description"].str.contains("T cell")]</span></span>
@@ -1809,7 +1810,7 @@ background-color: null;
 font-style: inherit;">#plot_tracks(tracks, target_interval)</span></span></code></pre></div>
 </div>
 <p>Heart tissue (takes too long to run):</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="38">
+<div class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#heart_targets = df_targets[df_targets["description"].str.contains("CHIP") &amp; df_targets["description"].str.contains("H3K27ac") &amp; df_targets["description"].str.contains("heart")]</span></span>
@@ -1842,7 +1843,7 @@ font-style: inherit;">#plot_tracks(tracks, target_interval)</span></span></code>
 <section id="predicting-on-average-haplotype" class="level2">
 <h2 class="anchored" data-anchor-id="predicting-on-average-haplotype">Predicting on Average Haplotype</h2>
 <p>Change the run predictions function: Currently it is averaging the predictions from each haplotype individually. We need to change it so that it averages the haplotype before it predicts.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="39">
+<div class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> run_hapavg_predictions(gene_intervals, tss_dataframe, individuals_list<span class="op" style="color: #5E5E5E;
@@ -2258,7 +2259,7 @@ font-style: inherit;">return</span>([gene_output, gene_predictions])</span>
 <span id="cb54-79"></span></code></pre></div>
 </div>
 <p>Function to download chromosome bed files and read chromosomes dataframes.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="40">
+<div class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1">chrom_bed_downloads <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
@@ -2407,7 +2408,7 @@ font-style: inherit;">22</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="41">
+<div class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> download_chrom_beds(chromosome, genes, downloads_table<span class="op" style="color: #5E5E5E;
@@ -2564,7 +2565,7 @@ font-style: inherit;">/</span>data<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>chr_{chromosome}_bed.tar.gz</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="42">
+<div class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1">download_chrom_beds(chromosome <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -2577,7 +2578,7 @@ font-style: inherit;">'GSDMB'</span>])<span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#, 'MED24', 'ORMDL3', 'IKZF3'])</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="43">
+<div class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1">chr17_tss <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.read_table(<span class="st" style="color: #20794D;
@@ -2593,7 +2594,7 @@ background-color: null;
 font-style: inherit;">'</span>)</span></code></pre></div>
 </div>
 <p>Run prediction on 10 individuals with averaged haplotypes.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="44">
+<div class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1">asthma_genes <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
@@ -2643,7 +2644,7 @@ background-color: null;
 font-style: inherit;"># we use the TSS information</span></span></code></pre></div>
 </div>
 <p>Check if individuals are present in the chromosome 17 file.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="45">
+<div class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> check_individuals(path_to_bed_file, list_of_individuals):</span>
@@ -2729,7 +2730,7 @@ font-style: inherit;">'All individuals are present in the bed file.'</span>)</sp
 background-color: null;
 font-style: inherit;">return</span>(missing)</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="46">
+<div class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1">missing <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> check_individuals(<span class="st" style="color: #20794D;
@@ -2767,7 +2768,7 @@ All individuals are present in the bed file.</code></pre>
 </div>
 </div>
 <p>Collect individuals we want to predict for.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="47">
+<div class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> collect_intervals(chromosomes <span class="op" style="color: #5E5E5E;
@@ -2903,7 +2904,7 @@ font-style: inherit;">None</span>)):</span>
 background-color: null;
 font-style: inherit;">return</span>(gene_intervals)</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="48">
+<div class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1">asthma_intervals <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> collect_intervals(chromosomes<span class="op" style="color: #5E5E5E;
@@ -2919,7 +2920,7 @@ font-style: inherit;"># here, we collect the intervals for that gene</span></spa
 </div>
 </div>
 <p>More specific predictions functions from original hackathon code.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="49">
+<div class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> prepare_for_quantify_prediction_per_TSS(predictions, gene, tss_df):</span>
@@ -3147,7 +3148,7 @@ font-style: inherit;">=</span> cage_preds</span>
 background-color: null;
 font-style: inherit;">return</span>(tss_predictions)</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="50">
+<div class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb67" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1">pred_hapl_avg <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> run_hapavg_predictions(gene_intervals<span class="op" style="color: #5E5E5E;
@@ -3174,7 +3175,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <section id="regular-enformer-predictions-individual-haplotype-predictions" class="level2">
 <h2 class="anchored" data-anchor-id="regular-enformer-predictions-individual-haplotype-predictions">Regular Enformer Predictions (individual haplotype predictions)</h2>
 <p>The regular run_predictions functions outputs the predictions for each haplotype and puts each in a list (without averaging it), which is why it produces double the amount of values as your avg_run_predictions function. Use the regular run_predictions and then average them.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="51">
+<div class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb69" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> run_predictions(gene_intervals, tss_dataframe, individuals_list<span class="op" style="color: #5E5E5E;
@@ -3576,7 +3577,7 @@ font-style: inherit;">=</span> individual_prediction</span>
 background-color: null;
 font-style: inherit;">return</span>([gene_output, gene_predictions])</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="52">
+<div class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb70" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1">pred_hapl_sep <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> run_predictions(gene_intervals<span class="op" style="color: #5E5E5E;
@@ -3599,7 +3600,7 @@ Currently on gene GSDMB, and predicting on individual HG00380...
 Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="53">
+<div class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb72" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"></span>
 <span id="cb72-2"><span class="im" style="color: #00769E;
 background-color: null;
@@ -3670,7 +3671,7 @@ font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">list</span>(get_all_values(pred_hapl_sep))</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="54">
+<div class="cell" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb73" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="bu" style="color: null;
@@ -3686,7 +3687,7 @@ font-style: inherit;">len</span>(values_sep_hapl))</span></code></pre></div>
 9090</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="55">
+<div class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb75" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1">plt.scatter(values_avg_hapl, values_sep_hapl)</span>
 <span id="cb75-2">plt.xlabel(<span class="st" style="color: #20794D;
 background-color: null;
@@ -3704,7 +3705,7 @@ font-style: inherit;">"Enformer Predictions: Two Haplotypes vs Averaged Haplotyp
 <p><img src="https://www.srustillmblog.io/posts/2023-07-19-katenproj/enf_proj_partone_files/figure-html/cell-56-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="56">
+<div class="cell" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb77" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#calculate correlation coefficient for above plot</span></span>
@@ -3734,7 +3735,7 @@ font-style: inherit;">print</span>(corr)</span></code></pre></div>
 </section>
 <section id="prepare-input-data" class="level2">
 <h2 class="anchored" data-anchor-id="prepare-input-data">Prepare Input Data</h2>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="57">
+<div class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb79" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1">geuvadis_gene_expression <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.read_table(<span class="st" style="color: #20794D;
@@ -3929,7 +3930,7 @@ font-style: inherit;">5</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="58">
+<div class="cell" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb80" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1">gene_intervals <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> collect_intervals(chromosomes<span class="op" style="color: #5E5E5E;
@@ -3948,7 +3949,7 @@ font-style: inherit;">print</span>(gene_intervals)</span></code></pre></div>
 <pre><code>{'GSDMB': ['17', 38060848, 38077313]}</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="59">
+<div class="cell" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb82" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1">model <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Enformer(model_path) <span class="co" style="color: #5E5E5E;
@@ -3965,7 +3966,7 @@ font-style: inherit;"># we define a class called fasta_extractor to help us extr
 <section id="predicting-separated-haplotype-and-averages-haplotype-across-tracks" class="level2">
 <h2 class="anchored" data-anchor-id="predicting-separated-haplotype-and-averages-haplotype-across-tracks">Predicting Separated Haplotype and Averages Haplotype Across Tracks</h2>
 <p>Pick one individual at random.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="60">
+<div class="cell" data-execution_count="60">
 <div class="sourceCode cell-code" id="cb83" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1">rand_individual <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> np.random.choice(a<span class="op" style="color: #5E5E5E;
@@ -3985,10 +3986,10 @@ background-color: null;
 font-style: inherit;"># individuals we are interested in</span></span>
 <span id="cb83-2">rand_individual</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="60">
-<pre><code>'HG00306'</code></pre>
+<pre><code>'NA20507'</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="61">
+<div class="cell" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb85" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1">gene <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -4060,7 +4061,7 @@ font-style: inherit;">0</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># read in the appropriate bed file for the gene</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="62">
+<div class="cell" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb86" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> geno_to_seq(gene, individual):</span>
@@ -4178,7 +4179,7 @@ font-style: inherit;">"ALT"</span>]</span>
 background-color: null;
 font-style: inherit;">return</span> haplo_1, haplo_2</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="63">
+<div class="cell" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb87" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1">haplo_1, haplo_2 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> geno_to_seq(<span class="st" style="color: #20794D;
@@ -4203,7 +4204,7 @@ font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="64">
+<div class="cell" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb88" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1">prediction_1 <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model.predict_on_batch(haplo_1_enc)[<span class="st" style="color: #20794D;
@@ -4236,7 +4237,7 @@ font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="65">
+<div class="cell" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb89" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1">res <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> []</span>
@@ -4264,7 +4265,7 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb89-6">    res.append(corr_all)</span></code></pre></div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="66">
+<div class="cell" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb90" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="bu" style="color: null;
@@ -4273,7 +4274,7 @@ font-style: inherit;">min</span>(res), <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">max</span>(res))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.9998775696710487 0.9999999981804293</code></pre>
+<pre><code>0.9909548473158399 0.9999998617710296</code></pre>
 </div>
 </div>
 <p>The results from both methods are nearly identical across all tracks.</p>
