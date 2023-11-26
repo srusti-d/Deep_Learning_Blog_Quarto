@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Import necessary packages.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_hub <span class="im">as</span> hub <span class="co"># for interacting with saved models and tensorflow hub</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip <span class="co"># for manipulating compressed files</span></span>
@@ -246,7 +246,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 </div>
 </div>
 <p>Changed the original code from !pip to %pip because only &amp;pip allows us to import packages into the correct location (including tensorflow, which was the specific package that wasn’t importing here).</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tensorflow import</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install tensorflow </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install tensorflow_hub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -309,13 +309,13 @@ Requirement already satisfied: protobuf&gt;=3.19.6 in /soft/datascience/conda/20
 Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure the GPU is enabled</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> tf.config.list_physical_devices(<span class="st">'GPU'</span>), <span class="st">'Start the colab kernel with GPU: Runtime -&gt; Change runtime type -&gt; GPU'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>kipoiseq is a package that helps us to extract sequences from fasta files given some intervals. We will install the package.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install kipoiseq<span class="op">==</span><span class="fl">0.5.2</span> <span class="op">--</span>quiet <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="co">#changed ! in front of pip to % on polaris for package import </span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># You can ignore the pyYAML error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -325,7 +325,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install Biopython <span class="co">#Biopython is a python package that helps us do many bioinfomatic analysis in python</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Defaulting to user installation because normal site-packages is not writeable
@@ -338,7 +338,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
 <p>We want to define some paths to save downloaded files for the duration of this notebook.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>transform_path <span class="op">=</span> <span class="st">'gs://dm-enformer/models/enformer.finetuned.SAD.robustscaler-PCA500-robustscaler.transform.pkl'</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model_path <span class="op">=</span> <span class="st">'https://tfhub.dev/deepmind/enformer/1'</span> <span class="co">#where DeepMind stored the enformer model</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>fasta_file <span class="op">=</span> <span class="st">'/grand/TFXcan/imlab/users/srusti/enformer/data/genome.fa'</span> <span class="co">#contains the reference human genome</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -347,7 +347,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </section>
 <section id="extracting-dna-sequence-centered-at-locus" class="level2">
 <h2 class="anchored" data-anchor-id="extracting-dna-sequence-centered-at-locus">Extracting DNA Sequence Centered at Locus</h2>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FastaStringExtractor:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, fasta_file):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> pyfaidx</span>
@@ -373,26 +373,26 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.fasta.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To use the above function, first create an instance of the FastaStringExtractor object, providing a fasta file you want to use:</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fasta_extractor_object <span class="op">=</span> FastaStringExtractor(fasta_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, create an interval you want to extract the sequence from using kipoiseq (“.resize” will resize the interval you provide to a length provided by “sequence_length”. The new interval will be centered on the “start”, “end” you provided originally ):</p>
 <p>target_interval = kipoiseq.Interval(chrom,start,end).resize(SEQUENCE_LENGTH)</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SEQUENCE_LENGTH <span class="op">=</span> <span class="dv">393216</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>target_interval <span class="op">=</span> kipoiseq.Interval(<span class="st">'chr17'</span>, <span class="dv">38060848</span>, <span class="dv">38074888</span>).resize(SEQUENCE_LENGTH) <span class="co">#17q locus of asthma</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>target_interval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>Interval(chrom='chr17', start=37871260, end=38264476, name='', strand='.', ...)</code></pre>
 </div>
 </div>
 <p>Finally, extract the sequence using the extractor object like this:</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>extracted_sequence <span class="op">=</span> fasta_extractor_object.extract(target_interval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(extracted_sequence)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(extracted_sequence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -404,7 +404,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <h2 class="anchored" data-anchor-id="call-enformer-using-extracted-dna-sequence">Call Enformer using Extracted DNA Sequence</h2>
 <p>Next, we have some functions that will help us along the way. Classes and methods defined in this code block can be found in the <a href="https://colab.research.google.com/github/deepmind/deepmind_research/blob/master/enformer/enformer-usage.ipynb">original Enformer usage colab notebook</a>.</p>
 <p><strong>Enformer, EnformerScoreVariantsNormalized, EnformerScoreVariantsPCANormalized</strong></p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># @title `Enformer`, `EnformerScoreVariantsNormalized`, `EnformerScoreVariantsPCANormalized`,</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>SEQUENCE_LENGTH <span class="op">=</span> <span class="dv">393216</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -480,7 +480,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 <p><strong>One Hot Encoder</strong></p>
 <p>One-Hot Encoder converts the region of the genome from letters like A, G, T, C to binary (1, 0)</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> one_hot_encode(sequence):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> kipoiseq.transforms.functional.one_hot_dna(sequence).astype(np.float32)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,16 +508,16 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'alt'</span>: variant.alt}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Defining the Enformer model and fasta_extractor in order to run Enformer</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Enformer(model_path)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>fasta_extractor <span class="op">=</span> FastaStringExtractor(fasta_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run One Hot Encoder and run enformer.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sequence_one_hot <span class="op">=</span> one_hot_encode(fasta_extractor.extract(target_interval.resize(SEQUENCE_LENGTH)))</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.predict_on_batch(sequence_one_hot[np.newaxis])[<span class="st">'human'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>predictions.shape <span class="co">#shows that this is the 896 by 5313 matrix that Enformer outputs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>(896, 5313)</code></pre>
@@ -527,21 +527,21 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <section id="plot-enformer-matrix-896-x-5313" class="level2">
 <h2 class="anchored" data-anchor-id="plot-enformer-matrix-896-x-5313">Plot Enformer Matrix (896 x 5313)</h2>
 <p>We will plot this Enformer matrix in R, so it needs to be converted to a CSV file in this notebook first. After saving it as a csv file, we will read the file in RStudio and visualize it using image(matrix), where “matrix” is the name of our Enformer predictions matrix (assigned as ‘predictions’).</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">'/grand/TFXcan/imlab/users/srusti/enformer/data/q17_enformer.csv'</span>, predictions, delimiter<span class="op">=</span><span class="st">','</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To save the file from polaris directory to local directory, use the command scp:</p>
 <p>scp sd04@polaris.alcf.anl.gov:/grand/TFXcan/imlab/users/srusti/enformer/data/q17_enformer.csv ~/localfolderpath</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predictions.<span class="bu">max</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>559.01654</code></pre>
 </div>
 </div>
 <p>Attempts at making a plot of the enformer output matrix. Very computationally expensive.</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vmax = predictions.max()</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#sns.heatmap(predictions, vmin=0, vmax=1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -549,7 +549,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <section id="plot-tracks" class="level2">
 <h2 class="anchored" data-anchor-id="plot-tracks">Plot Tracks</h2>
 <p>Function to plot tracks</p>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_tracks(tracks, interval, height<span class="op">=</span><span class="fl">1.5</span>):</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(tracks), <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, height <span class="op">*</span> <span class="bu">len</span>(tracks)), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> ax, (title, y) <span class="kw">in</span> <span class="bu">zip</span>(axes, tracks.items()):</span>
@@ -560,7 +560,7 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Download targets_human.txt</p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>targets_txt <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/calico/basenji/master/manuscripts/cross2020/targets_human.txt'</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_targets <span class="op">=</span> pd.read_csv(targets_txt, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>df_targets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -712,12 +712,12 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
 <p>Function to extract from dataframe based on substring</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> idx_substr(df, column_name, substring):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> df[column_name].<span class="bu">str</span>.contains(substring)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask].index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> idx_substr(df_targets, <span class="st">'description'</span>, <span class="st">'H3K27ac'</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>array_h32kac <span class="op">=</span> np.array(indices)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>list_h32kac <span class="op">=</span> array_h32kac.tolist()</span>
@@ -731,25 +731,25 @@ Note: you may need to restart the kernel to use updated packages.</code></pre>
 </div>
 </div>
 <p>The columns in the ‘predictions’ enformer output matrix is the same as the rows in the human targets dataframe.</p>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#idk why this for loop isn't working (goal is to iterate through the list of indices and plot the tracks for each of those indices)</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#for i in list_h32kac:</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#tracks = predictions[:, i]</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plot_tracks(targets, target_interval)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Trying for loop again but with dictionary comprehension.</p>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>hm_targets <span class="op">=</span> df_targets[df_targets[<span class="st">"description"</span>].<span class="bu">str</span>.contains(<span class="st">"H3K27ac"</span>)]</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>hm_indices <span class="op">=</span> hm_targets.index.to_numpy()</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>hm_desc <span class="op">=</span> hm_targets.description</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(hm_desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>228</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hm_desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>688                                  CHIP:H3K27ac:GM12878
@@ -767,14 +767,14 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 </div>
 <p>Taking too long to run, but worked at some point?</p>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tracks = {}</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#for id, desc in zip(hm_indices, hm_desc[:30]):</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#tracks[desc] = predictions[:, id]</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#plot_tracks(tracks, target_interval)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="30">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tracks <span class="op">=</span> {}</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span>, desc <span class="kw">in</span> <span class="bu">zip</span>(hm_indices, hm_desc[:<span class="dv">5</span>]):</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    tracks[desc] <span class="op">=</span> predictions[:, <span class="bu">id</span>]</span>
@@ -785,7 +785,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 <p>With the above plots, the y-axis is signal strength and the x-axis is locations along the genome. Keep in mind that the y-axis is different for each plot, so don’t be misguided by that. The peaks indicate a strong signal.</p>
 <p>Creating new matrix of just H32Kac histone modifications.</p>
-<div class="cell" data-execution_count="31">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> spec_matr(matrix, indices):</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    selected_columns <span class="op">=</span> matrix[:, indices]</span>
@@ -810,11 +810,11 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 </div>
 <p>Transpose Matrix</p>
-<div class="cell" data-execution_count="32">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>final_hist <span class="op">=</span> hist_mat.transpose()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Conducting PCA.</p>
-<div class="cell" data-execution_count="33">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an instance of PCA with the desired number of components</span></span>
@@ -837,7 +837,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <pre><code>Shape of transformed data: (228, 2)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transformed_data)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(principal_components)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1078,7 +1078,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <p>In the code above, we import the necessary modules and create an instance of the PCA class from scikit-learn. We specify the desired number of components (n_components) as an argument. Next, we fit the PCA model to the data_matrix using the fit() method. Then, we transform the original data to the principal components using the transform() method.</p>
 <p>You can access the principal components via the components_ attribute and the explained variance ratio via the explained_variance_ratio_ attribute of the PCA object.</p>
 <p>Finally, we print the shape of the transformed data matrix and show the first few rows of the transformed data.</p>
-<div class="cell" data-execution_count="35">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#producing a PCA plot</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(transformed_data[:, <span class="dv">0</span>], transformed_data[:, <span class="dv">1</span>])</span>
@@ -1101,7 +1101,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <section id="cell-type-specific-histone-modification-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="cell-type-specific-histone-modification-analysis">Cell Type Specific Histone Modification Analysis</h2>
 <p>Lung tissue cells:</p>
-<div class="cell" data-execution_count="36">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>lung_targets <span class="op">=</span> df_targets[df_targets[<span class="st">"description"</span>].<span class="bu">str</span>.contains(<span class="st">"CHIP"</span>) <span class="op">&amp;</span> df_targets[<span class="st">"description"</span>].<span class="bu">str</span>.contains(<span class="st">"H3K27ac"</span>) <span class="op">&amp;</span> df_targets[<span class="st">"description"</span>].<span class="bu">str</span>.contains(<span class="st">"lung"</span>)]</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>lung_indices <span class="op">=</span> lung_targets.index.to_numpy()</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>lung_desc <span class="op">=</span> lung_targets.description</span>
@@ -1115,7 +1115,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 </div>
 <p>T cells (takes too long to run):</p>
-<div class="cell" data-execution_count="37">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tcell_targets = df_targets[df_targets["description"].str.contains("CHIP") &amp; df_targets["description"].str.contains("H3K27ac") &amp; df_targets["description"].str.contains("T cell")]</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">#tcell_indices = tcell_targets.index.to_numpy()</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">#tcell_desc = tcell_targets.description</span></span>
@@ -1126,7 +1126,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co">#plot_tracks(tracks, target_interval)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Heart tissue (takes too long to run):</p>
-<div class="cell" data-execution_count="38">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#heart_targets = df_targets[df_targets["description"].str.contains("CHIP") &amp; df_targets["description"].str.contains("H3K27ac") &amp; df_targets["description"].str.contains("heart")]</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co">#heart_indices = heart_targets.index.to_numpy()</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co">#heart_desc = heart_targets.description</span></span>
@@ -1145,7 +1145,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <section id="predicting-on-average-haplotype" class="level2">
 <h2 class="anchored" data-anchor-id="predicting-on-average-haplotype">Predicting on Average Haplotype</h2>
 <p>Change the run predictions function: Currently it is averaging the predictions from each haplotype individually. We need to change it so that it averages the haplotype before it predicts.</p>
-<div class="cell" data-execution_count="39">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_hapavg_predictions(gene_intervals, tss_dataframe, individuals_list<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Parameters :</span></span>
@@ -1227,7 +1227,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <span id="cb54-79"><a href="#cb54-79" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Function to download chromosome bed files and read chromosomes dataframes.</p>
-<div class="cell" data-execution_count="40">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>chrom_bed_downloads <span class="op">=</span> pd.read_csv(<span class="st">"https://uchicago.box.com/shared/static/du77wf31li38tciv8imivwu57svae03p.csv"</span>)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>chrom_bed_downloads.index <span class="op">=</span> chrom_bed_downloads[<span class="st">"chroms"</span>]</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1366,7 +1366,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="41">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_chrom_beds(chromosome, genes, downloads_table<span class="op">=</span>chrom_bed_downloads):</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Downloads bed/variation files for a chromosome and list of genes</span></span>
@@ -1383,14 +1383,14 @@ Name: description, Length: 228, dtype: object</code></pre>
 <span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove the download tar.gz file</span></span>
 <span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>rm <span class="op">/</span>grand<span class="op">/</span>TFXcan<span class="op">/</span>imlab<span class="op">/</span>users<span class="op">/</span>srusti<span class="op">/</span>enformer<span class="op">/</span>data<span class="op">/</span>chr_{chromosome}_bed.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="42">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>download_chrom_beds(chromosome <span class="op">=</span> <span class="st">"17"</span>, genes <span class="op">=</span> [<span class="st">'GSDMB'</span>])<span class="co">#, 'MED24', 'ORMDL3', 'IKZF3'])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="43">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>chr17_tss <span class="op">=</span> pd.read_table(<span class="st">'/grand/TFXcan/imlab/users/srusti/enformer/data/tss_by_chr/chr17_tss_by_gene.txt'</span>, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run prediction on 10 individuals with averaged haplotypes.</p>
-<div class="cell" data-execution_count="44">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>asthma_genes <span class="op">=</span> [<span class="st">'GSDMB'</span>] <span class="co"># our gene of interest</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>rand_individuals <span class="op">=</span> [<span class="st">'NA11992'</span>, <span class="st">'NA19235'</span>, <span class="st">'NA20770'</span>, <span class="st">'HG00232'</span>, <span class="st">'HG00342'</span>, <span class="st">'NA20502'</span>, <span class="st">'NA19189'</span>, <span class="st">'HG00108'</span>, <span class="st">'HG00380'</span>, <span class="st">'NA12872'</span>] <span class="co"># individuals we are interested in</span></span>
@@ -1400,7 +1400,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>chr17_tss_dfs <span class="op">=</span> [chr17_tss] <span class="co"># we use the TSS information</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check if individuals are present in the chromosome 17 file.</p>
-<div class="cell" data-execution_count="45">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_individuals(path_to_bed_file, list_of_individuals):</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
@@ -1422,7 +1422,7 @@ Name: description, Length: 228, dtype: object</code></pre>
 <span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(missing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="46">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> check_individuals(<span class="st">"/grand/TFXcan/imlab/users/srusti/enformer/data/individual_beds/chr17/chr17_IKZF3.bed"</span>, list_of_individuals <span class="op">=</span> rand_individuals)</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> check_individuals(<span class="st">"/grand/TFXcan/imlab/users/srusti/enformer/data/individual_beds/chr17/chr17_GSDMB.bed"</span>, list_of_individuals <span class="op">=</span> rand_individuals)</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> check_individuals(<span class="st">"/grand/TFXcan/imlab/users/srusti/enformer/data/individual_beds/chr17/chr17_MED24.bed"</span>, list_of_individuals <span class="op">=</span> rand_individuals)</span>
@@ -1436,7 +1436,7 @@ All individuals are present in the bed file.</code></pre>
 </div>
 </div>
 <p>Collect individuals we want to predict for.</p>
-<div class="cell" data-execution_count="47">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collect_intervals(chromosomes <span class="op">=</span> [<span class="st">"22"</span>], gene_list<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
@@ -1466,7 +1466,7 @@ All individuals are present in the bed file.</code></pre>
 <span id="cb63-27"><a href="#cb63-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> <span class="bu">isinstance</span>(gene_list, <span class="bu">type</span>(<span class="va">None</span>)):</span>
 <span id="cb63-28"><a href="#cb63-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(gene_intervals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="48">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>asthma_intervals <span class="op">=</span> collect_intervals(chromosomes<span class="op">=</span>asthma_chromosomes, gene_list<span class="op">=</span>asthma_genes) <span class="co"># here, we collect the intervals for that gene</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>asthma_intervals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="48">
@@ -1474,7 +1474,7 @@ All individuals are present in the bed file.</code></pre>
 </div>
 </div>
 <p>More specific predictions functions from original hackathon code.</p>
-<div class="cell" data-execution_count="49">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_for_quantify_prediction_per_TSS(predictions, gene, tss_df):</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
@@ -1526,7 +1526,7 @@ All individuals are present in the bed file.</code></pre>
 <span id="cb66-49"><a href="#cb66-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-50"><a href="#cb66-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(tss_predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="50">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>pred_hapl_avg <span class="op">=</span> run_hapavg_predictions(gene_intervals<span class="op">=</span>asthma_intervals, tss_dataframe<span class="op">=</span>chr17_tss_dfs, individuals_list<span class="op">=</span>rand_individuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Currently on gene GSDMB, and predicting on individual NA11992...
@@ -1545,7 +1545,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <section id="regular-enformer-predictions-individual-haplotype-predictions" class="level2">
 <h2 class="anchored" data-anchor-id="regular-enformer-predictions-individual-haplotype-predictions">Regular Enformer Predictions (individual haplotype predictions)</h2>
 <p>The regular run_predictions functions outputs the predictions for each haplotype and puts each in a list (without averaging it), which is why it produces double the amount of values as your avg_run_predictions function. Use the regular run_predictions and then average them.</p>
-<div class="cell" data-execution_count="51">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_predictions(gene_intervals, tss_dataframe, individuals_list<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Parameters :</span></span>
@@ -1621,7 +1621,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <span id="cb69-73"><a href="#cb69-73" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-74"><a href="#cb69-74" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>([gene_output, gene_predictions])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="52">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>pred_hapl_sep <span class="op">=</span> run_predictions(gene_intervals<span class="op">=</span>asthma_intervals, tss_dataframe<span class="op">=</span>chr17_tss_dfs, individuals_list<span class="op">=</span>rand_individuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Currently on gene GSDMB, and predicting on individual NA11992...
@@ -1636,7 +1636,7 @@ Currently on gene GSDMB, and predicting on individual HG00380...
 Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="53">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Iterable</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1653,7 +1653,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a>values_avg_hapl <span class="op">=</span> <span class="bu">list</span>(get_all_values(pred_hapl_avg))</span>
 <span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a>values_sep_hapl <span class="op">=</span> <span class="bu">list</span>(get_all_values(pred_hapl_sep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="54">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(values_avg_hapl))</span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(values_sep_hapl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1661,7 +1661,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 9090</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="55">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(values_avg_hapl, values_sep_hapl)</span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Averaged Haplotype"</span>)</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Separate Haplotype"</span>)</span>
@@ -1673,7 +1673,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <p><img src="enf_proj_partone_files/figure-html/cell-56-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="56">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate correlation coefficient for above plot</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.corrcoef(values_avg_hapl, values_sep_hapl)[<span class="dv">0</span>][<span class="dv">1</span>]</span>
@@ -1687,7 +1687,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 </section>
 <section id="prepare-input-data" class="level2">
 <h2 class="anchored" data-anchor-id="prepare-input-data">Prepare Input Data</h2>
-<div class="cell" data-execution_count="57">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>geuvadis_gene_expression <span class="op">=</span> pd.read_table(<span class="st">'https://uchicago.box.com/shared/static/5vwc7pjw9qmtv7298c4rc7bcuicoyemt.gz'</span>, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>,</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>                                         dtype<span class="op">=</span>{<span class="st">'gene_id'</span>: <span class="bu">str</span>, <span class="st">'gene_name'</span>:<span class="bu">str</span>, <span class="st">'TargetID'</span>:<span class="bu">str</span>, <span class="st">'Chr'</span>:<span class="bu">str</span>})</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>geuvadis_gene_expression.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1850,14 +1850,14 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="58">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>gene_intervals <span class="op">=</span> collect_intervals(chromosomes<span class="op">=</span>[<span class="st">'17'</span>], gene_list<span class="op">=</span>[<span class="st">'GSDMB'</span>])</span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gene_intervals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'GSDMB': ['17', 38060848, 38077313]}</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="59">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Enformer(model_path) <span class="co"># here we load the model architecture.</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>fasta_extractor <span class="op">=</span> FastaStringExtractor(fasta_file) <span class="co"># we define a class called fasta_extractor to help us extra raw sequence data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1866,14 +1866,14 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <section id="predicting-separated-haplotype-and-averages-haplotype-across-tracks" class="level2">
 <h2 class="anchored" data-anchor-id="predicting-separated-haplotype-and-averages-haplotype-across-tracks">Predicting Separated Haplotype and Averages Haplotype Across Tracks</h2>
 <p>Pick one individual at random.</p>
-<div class="cell" data-execution_count="60">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="60">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>rand_individual <span class="op">=</span> np.random.choice(a<span class="op">=</span>geuvadis_gene_expression.columns[<span class="dv">6</span>:<span class="op">-</span><span class="dv">1</span>], replace<span class="op">=</span><span class="va">False</span>) <span class="co"># individuals we are interested in</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>rand_individual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="60">
 <pre><code>'NA20507'</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="61">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>gene <span class="op">=</span> <span class="st">'GSDMB'</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>gene_interval <span class="op">=</span> gene_intervals[gene]</span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>target_interval <span class="op">=</span> kipoiseq.Interval(<span class="st">"chr"</span> <span class="op">+</span> gene_interval[<span class="dv">0</span>],</span>
@@ -1883,7 +1883,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>window_coords <span class="op">=</span> target_interval.resize(SEQUENCE_LENGTH)</span>
 <span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>cur_gene_vars <span class="op">=</span> pd.read_csv(<span class="st">"/grand/TFXcan/imlab/users/srusti/enformer/data/individual_beds/chr"</span> <span class="op">+</span> gene_interval[<span class="dv">0</span>] <span class="op">+</span> <span class="st">"/chr"</span> <span class="op">+</span> gene_interval[<span class="dv">0</span>] <span class="op">+</span> <span class="st">"_"</span><span class="op">+</span> gene <span class="op">+</span> <span class="st">".bed"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, header<span class="op">=</span><span class="dv">0</span>) <span class="co"># read in the appropriate bed file for the gene</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="62">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geno_to_seq(gene, individual):</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>      <span class="co"># two haplotypes per individual</span></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  haplo_1 <span class="op">=</span> <span class="bu">list</span>(target_fa[:])</span>
@@ -1903,21 +1903,21 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a>      haplo_2[row[<span class="st">"POS"</span>]<span class="op">-</span>window_coords.start<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> row[<span class="st">"ALT"</span>]</span>
 <span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> haplo_1, haplo_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="63">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>haplo_1, haplo_2 <span class="op">=</span> geno_to_seq(<span class="st">'GSDMB'</span>, rand_individual)</span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>haplo_1_enc <span class="op">=</span> one_hot_encode(<span class="st">""</span>.join(haplo_1))[np.newaxis]</span>
 <span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>haplo_2_enc <span class="op">=</span> one_hot_encode(<span class="st">""</span>.join(haplo_2))[np.newaxis]</span>
 <span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>average_enc <span class="op">=</span> np.add(haplo_1_enc, haplo_2_enc) <span class="op">/</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="64">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>prediction_1 <span class="op">=</span> model.predict_on_batch(haplo_1_enc)[<span class="st">'human'</span>][<span class="dv">0</span>]</span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>prediction_2 <span class="op">=</span> model.predict_on_batch(haplo_2_enc)[<span class="st">'human'</span>][<span class="dv">0</span>]</span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>pre_average <span class="op">=</span> model.predict_on_batch(average_enc)[<span class="st">'human'</span>][<span class="dv">0</span>]</span>
 <span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>post_average <span class="op">=</span> (prediction_1 <span class="op">+</span> prediction_2) <span class="op">/</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="65">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> []</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5313</span>):</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>    pre_track <span class="op">=</span> pre_average[:, i]</span>
@@ -1925,7 +1925,7 @@ Currently on gene GSDMB, and predicting on individual NA12872...</code></pre>
 <span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>    corr_all <span class="op">=</span> np.corrcoef(pre_track, post_track)[<span class="dv">0</span>][<span class="dv">1</span>]</span>
 <span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>    res.append(corr_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="66">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">min</span>(res), <span class="bu">max</span>(res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.9909548473158399 0.9999998617710296</code></pre>
