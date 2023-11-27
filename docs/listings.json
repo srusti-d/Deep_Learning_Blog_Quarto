@@ -2,7 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/polaris-test/test_tutorial.html",
       "/posts/query-encode/encode-update.html",
+      "/posts/polaris-tutorial/polaris-tutorial.html",
       "/posts/polaris-test/polaris_test.html",
       "/posts/2023-07-19-katenproj/enf_proj_partone.html",
       "/posts/practice_analysis/diabetes_analysis.html",
