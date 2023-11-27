@@ -10,7 +10,547 @@
 <atom:link href="https://www.srustillmblog.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A Blog Navigating my LLM Project</description>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Sun, 26 Nov 2023 06:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 27 Nov 2023 06:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to Use Polaris</title>
+  <dc:creator>Srusti </dc:creator>
+  <link>https://www.srustillmblog.io/posts/polaris-tutorial/polaris-tutorial.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Polaris is a high performance compute system at the Argonne Leadership Computing Facility (ALCF). This post will explain how to use polaris.</p>
+<section id="getting-started-on-polaris" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-on-polaris">Getting Started on Polaris</h2>
+<p>First, make sure your ALCF user account and mobile token account has been created, and that you have followed the steps outlined in the ALCF user set-up email (including downloading MobilePASS+ to get the tokens).</p>
+<section id="to-log-in-to-polaris-navigate-to-the-terminal-and-type" class="level3">
+<h3 class="anchored" data-anchor-id="to-log-in-to-polaris-navigate-to-the-terminal-and-type">To log in to polaris, navigate to the terminal and type:</h3>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>username<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>@polaris.alcf.anl.gov</span></code></pre></div>
+<p>Then, type in the password from your CRYPTOCard/MobilePASS+ token. Each time you login to polaris, you will be given a new password.</p>
+</section>
+<section id="first-your-time-in-the-login-node" class="level3">
+<h3 class="anchored" data-anchor-id="first-your-time-in-the-login-node">First your time in the login node</h3>
+<p>After you login to polaris using the ssh method above, you will be given a notice to users and prompted to type a password, which will be the password in MobilePASS+. Once you are in the login node, you should see something like this in your terminal:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user@polaris-login-02:~</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+<p>You can run applications on the login node, but most of your work should be run on compute nodes by submitting interactive jobs (which we will cover later).</p>
+<p>Once in login node, load conda and create a virtual environment.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">module</span> load conda/2023-10-04 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#updated conda version</span></span>
+<span id="cb3-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate base</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#create venvs directory under ~ for now, </span></span>
+<span id="cb3-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#later we'll use /grand/project/TFXcan or something like this</span></span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> venvs/polaris/2023-10-04</span>
+<span id="cb3-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> venv venvs/polaris/2023-10-04 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--system-site-packages</span></span></code></pre></div>
+<p>Next code chunk will activate the environment you just created and install pip.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> venvs/polaris/2023-10-04/bin/activate</span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> pip install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--upgrade</span> pip setuptools wheel</span></code></pre></div>
+<p>Now, you are free to be able to use pip to install packages as needed into an isolated environment. Example, installing numpy package:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> pip install wandb numpy</span></code></pre></div>
+</section>
+</section>
+<section id="submitting-and-using-a-compute-node" class="level2">
+<h2 class="anchored" data-anchor-id="submitting-and-using-a-compute-node">Submitting and using a compute node</h2>
+<p>Most work should be done on the compute node (an interactive job). After logging in to the login node, request a compute node by running the following:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qsub</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> AIHPC4EDU <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> walltime=1:00:00 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> filesystems=home:grand <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> debug</span></code></pre></div>
+<p>Above command will give you an interactive job for 1 hour. Shorter interactive jobs are more likely to be approved, so you will get them faster. However, to get more than just one hour in the job, you can use the “preemptable” queue instead of “debug” and adjust the walltime as desired. For example, getting an 8 hour node:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qsub</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> AIHPC4EDU <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> walltime=08:00:00 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> filesystems=home:grand <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> preemptable</span></code></pre></div>
+<p>If you are waiting for a while to get the compute node, you may want to check the number of free (available) nodes in polaris:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pbsnodes</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-avjS</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> free <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span></span></code></pre></div>
+<p>You can also check out this cool web-based visualization of free nodes <a href="https://status.alcf.anl.gov/#/polaris">here</a>.</p>
+<p>Once you get a compute node, your terminal will look something like this:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user@x3006c0s25b1n0:~</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+<section id="activate-the-environments-in-the-compute-node." class="level3">
+<h3 class="anchored" data-anchor-id="activate-the-environments-in-the-compute-node.">Activate the environments in the compute node.</h3>
+<p>Activate the base conda and activate your virtual environment where you installed your packages. <strong>You need to do this every time you start a compute node or login to the login node where you are working.</strong></p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">module</span> load conda/2023-10-04</span>
+<span id="cb10-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate base</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> venvs/polaris/2023-10-04/bin/activate</span></code></pre></div>
+</section>
+<section id="how-to-start-a-jupyter-notebook-server-in-the-compute-node" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-start-a-jupyter-notebook-server-in-the-compute-node">How to start a Jupyter Notebook server in the compute node</h3>
+<p>First, get your ip address.</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">my_ip_address</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ip</span> rule <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-w</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0:'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{print $3;exit}'</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span> jupyter-notebook <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-browser</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ip</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--port</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>15005</span></code></pre></div>
+<p>Then:</p>
+<ul>
+<li><p>Open a notebook in VSCode from the remote explorer (file with .ipynb extension).</p></li>
+<li><p>Select a new kernel by clicking on the upper right side of VsCode (for me, it said “Python 3 (ipykernel)”, but yours might say “Select Kernel” or something else)</p></li>
+</ul>
+<p>Polaris is a high performance compute system at the Argonne Leadership Computing Facility (ALCF). This post will explain how to use polaris.</p>
+</section>
+</section>
+<section id="getting-started-on-polaris-1" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-on-polaris-1">Getting Started on Polaris</h2>
+<p>First, make sure your ALCF user account and mobile token account has been created, and that you have followed the steps outlined in the ALCF user set-up email (including downloading MobilePASS+ to get the tokens).</p>
+<section id="to-log-in-to-polaris-navigate-to-the-terminal-and-type-1" class="level3">
+<h3 class="anchored" data-anchor-id="to-log-in-to-polaris-navigate-to-the-terminal-and-type-1">To log in to polaris, navigate to the terminal and type:</h3>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"></span>
+<span id="cb12-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>username<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>@polaris.alcf.anl.gov</span></code></pre></div>
+<p>Then, type in the password from your CRYPTOCard/MobilePASS+ token. Each time you login to polaris, you will be given a new password.</p>
+</section>
+<section id="first-your-time-in-the-login-node-1" class="level3">
+<h3 class="anchored" data-anchor-id="first-your-time-in-the-login-node-1">First your time in the login node</h3>
+<p>After you login to polaris using the ssh method above, you will be given a notice to users and prompted to type a password, which will be the password in MobilePASS+. Once you are in the login node, you should see something like this in your terminal:</p>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user@polaris-login-02:~</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+<p>You can run applications on the login node, but most of your work should be run on compute nodes by submitting interactive jobs (which we will cover later).</p>
+<p>Once in login node, load conda and create a virtual environment.</p>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">module</span> load conda/2023-10-04 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#updated conda version</span></span>
+<span id="cb14-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate base</span>
+<span id="cb14-3"></span>
+<span id="cb14-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#create venvs directory under ~ for now, </span></span>
+<span id="cb14-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#later we'll use /grand/project/TFXcan or something like this</span></span>
+<span id="cb14-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> venvs/polaris/2023-10-04</span>
+<span id="cb14-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> venv venvs/polaris/2023-10-04 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--system-site-packages</span></span></code></pre></div>
+<p>Next code chunk will activate the environment you just created and install pip.</p>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> venvs/polaris/2023-10-04/bin/activate</span>
+<span id="cb15-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> pip install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--upgrade</span> pip setuptools wheel</span></code></pre></div>
+<p>Now, you are free to be able to use pip to install packages as needed into an isolated environment. Example, installing numpy package:</p>
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> pip install wandb numpy</span></code></pre></div>
+</section>
+</section>
+<section id="submitting-and-using-a-compute-node-1" class="level2">
+<h2 class="anchored" data-anchor-id="submitting-and-using-a-compute-node-1">Submitting and using a compute node</h2>
+<p>Most work should be done on the compute node (an interactive job). After logging in to the login node, request a compute node by running the following:</p>
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qsub</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> AIHPC4EDU <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> walltime=1:00:00 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> filesystems=home:grand <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> debug</span></code></pre></div>
+<p>Above command will give you an interactive job for 1 hour. Shorter interactive jobs are more likely to be approved, so you will get them faster. However, to get more than just one hour in the job, you can use the “preemptable” queue instead of “debug” and adjust the walltime as desired. For example, getting an 8 hour node:</p>
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">qsub</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> AIHPC4EDU <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> walltime=08:00:00 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> filesystems=home:grand <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> preemptable</span></code></pre></div>
+<p>If you are waiting for a while to get the compute node, you may want to check the number of free (available) nodes in polaris:</p>
+<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pbsnodes</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-avjS</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> free <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span></span></code></pre></div>
+<p>You can also check out this cool web-based visualization of free nodes <a href="https://status.alcf.anl.gov/#/polaris">here</a>.</p>
+<p>Once you get a compute node, your terminal will look something like this:</p>
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user@x3006c0s25b1n0:~</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+<p>Table from ALCF; five production queues you can target in your qsub (-q <queue name="">):</queue></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.srustillmblog.io/Users/satyadonapati/Github/Deep_Learning_Blog_Quarto/posts/polaris-tutorial/fivequeues.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image</figcaption>
+</figure>
+</div>
+<section id="activate-the-environments-in-the-compute-node.-1" class="level3">
+<h3 class="anchored" data-anchor-id="activate-the-environments-in-the-compute-node.-1">Activate the environments in the compute node.</h3>
+<p>Activate the base conda and activate your virtual environment where you installed your packages. <strong>You need to do this every time you start a compute node or login to the login node where you are working.</strong></p>
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">module</span> load conda/2023-10-04</span>
+<span id="cb21-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate base</span>
+<span id="cb21-3"></span>
+<span id="cb21-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> venvs/polaris/2023-10-04/bin/activate</span></code></pre></div>
+</section>
+<section id="how-to-start-a-jupyter-notebook-server-in-the-compute-node-1" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-start-a-jupyter-notebook-server-in-the-compute-node-1">How to start a Jupyter Notebook server in the compute node</h3>
+<p>First, get your ip address.</p>
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">my_ip_address</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ip</span> rule <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-w</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0:'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{print $3;exit}'</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span> jupyter-notebook <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-browser</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ip</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--port</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>15005</span></code></pre></div>
+<p>Then:</p>
+<p>Open a notebook in VSCode from the remote explorer (file with .ipynb extension).</p>
+<p>Select a new kernel by clicking on the upper right side of VsCode (for me, it said “Python 3 (ipykernel)”, but yours might say “Select Kernel” or something else)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.srustillmblog.io/Users/satyadonapati/Github/Deep_Learning_Blog_Quarto/posts/polaris-tutorial/jupyterstepone.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image</figcaption>
+</figure>
+</div>
+<p>A drop-down will pop up at the top of your screen: click on “Select another kernel”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.srustillmblog.io/Users/satyadonapati/Github/Deep_Learning_Blog_Quarto/posts/polaris-tutorial/jupytersteptwo.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image</figcaption>
+</figure>
+</div>
+<p>Select “Existing jupyter server”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.srustillmblog.io/Users/satyadonapati/Github/Deep_Learning_Blog_Quarto/posts/polaris-tutorial/jupyterstepthree.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image</figcaption>
+</figure>
+</div>
+<p>Select the jupyter sever with the same ip as my_ip_address returned from the code above</p>
+<p>If you find the jupyter notebook server with your ip address, choose that. If not, type in the one of the 2 urls shown when starting the jupyter notebook from the GPU (remote) server. The URL will look something like this:</p>
+<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>http://10.201.1.207:15005/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">?</span>token=c4bf05355a75efcf99eca814a774432b78432cffe1eb1403<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+<p>Now, the jupyter notebook on VSCode should be running from polaris’s GPU compute node.</p>
+</section>
+</section>
+<section id="storing-datafiles-on-login-node" class="level2">
+<h2 class="anchored" data-anchor-id="storing-datafiles-on-login-node">Storing Data/Files on Login Node</h2>
+<p>To store data and other files on the login node without taking space in home, navigate to the following:</p>
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/grand/TFXcan/imlab/users/</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>username<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span></span></code></pre></div>
+</section>
+<section id="parsl" class="level2">
+<h2 class="anchored" data-anchor-id="parsl">Parsl</h2>
+</section>
+<section id="possible-issues" class="level2">
+<h2 class="anchored" data-anchor-id="possible-issues">Possible Issues</h2>
+<section id="if-you-cant-find-your-ip-address-when-trying-to-select-jupyter-server" class="level3">
+<h3 class="anchored" data-anchor-id="if-you-cant-find-your-ip-address-when-trying-to-select-jupyter-server">If you can’t find your IP address when trying to select Jupyter Server</h3>
+<p>When starting the jupyter server, you should see something like this, where there are two URLs provided. Try the method above where you copy-paste one of the URLs into the drop-down at the top of screen, where it says “Enter a Remote URL”. If one URL does not work, try using the other URL.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.srustillmblog.io/Users/satyadonapati/Github/Deep_Learning_Blog_Quarto/posts/polaris-tutorial/jupyterstepfour.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image</figcaption>
+</figure>
+</div>
+<p>If it still doesn’t work, see below.</p>
+</section>
+<section id="may-need-to-register-your-jupyter-kernel-on-your-local-computer-to-use-it-on-vscode" class="level3">
+<h3 class="anchored" data-anchor-id="may-need-to-register-your-jupyter-kernel-on-your-local-computer-to-use-it-on-vscode">May need to register your Jupyter Kernel on your local computer to use it on VSCode</h3>
+<p>On polaris, after running:</p>
+<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">my_ip_address</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ip</span> rule <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-w</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0:'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{print $3;exit}'</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<p>Try the following:</p>
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span></span>
+<span id="cb26-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># then you can start the jupyter notebook normally</span></span>
+<span id="cb26-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">jupyter-notebook</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-browser</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ip</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$my_ip_address</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--port</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>15005</span></code></pre></div>
+<p>Next, copy-paste your ip address in the following command, along with the port number:</p>
+<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-N</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>port<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>ip address<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span>:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>port<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> youruser@polaris.alcf.anl.gov</span></code></pre></div>
+<p>Repeat the steps for connecting to the Jupyter Server:</p>
+<ul>
+<li><p>A drop-down will pop up at the top of your screen: click on “Select another kernel”</p></li>
+<li><p>Select “Existing jupyter server”</p></li>
+<li><p>Select the jupyter sever with the same ip as my_ip_address returned from the code above</p></li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://www.srustillmblog.io/posts/polaris-tutorial/polaris-tutorial.html</guid>
+  <pubDate>Mon, 27 Nov 2023 06:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Polaris Test Post</title>
   <dc:creator>Srusti </dc:creator>
