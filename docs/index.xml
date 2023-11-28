@@ -36,8 +36,8 @@ background-color: null;
 font-style: inherit;">&gt;</span>@polaris.alcf.anl.gov</span></code></pre></div>
 <p>Then, type in the password from your CRYPTOCard/MobilePASS+ token. Each time you login to polaris, you will be given a new password.</p>
 </section>
-<section id="first-your-time-in-the-login-node" class="level3">
-<h3 class="anchored" data-anchor-id="first-your-time-in-the-login-node">First your time in the login node</h3>
+<section id="first-time-in-the-login-node" class="level3">
+<h3 class="anchored" data-anchor-id="first-time-in-the-login-node">First time in the login node</h3>
 <p>After you login to polaris using the ssh method above, you will be given a notice to users and prompted to type a password, which will be the password in MobilePASS+. Once you are in the login node, you should see something like this in your terminal:</p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
@@ -226,8 +226,8 @@ background-color: null;
 font-style: inherit;">&gt;</span>@polaris.alcf.anl.gov</span></code></pre></div>
 <p>Then, type in the password from your CRYPTOCard/MobilePASS+ token. Each time you login to polaris, you will be given a new password.</p>
 </section>
-<section id="first-your-time-in-the-login-node-1" class="level3">
-<h3 class="anchored" data-anchor-id="first-your-time-in-the-login-node-1">First your time in the login node</h3>
+<section id="first-your-time-in-the-login-node" class="level3">
+<h3 class="anchored" data-anchor-id="first-your-time-in-the-login-node">First your time in the login node</h3>
 <p>After you login to polaris using the ssh method above, you will be given a notice to users and prompted to type a password, which will be the password in MobilePASS+. Once you are in the login node, you should see something like this in your terminal:</p>
 <div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
 background-color: null;
