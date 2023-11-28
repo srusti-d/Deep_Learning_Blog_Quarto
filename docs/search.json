@@ -301,13 +301,6 @@
     "text": "Storing Data/Files on Login Node\nTo store data and other files on the login node without taking space in home, navigate to the following:\n/grand/TFXcan/imlab/users/&lt;username&gt;"
   },
   {
-    "objectID": "posts/polaris-tutorial/polaris-tutorial.html#parsl",
-    "href": "posts/polaris-tutorial/polaris-tutorial.html#parsl",
-    "title": "How to Use Polaris",
-    "section": "Parsl",
-    "text": "Parsl"
-  },
-  {
     "objectID": "posts/polaris-tutorial/polaris-tutorial.html#possible-issues",
     "href": "posts/polaris-tutorial/polaris-tutorial.html#possible-issues",
     "title": "How to Use Polaris",
